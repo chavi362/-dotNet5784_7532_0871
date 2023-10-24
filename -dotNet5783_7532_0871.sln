@@ -14,7 +14,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalFacade", "DalFacade\DalF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalList", "DalList\DalList.csproj", "{AF479763-E487-42D2-BAEB-6A78A12EAEE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalTest", "DalTest\DalTest.csproj", "{6451FC0D-74CF-40E5-8705-2C293D78A2C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalTest", "DalTest\DalTest.csproj", "{6451FC0D-74CF-40E5-8705-2C293D78A2C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,11 +41,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{6E14A637-4CB0-48F8-AC80-540604BC1F64} = {B6A441A4-4905-4083-8816-69E02A4367B8}
-		{AF479763-E487-42D2-BAEB-6A78A12EAEE6} = {B6A441A4-4905-4083-8816-69E02A4367B8}
-		{6451FC0D-74CF-40E5-8705-2C293D78A2C5} = {B6A441A4-4905-4083-8816-69E02A4367B8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4DA08FA8-7183-45E1-B15F-16843BD3D99E}
