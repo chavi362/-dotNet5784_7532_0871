@@ -11,14 +11,15 @@ public record Task
     int Id,
     string Description,
     string Alias,
-    bool Milestone,
-    DateTime CreatedAt,
-    DateTime Start,
-    DateTime Forecast,
-    DateTime DedLine,
-    DateTime Complete,
-    string Deliverables,
-    string Remarks,
-    int EngineerId
-    //  להוסיף מהנדס
+    bool Milestone=false,
+    DateTime? CreatedAt=null,
+    DateTime? Start = null,
+    DateTime? Forecast = null,
+    DateTime? DedLine = null,
+    DateTime? Complete = null,
+    string? Deliverables=null,
+    string? Remarks=null,
+    int? EngineerId=null,
+    EngineerExperience? ComplexityLevel=null
+    
     );

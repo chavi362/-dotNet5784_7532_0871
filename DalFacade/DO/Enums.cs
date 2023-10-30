@@ -1,6 +1,9 @@
 ﻿
 namespace DO;
 
-internal class Enums
+public enum EngineerExperience
 {
+    Expert,
+    Junior,
+    Rockie
 }
