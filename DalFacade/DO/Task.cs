@@ -19,7 +19,7 @@ public record Task
     DateTime? Complete = null,
     string? Deliverables=null,
     string? Remarks=null,
-    int? EngineerId=null,
+    int EngineerId=0,
     EngineerExperience? ComplexityLevel=null
     
     );
