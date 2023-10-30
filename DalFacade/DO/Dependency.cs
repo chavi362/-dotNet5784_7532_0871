@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DO
-{
-    internal class Dependency
-    {
-    }
-}
+namespace DO;
+
+public record Dependency
+(
+    int id,
+    int DependentTask,
+    int DependensOnTask
+    );
