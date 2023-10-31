@@ -8,7 +8,7 @@ namespace DO;
 
 public record Dependency
 (
-    int id,
+    int Id,
     int DependentTask,
     int DependensOnTask
     );

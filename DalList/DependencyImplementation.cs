@@ -6,28 +6,48 @@ using System.Collections.Generic;
 
 public class DependencyImplementation : IDependency
 {
-    public int Create(Dependency item)
+    public int Create(Dependency d)
     {
-        throw new NotImplementedException();
+        int id = DataSource.Config.NextDependencyId;
+        Dependency copy = d with { Id = id };
+        DataSource.Dependencies.Add(copy);
+        return id;
     }
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        Dependency? toDelate = Read(id);
+        if (toDelate == null)
+        {
+            throw new Exception($"Dependency with ID={id} is not exist");
+        }
+        else
+        {
+            DataSource.Dependencies.Remove(toDelate);
+        }
+
     }
 
     public Dependency? Read(int id)
     {
-        throw new NotImplementedException();
+        return DataSource.Dependencies.Find(x => x.Id == id);
     }
 
     public List<Dependency> ReadAll()
     {
-        throw new NotImplementedException();
+        return new List<Dependency>(DataSource.Dependencies);
     }
 
-    public void Update(Dependency item)
+    public void Update(Dependency d)
     {
-        throw new NotImplementedException();
+        if (Read(d.Id) == null)
+        {
+            throw new Exception($"Dependencies with ID={d.Id} is not exist");
+        }
+        else
+        {
+            DataSource.Dependencies.Remove(d);
+            DataSource.Dependencies.Add(d);
+        }
     }
 }
