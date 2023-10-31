@@ -3,7 +3,7 @@
 namespace DalTest;
 using DO;
 using DalApi;
-
+const int MIN_ID=0;
 public static class Initialization
 {
     private static ITask? s_dalTask;
@@ -12,7 +12,20 @@ public static class Initialization
     private static readonly Random s_rand = new();
     private static void createTasks()
     {
-
+        (string description, string Alias)[] engineerTasks =
+        {
+    ("Design the project architecture", "design"),
+    ("Develop the backend logic","Develop"),
+    ("Implement the user interface","Implement"),
+    ("Perform testing and debugging","debug"),
+    ("Optimize the code for performance","Optimizing"),
+    ("Document the project specifications","Doucument"),
+    ("Collaborate with team members","coolubrating"),
+    ("Attend project meetings","meetings"),
+    ("Review and provide feedback on code","code review"),
+    ("Deploy the project to production","production"),                                                                                                    "
+    ("Maintain and support the project","support")
+        };
     }
     private static void createEngineers()
     {
