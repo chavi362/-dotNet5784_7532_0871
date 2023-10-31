@@ -67,7 +67,7 @@ public class TaskImplementation : ITask
         List<Dependency> d = DataSource.Dependencies.FindAll(x => x.DependentTask == t.Id);
         foreach (Dependency dependency in d)
         {
-            Delete(dependency.Id);
+           // Delete(dependency.Id);
         }
     }
 }
