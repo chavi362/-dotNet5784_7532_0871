@@ -6,19 +6,30 @@ namespace Dal;
 
 public class EngineerImplementation : IEngineer
 {
-    public int Create(Engineer item)
+    public int Create(Engineer engineer)
     {
-        throw new NotImplementedException();
+         if (Read(engineer.Id) is not null)
+            throw new Exception($"Engineer with ID={engineer.Id} already exists");
+        DataSource.Engineers.Add(engineer);
+        return engineer.Id;
     }
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        Engineer? toDelete = Read(id);
+        if (toDelete != null )
+        {
+            DataSource.Engineers.Remove(toDelete);
+        }
+        else
+        {
+            throw new Exception($"Engineer with ID={id} doern't exists");
+        }
     }
-
+    
     public Engineer? Read(int id)
     {
-        throw new NotImplementedException();
+        return DataSource.Engineers.Find(x => x.Id == id);
     }
 
     public List<Engineer> ReadAll()
