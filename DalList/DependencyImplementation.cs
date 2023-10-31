@@ -1,12 +1,33 @@
-﻿using System;
+﻿
+namespace Dal;
+using DalApi;
+using DO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Dal
+public class DependencyImplementation : IDependency
 {
-    internal class DependencyImplementation
+    int IDependency.Create(Dependency item)
     {
+        throw new NotImplementedException();
+    }
+
+    void IDependency.Delete(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    Dependency? IDependency.Read(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    List<Dependency> IDependency.ReadAll()
+    {
+        throw new NotImplementedException();
+    }
+
+    void IDependency.Update(Dependency item)
+    {
+        throw new NotImplementedException();
     }
 }

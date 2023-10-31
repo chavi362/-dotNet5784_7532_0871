@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
-namespace DalApi
+namespace DalApi;
+using DO;
+public interface ITask
 {
-    internal interface Itask
-    {
-    }
+    int Create(Task item); //Creates new entity object in DAL
+    Task? Read(int id); //Reads entity object by its ID
+    List<Task> ReadAll(); //stage 1 only, Reads all entity objects
+    void Update(Task item); //Updates entity object
+    void Delete(int id); //Deletes an object by its Id
 }
