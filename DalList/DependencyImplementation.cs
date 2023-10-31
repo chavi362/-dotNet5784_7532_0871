@@ -6,27 +6,27 @@ using System.Collections.Generic;
 
 public class DependencyImplementation : IDependency
 {
-    int IDependency.Create(Dependency item)
+    public int Create(Dependency item)
     {
         throw new NotImplementedException();
     }
 
-    void IDependency.Delete(int id)
+    public void Delete(int id)
     {
         throw new NotImplementedException();
     }
 
-    Dependency? IDependency.Read(int id)
+    public Dependency? Read(int id)
     {
         throw new NotImplementedException();
     }
 
-    List<Dependency> IDependency.ReadAll()
+    public List<Dependency> ReadAll()
     {
         throw new NotImplementedException();
     }
 
-    void IDependency.Update(Dependency item)
+    public void Update(Dependency item)
     {
         throw new NotImplementedException();
     }

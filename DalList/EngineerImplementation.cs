@@ -6,27 +6,27 @@ namespace Dal;
 
 public class EngineerImplementation : IEngineer
 {
-    int IEngineer.Create(Engineer item)
+    public int Create(Engineer item)
     {
         throw new NotImplementedException();
     }
 
-    void IEngineer.Delete(int id)
+    public void Delete(int id)
     {
         throw new NotImplementedException();
     }
 
-    Engineer? IEngineer.Read(int id)
+    public Engineer? Read(int id)
     {
         throw new NotImplementedException();
     }
 
-    List<Engineer> IEngineer.ReadAll()
+    public List<Engineer> ReadAll()
     {
         throw new NotImplementedException();
     }
 
-    void IEngineer.Update(Engineer item)
+    public void Update(Engineer item)
     {
         throw new NotImplementedException();
     }

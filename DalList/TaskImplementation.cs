@@ -7,9 +7,10 @@ using System.Collections.Generic;
 
 public class TaskImplementation : ITask
 {
-    public int Create(Task item)
+    public int Create(Task t)
     {
-        throw new NotImplementedException();
+        t.Id = Config.NextTaskId;
+        return id
     }
 
     public void Delete(int id)
