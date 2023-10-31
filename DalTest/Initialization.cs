@@ -3,7 +3,7 @@
 namespace DalTest;
 using DO;
 using DalApi;
-const int MIN_ID=0;
+
 public static class Initialization
 {
     private static ITask? s_dalTask;
@@ -17,38 +17,33 @@ public static class Initialization
     private static void createEngineers()
     {
 
-        (string name,string email)[] engineerNamesEmails =
+        (string name, string email)[] engineerNamesEmails =
         {
-        ("Dani Levi","Dani Levi@gmail.com"
-        ("Eli Amar","Eli Amar"
-        "Yair Cohen","Yair Cohen"
-        "Ariela Levin", "Ariela Levin"
-        "Dina Klein","Dina Klein"
-        "Shira Israelof","Shira Israelof"
-        "Chavi Chaimson",
-        "Avigail Catz",
-        "Chani Levi",
-        "Chani Lev"
+        ("Dani Levi","DaniLevi@gmail.com"),
+        ("Eli Amar","EliAmar@gmail.com"),
+        ("Yair Cohen","YairCohen@gmail.com"),
+        ("Ariela Levin", "ArielaLevin@gmail.com"),
+        ("Dina Klein","DinaKlein@gmail.com"),
+        ("Shira Israelof","ShiraIsraelof@gmail.com"),
+        ("Chavi Chaimson","ChaviChaimson@gmail.com"),
+        ("Avigail Catz","AvigailCatz@gmail.com"),
+        ("Chani Levi","ChaniLevi@gmail.com"),
+        ("Chani Lev","ChaniLev@gmail.com")
         };
 
-        foreach (var _name in engineerNames)
+        foreach (var _name in engineerNamesEmails)
         {
+            EngineerExperience level;
             int _id;
             do
                 _id = s_rand.Next(200000000, 400000000);
             while (s_dalEngineer!.Read(_id) != null);
+            Enum.TryParse<EngineerExperience>((s_rand.Next(0, 3)).ToString(), out level);
+            double cost= s_rand.Next(100000, 2000000);
+           
+            Engineer newEng = new(_id, _name.name, _name.email,level,cost);
 
-            bool? _b = (_id % 2) == 0 ? true : false;
-            Year _year =
-            (Year)s_rand.Next((int)Year.FirstYear, (int)Year.ExtraYear + 1);
-
-            DateTime start = new DateTime(1995, 1, 1);
-            int range = (DateTime.Today - start).Days;
-            DateTime _bdt = start.AddDays(s_rand.Next(range));
-
-            Engineer newStu = new(_id, _name, null, _b, _year, _bdt);
-
-            s_dalEngineer!.Create(newStu);
+            s_dalEngineer!.Create(newEng);
         }
 
     }
