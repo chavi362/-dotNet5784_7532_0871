@@ -2,6 +2,7 @@
 namespace DalTest;
 using DO;
 using DalApi;
+const int MIN_ID = 0;
 public static class Initialization
 {
     private static ITask? s_dalTask;
@@ -24,6 +25,10 @@ public static class Initialization
     ("Deploy the project to production","production"),                                                                                                    "
     ("Maintain and support the project","support")
         };
+        foreach (var _name in engineerTasks)
+        {
+            bool? _milestone = (_ % 2) == 0 ? true : false;
+        }
     }
     private static void createEngineers()
     {
