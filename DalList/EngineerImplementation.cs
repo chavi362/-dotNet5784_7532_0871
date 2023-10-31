@@ -34,11 +34,18 @@ public class EngineerImplementation : IEngineer
 
     public List<Engineer> ReadAll()
     {
-        throw new NotImplementedException();
+        return new List<Engineer>(DataSource.Engineers);
     }
 
-    public void Update(Engineer item)
+    public void Update(Engineer engineer)
     {
-        throw new NotImplementedException();
+        Engineer? prev = Read(engineer.Id);
+        if (prev is  null)
+        {
+            throw new Exception($"Engineer with ID={engineer.Id} doern't exists");
+        }
+        DataSource.Engineers.Remove(prev);
+        DataSource.Engineers.Add(engineer);
+
     }
 }
