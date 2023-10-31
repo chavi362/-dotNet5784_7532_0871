@@ -3,38 +3,39 @@
 namespace DalTest;
 using DO;
 using DalApi;
+const int MIN_ID=0;
 public static class Initialization
 {
-    private static ITask? s_dalTask; 
-    private static IDependency? s_dalDependency; 
-    private static IEngineer? s_dalEngineer; 
-
+    private static ITask? s_dalTask;
+    private static IDependency? s_dalDependency;
+    private static IEngineer? s_dalEngineer;
     private static readonly Random s_rand = new();
     private static void createTasks()
     {
-       
+
     }
     private static void createEngineers()
     {
 
-        string[] engineerNames =
+        (string name,string email)[] engineerNamesEmails =
         {
-        "Dani Levi",
-        "Eli Amar",
-        "Yair Cohen",
-        "Ariela Levin",
-        "Dina Klein",
-        "Shira Israelof",
+        ("Dani Levi","Dani Levi@gmail.com"
+        ("Eli Amar","Eli Amar"
+        "Yair Cohen","Yair Cohen"
+        "Ariela Levin", "Ariela Levin"
+        "Dina Klein","Dina Klein"
+        "Shira Israelof","Shira Israelof"
         "Chavi Chaimson",
         "Avigail Catz",
-        "Chani Levi"
-    };
+        "Chani Levi",
+        "Chani Lev"
+        };
 
         foreach (var _name in engineerNames)
         {
             int _id;
             do
-                _id = s_rand.Next(MIN_ID, MAX_ID);
+                _id = s_rand.Next(200000000, 400000000);
             while (s_dalEngineer!.Read(_id) != null);
 
             bool? _b = (_id % 2) == 0 ? true : false;
