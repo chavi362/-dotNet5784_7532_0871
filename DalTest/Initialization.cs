@@ -3,7 +3,6 @@
 namespace DalTest;
 using DO;
 using DalApi;
-const int MIN_ID=0;
 public static class Initialization
 {
     private static ITask? s_dalTask;
