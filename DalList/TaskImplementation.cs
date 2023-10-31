@@ -9,27 +9,43 @@ public class TaskImplementation : ITask
 {
     public int Create(Task t)
     {
-        t.Id = Config.NextTaskId;
-        return id
+        int id = DataSource.Config.NextTaskId;
+        Task copy = t with { Id = id };
+        DataSource.Tasks.Add(copy);
+        return id;
     }
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        Task? toDelate = Read(id);
+        if ( toDelate== null)
+        {
+            throw new Exception($"Task with ID={id} is not exist");
+        }
+        else
+            DataSource.Tasks.Remove(toDelate);
     }
 
     public Task? Read(int id)
     {
-        throw new NotImplementedException();
+         return DataSource.Tasks.Find(x=> x.Id == id);
+
     }
 
     public List<Task> ReadAll()
     {
-        throw new NotImplementedException();
+        return new List<Task>(DataSource.Tasks);
     }
 
-    public void Update(Task item)
+    public void Update(Task t)
     {
-        throw new NotImplementedException();
+        if(Read(t.Id)==null)
+        {
+            throw new Exception($"Task with ID={t.Id} is not exist");
+        }
+        else { 
+            Delete(t.Id);
+            DataSource.Tasks.Add(t); 
+         }
     }
 }
