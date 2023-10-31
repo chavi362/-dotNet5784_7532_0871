@@ -1,5 +1,4 @@
 ﻿
-
 namespace DalTest;
 using DO;
 using DalApi;
@@ -61,7 +60,7 @@ public static class Initialization
     }
     private static void createDependencies()
     {
-
+        Dependency d = new(0, )
     }
 
 }
