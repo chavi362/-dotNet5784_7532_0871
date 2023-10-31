@@ -24,7 +24,9 @@ public class TaskImplementation : ITask
         }
         else
         {
-            
+            if(CheckingDependency(toDelate))
+                throw new Exception($"another task dependth on thid task with ID={id}");
+            DeletingTaskDependency(toDelate);
             DataSource.Tasks.Remove(toDelate);
         }
         
@@ -52,6 +54,20 @@ public class TaskImplementation : ITask
         {
             DataSource.Tasks.Remove(t);
             DataSource.Tasks.Add(t);
+        }
+    }
+    public bool CheckingDependency(Task t)
+    {
+        if (DataSource.Dependencies.Find(x => x.DependensOnTask == t.Id) == null)
+            return true;
+        return false;
+    }
+    public void DeletingTaskDependency(Task t)
+    {
+        List<Dependency> d = DataSource.Dependencies.FindAll(x => x.DependentTask == t.Id);
+        foreach (Dependency dependency in d)
+        {
+            Delete(dependency.Id);
         }
     }
 }
