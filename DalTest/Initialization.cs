@@ -22,19 +22,42 @@ public static class Initialization
     ("Collaborate with team members","coolubrating"),
     ("Attend project meetings","meetings"),
     ("Review and provide feedback on code","code review"),
+    ("Review and provide feedback on code","code review"),
     ("Deploy the project to production","production"),                                                                                                    "
     ("Maintain and support the project","support")
         };
-        foreach (var _name in engineerTasks)
+        foreach (var taskData in engineerTasks)
         {
-            bool? _milestone = (_ % 2) == 0 ? true : false;
+            while (s_dalTask!.Read(taskId) != null);
+
+            bool isMilestone = s_rand.Next(2) == 0;
+
+            DateTime startDate = DateTime.Now.AddDays(s_rand.Next(1, 3));
+            DateTime estimatedCompletionDate = startDate.AddDays(s_rand.Next(5, 15));
+            DateTime finalCompletionDate = estimatedCompletionDate.AddDays(s_rand.Next(1, 5));
+
+            Task newTask = new Task(
+                taskData.description,
+                taskData.Alias,
+                isMilestone,
+                DateTime.Now,
+                startDate,
+                estimatedCompletionDate,
+                finalCompletionDate,
+                null,
+                null,
+                0,
+                null
+            );
+
+            s_dalTask!.Create(newTask);
         }
     }
-    private static void createEngineers()
-    {
-
-        (string name, string email)[] engineerNamesEmails =
+        private static void createEngineers()
         {
+
+            (string name, string email)[] engineerNamesEmails =
+            {
         ("Dani Levi","DaniLevi@gmail.com"),
         ("Eli Amar","EliAmar@gmail.com"),
         ("Yair Cohen","YairCohen@gmail.com"),
@@ -47,25 +70,25 @@ public static class Initialization
         ("Chani Lev","ChaniLev@gmail.com")
         };
 
-        foreach (var _name in engineerNamesEmails)
-        {
-            EngineerExperience level;
-            int _id;
-            do
-                _id = s_rand.Next(200000000, 400000000);
-            while (s_dalEngineer!.Read(_id) != null);
-            Enum.TryParse<EngineerExperience>((s_rand.Next(0, 3)).ToString(), out level);
-            double cost= s_rand.Next(100000, 2000000);
-           
-            Engineer newEng = new(_id, _name.name, _name.email,level,cost);
+            foreach (var _name in engineerNamesEmails)
+            {
+                EngineerExperience level;
+                int _id;
+                do
+                    _id = s_rand.Next(200000000, 400000000);
+                while (s_dalEngineer!.Read(_id) != null);
+                Enum.TryParse<EngineerExperience>((s_rand.Next(0, 3)).ToString(), out level);
+                double cost = s_rand.Next(100000, 2000000);
 
-            s_dalEngineer!.Create(newEng);
+                Engineer newEng = new(_id, _name.name, _name.email, level, cost);
+
+                s_dalEngineer!.Create(newEng);
+            }
+
+        }
+        private static void createDependencies()
+        {
+           // Dependency d = new(0, )
         }
 
     }
-    private static void createDependencies()
-    {
-        Dependency d = new(0, )
-    }
-
-}
