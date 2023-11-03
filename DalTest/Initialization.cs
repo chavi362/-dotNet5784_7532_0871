@@ -27,7 +27,7 @@ public static class Initialization
         };
         foreach (var taskData in engineerTasks)
         {
-            while (s_dalTask!.Read(taskId) != null);
+            while (s_dalTask!.Read(taskId) != null) ;
 
             bool isMilestone = s_rand.Next(2) == 0;
 
@@ -52,11 +52,11 @@ public static class Initialization
             s_dalTask!.Create(newTask);
         }
     }
-        private static void createEngineers()
-        {
+    private static void createEngineers()
+    {
 
-            (string name, string email)[] engineerNamesEmails =
-            {
+        (string name, string email)[] engineerNamesEmails =
+        {
         ("Dani Levi","DaniLevi@gmail.com"),
         ("Eli Amar","EliAmar@gmail.com"),
         ("Yair Cohen","YairCohen@gmail.com"),
@@ -69,22 +69,22 @@ public static class Initialization
         ("Chani Lev","ChaniLev@gmail.com")
         };
 
-            foreach (var _name in engineerNamesEmails)
-            {
-                EngineerExperience level;
-                int _id;
-                do
-                    _id = s_rand.Next(200000000, 400000000);
-                while (s_dalEngineer!.Read(_id) != null);
-                Enum.TryParse<EngineerExperience>((s_rand.Next(0, 3)).ToString(), out level);
-                double cost = s_rand.Next(100000, 2000000);
+        foreach (var _name in engineerNamesEmails)
+        {
+            EngineerExperience level;
+            int _id;
+            do
+                _id = s_rand.Next(200000000, 400000000);
+            while (s_dalEngineer!.Read(_id) != null);
+            Enum.TryParse<EngineerExperience>((s_rand.Next(0, 3)).ToString(), out level);
+            double cost = s_rand.Next(100000, 2000000);
 
-                Engineer newEng = new(_id, _name.name, _name.email, level, cost);
+            Engineer newEng = new(_id, _name.name, _name.email, level, cost);
 
-                s_dalEngineer!.Create(newEng);
-            }
-
+            s_dalEngineer!.Create(newEng);
         }
+
+    }
     private static void createDependencies()
     {
         int numOfTasks = s_dalTask!.ReadAll().Count();
@@ -92,7 +92,6 @@ public static class Initialization
         for (int dependentTaskId = MIN_ID; dependentTaskId < numOfTasks; dependentTaskId++)
         {
             int numOfDependencies = s_rand.Next(3); // Randomly determine the number of dependencies for each task
-
             for (int i = 0; i < numOfDependencies; i++)
             {
                 int dependenciesOnTaskId;
@@ -105,6 +104,19 @@ public static class Initialization
                 s_dalDependency!.Create(newDependency);
             }
         }
+    }
+    public static void Do(
+                   ITask? dalTask, IDependency? dalDependency, IEngineer? dalEngineer)
+    {
+        // Assign the interface parameters to the respective access variables
+        s_dalTask = dalTask ?? throw new NullReferenceException("DAL for Task cannot be null!");
+        s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL for Dependency cannot be null!");
+        s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL for Engineer cannot be null!");
+
+        // Call the private methods to initialize the lists
+        createTasks();
+        createDependencies();
+        createEngineers();
     }
 
 
