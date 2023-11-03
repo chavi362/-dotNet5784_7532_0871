@@ -13,18 +13,17 @@ public static class Initialization
     {
         (string description, string Alias)[] engineerTasks =
         {
-    ("Design the project architecture", "design"),
-    ("Develop the backend logic","Develop"),
-    ("Implement the user interface","Implement"),
-    ("Perform testing and debugging","debug"),
-    ("Optimize the code for performance","Optimizing"),
-    ("Document the project specifications","Doucument"),
-    ("Collaborate with team members","coolubrating"),
-    ("Attend project meetings","meetings"),
-    ("Review and provide feedback on code","code review"),
-    ("Review and provide feedback on code","code review"),
-    ("Deploy the project to production","production"),                                                                                                    "
-    ("Maintain and support the project","support")
+            ("Design the project architecture", "design"),
+            ("Develop the backend logic","Develop"),
+            ("Implement the user interface","Implement"),
+            ("Perform testing and debugging","debug"),
+            ("Optimize the code for performance","Optimizing"),
+            ("Document the project specifications","Doucument"),
+            ("Collaborate with team members","collaborating"),
+            ("Attend project meetings","meetings"),
+            ("Review and provide feedback on code","code review"),
+            ("Deploy the project to production","production"),
+            ("Maintain and support the project","support")
         };
         foreach (var taskData in engineerTasks)
         {
@@ -86,9 +85,27 @@ public static class Initialization
             }
 
         }
-        private static void createDependencies()
-        {
-           // Dependency d = new(0, )
-        }
+    private static void createDependencies()
+    {
+        int numOfTasks = s_dalTask!.ReadAll().Count();
 
+        for (int dependentTaskId = MIN_ID; dependentTaskId < numOfTasks; dependentTaskId++)
+        {
+            int numOfDependencies = s_rand.Next(3); // Randomly determine the number of dependencies for each task
+
+            for (int i = 0; i < numOfDependencies; i++)
+            {
+                int dependenciesOnTaskId;
+                do
+                {
+                    dependenciesOnTaskId = s_rand.Next(numOfTasks);
+                } while (dependentTaskId == dependenciesOnTaskId); // Ensure the dependency is not the same task as the dependent task
+
+                Dependency newDependency = new Dependency(dependentTaskId, dependenciesOnTaskId);
+                s_dalDependency!.Create(newDependency);
+            }
+        }
     }
+
+
+}
