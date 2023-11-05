@@ -32,7 +32,7 @@ public static class Initialization
             DateTime startDate = DateTime.Now.AddDays(s_rand.Next(1, 3));
             DateTime estimatedCompletionDate = startDate.AddDays(s_rand.Next(5, 15));
             DateTime deadlineDate = startDate.AddDays(s_rand.Next(5, 10));
-            DateTime finalCompletionDate = deadlineDate.AddDays(s_rand.Next(1, 5));
+            DateTime finalCompletionDate = startDate.AddDays(s_rand.Next(5, 35));
 
             Task newTask = new Task(
                 0,
