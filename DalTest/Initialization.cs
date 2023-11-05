@@ -2,7 +2,7 @@
 namespace DalTest;
 using DO;
 using DalApi;
-const int MIN_ID = 0;
+//const int MIN_ID = 0;
 public static class Initialization
 {
     private static ITask? s_dalTask;
@@ -27,21 +27,22 @@ public static class Initialization
         };
         foreach (var taskData in engineerTasks)
         {
-            while (s_dalTask!.Read(taskId) != null) ;
 
             bool isMilestone = s_rand.Next(2) == 0;
-
             DateTime startDate = DateTime.Now.AddDays(s_rand.Next(1, 3));
             DateTime estimatedCompletionDate = startDate.AddDays(s_rand.Next(5, 15));
-            DateTime finalCompletionDate = estimatedCompletionDate.AddDays(s_rand.Next(1, 5));
+            DateTime deadlineDate = startDate.AddDays(s_rand.Next(5, 10));
+            DateTime finalCompletionDate = deadlineDate.AddDays(s_rand.Next(1, 5));
 
             Task newTask = new Task(
+                0,
                 taskData.description,
                 taskData.Alias,
                 isMilestone,
                 DateTime.Now,
                 startDate,
                 estimatedCompletionDate,
+                deadlineDate,
                 finalCompletionDate,
                 null,
                 null,
@@ -89,7 +90,7 @@ public static class Initialization
     {
         int numOfTasks = s_dalTask!.ReadAll().Count();
 
-        for (int dependentTaskId = MIN_ID; dependentTaskId < numOfTasks; dependentTaskId++)
+        for (int dependentTaskId = 0; dependentTaskId < numOfTasks; dependentTaskId++)
         {
             int numOfDependencies = s_rand.Next(3); // Randomly determine the number of dependencies for each task
             for (int i = 0; i < numOfDependencies; i++)
@@ -100,7 +101,7 @@ public static class Initialization
                     dependenciesOnTaskId = s_rand.Next(numOfTasks);
                 } while (dependentTaskId == dependenciesOnTaskId); // Ensure the dependency is not the same task as the dependent task
 
-                Dependency newDependency = new Dependency(dependentTaskId, dependenciesOnTaskId);
+                Dependency newDependency = new(0,dependentTaskId, dependenciesOnTaskId);
                 s_dalDependency!.Create(newDependency);
             }
         }
