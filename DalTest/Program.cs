@@ -1,10 +1,11 @@
-﻿using DO;
+﻿
 using DalApi;
 using System;
 using System.Diagnostics;
 using System.Net;
 using System.Security.Cryptography;
 using Dal;
+using DO;
 
 namespace DalTest;
 class Program
@@ -12,6 +13,97 @@ class Program
     private static IEngineer? s_dalEngineer = new EngineerImplementation(); //stage 1
     private static IDependency? s_dalDependency = new DependencyImplementation(); //stage 1
     private static ITask? s_dalTask = new TaskImplementation(); //stage 1
+    public static void InfoOfTask(char x)
+    {
+        switch (x)
+        {
+            case 'a'://add
+
+                `                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                t = new Task();
+                Console.WriteLine("enter product's id to add");
+                p._id = int.Parse(Console.ReadLine());
+                Console.WriteLine("enter product's name");
+                p._name = Console.ReadLine();
+                Console.WriteLine("enter product's price");
+                p._price = double.Parse(Console.ReadLine());
+                Console.WriteLine("enter product's category(0-for cups,1-for cakes,2-for cookies)");
+                p._category = (ECategory)int.Parse(Console.ReadLine());
+                Console.WriteLine("enter product's instock");
+                p._inStock = int.Parse(Console.ReadLine());
+                Console.WriteLine("enter product's parve(0/1)");
+                p._parve = int.Parse(Console.ReadLine());
+                try
+                {
+
+                    int result=dalProduct.create(p);
+                    Console.WriteLine("the product was added");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                break;
+            case 'b'://read by id
+                Console.WriteLine("enter product's id to read");
+                int id = int.Parse(Console.ReadLine());
+                try
+                {
+                    Console.WriteLine(dalProduct.read(id));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                break;
+            case 'c'://read all
+                Console.WriteLine("all the products:");
+                Product[] arrReadAllProducts = dalProduct.readAll();
+                foreach (var item in arrReadAllProducts)
+                    Console.WriteLine(item);
+                break;
+            case 'd'://update
+                Console.WriteLine("enter id of product to update");
+                int idUpdate = int.Parse(Console.ReadLine());//search of the id to update
+                try
+                {
+                    Console.WriteLine(dalProduct.read(idUpdate));
+                    Product pUpdate = new Product();
+                    pUpdate._id = idUpdate;
+                    Console.WriteLine("enter product's name");
+                    pUpdate._name = Console.ReadLine();
+                    Console.WriteLine("enter product's price");
+                    pUpdate._price = double.Parse(Console.ReadLine());
+                    Console.WriteLine("enter product's category(0-for cups,1-for cakes,2-for cookies)");
+                    pUpdate._category = (ECategory)int.Parse(Console.ReadLine());
+                    Console.WriteLine("enter product's instock");
+                    pUpdate._inStock = int.Parse(Console.ReadLine());
+                    Console.WriteLine("enter product's parve(0/1)");
+                    pUpdate._parve = int.Parse(Console.ReadLine());
+                    dalProduct.update(pUpdate);
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                break;
+            case 'e'://delete a product
+                Console.WriteLine("enter id of product to delete");
+                int idDelete = int.Parse(Console.ReadLine());
+                try
+                {
+                    dalProduct.delete(idDelete);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     public static void Main(string[] args)
     {
 
@@ -24,9 +116,9 @@ class Program
         {
             Console.WriteLine("error in parameters");
         }
-        Console.WriteLine("for product press 1");
-        Console.WriteLine("for order press 2");
-        Console.WriteLine("for item in order press 3");
+        Console.WriteLine("for tasks press 1");
+        Console.WriteLine("for dependencies press 2");
+        Console.WriteLine("for engeeners 3");
         Console.WriteLine("for exit press 0");
         int select = int.Parse(Console.ReadLine());
         char x;
@@ -35,13 +127,13 @@ class Program
             switch (select)
             {
                 case 1:
-                    Console.WriteLine("for add a product press a");
-                    Console.WriteLine("for read a product press b");
-                    Console.WriteLine("for read all products press c");
-                    Console.WriteLine("for update a product press d");
-                    Console.WriteLine("for delete a product press e");
+                    Console.WriteLine("for add a task press a");
+                    Console.WriteLine("for read a task press b");
+                    Console.WriteLine("for read all tasks press c");
+                    Console.WriteLine("for update a task press d");
+                    Console.WriteLine("for delete a task press e");
                     x = char.Parse(Console.ReadLine());
-                    InfoOfProduct(x);//doing this function 
+                    InfoOfTask(x);//doing this function 
                     break;
                 case 2:
                     Console.WriteLine("for add an order press a");
