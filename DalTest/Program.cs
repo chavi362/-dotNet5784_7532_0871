@@ -306,13 +306,11 @@ class Program
                     //doing this function 
                     break;
                 case 3:
-                    Console.WriteLine("for add a task befor another press a");
-                    Console.WriteLine("for read task befor another press b");
-                    Console.WriteLine("for read all tasks befor anothers press c");
-                    Console.WriteLine("for update an task befor another press d");
-                    Console.WriteLine("for delete an task befor another press e");
-                    //Console.WriteLine("for read an item in order by id of order and product press f");
-                    //Console.WriteLine("for read an items in order press g");
+                    Console.WriteLine("for add a dependency befor another press a");
+                    Console.WriteLine("for read dependency befor another press b");
+                    Console.WriteLine("for read all dependencies befor anothers press c");
+                    Console.WriteLine("for update an dependency befor another press d");
+                    Console.WriteLine("for delete an dependency befor another press e");
                     x = char.Parse(Console.ReadLine()!);
                     InfoOfDependencies(x);
 
