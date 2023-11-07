@@ -95,7 +95,89 @@ class Program
                 break;
         }
     }
+    public static void InfoOfEngineers(char x)
+    {
+        switch (x)
+        {
 
+            case 'a'://add                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            t = new Task();
+                Console.WriteLine("enter engineer's id to add");
+                int id = int.Parse(Console.ReadLine()!);
+                Console.WriteLine("enter engineer's name");
+                string name = Console.ReadLine()!;
+                Console.WriteLine("enter engineer's email");
+                string email = Console.ReadLine()!;
+                DO.Engineer myEngineer= new(id, name, email);
+                try
+                {
+                    int result = s_dalEngineer.Create(myEngineer);
+                    Console.WriteLine("the task was added");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                break;
+            case 'b'://read by id
+                Console.WriteLine("enter product's id to read");
+                int id = int.Parse(Console.ReadLine());
+                try
+                {
+                    Console.WriteLine(dalProduct.read(id));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                break;
+            case 'c'://read all
+                Console.WriteLine("all the tasks:");
+                Product[] arrReadAllTasks = dalProduct.readAll();
+                foreach (var item in arrReadAllProducts)
+                    Console.WriteLine(item);
+                break;
+            case 'd'://update
+                Console.WriteLine("enter id of product to update");
+                int idUpdate = int.Parse(Console.ReadLine());//search of the id to update
+                try
+                {
+                    Console.WriteLine(dalProduct.read(idUpdate));
+                    Product pUpdate = new Product();
+                    pUpdate._id = idUpdate;
+                    Console.WriteLine("enter product's name");
+                    pUpdate._name = Console.ReadLine();
+                    Console.WriteLine("enter product's price");
+                    pUpdate._price = double.Parse(Console.ReadLine());
+                    Console.WriteLine("enter product's category(0-for cups,1-for cakes,2-for cookies)");
+                    pUpdate._category = (ECategory)int.Parse(Console.ReadLine());
+                    Console.WriteLine("enter product's instock");
+                    pUpdate._inStock = int.Parse(Console.ReadLine());
+                    Console.WriteLine("enter product's parve(0/1)");
+                    pUpdate._parve = int.Parse(Console.ReadLine());
+                    dalProduct.update(pUpdate);
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                break;
+            case 'e'://delete a product
+                Console.WriteLine("enter id of product to delete");
+                int idDelete = int.Parse(Console.ReadLine());
+                try
+                {
+                    dalProduct.delete(idDelete);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                break;
+            default:
+                break;
+        }
+    }
     public static void Main(string[] args)
     {
 
@@ -134,7 +216,7 @@ class Program
                     Console.WriteLine("for update an order press d");
                     Console.WriteLine("for delete an order press e");
                     x = char.Parse(Console.ReadLine());
-                    InfoOfOrder(x); //doing this function 
+                    InfoOfEngineers(x); //doing this function 
                     break;
                 case 3:
                     Console.WriteLine("for add an item in order press a");
