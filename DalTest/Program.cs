@@ -6,7 +6,6 @@ using System.Net;
 using System.Security.Cryptography;
 using Dal;
 using DO;
-using System.Linq.Expressions;
 
 namespace DalTest;
 class Program
@@ -140,8 +139,8 @@ class Program
                     Console.WriteLine(item);
                 break;
             case 'd'://update
-                Console.WriteLine("enter id of engineer to update");
-                int idUpdate = int.Parse(Console.ReadLine());//search of the id to update
+            Console.WriteLine("enter id of engineer to update");
+            int idUpdate = int.Parse(Console.ReadLine());//search of the id to update
                 try
                 {
                     Console.WriteLine("enter engineer's id to update");
@@ -153,44 +152,34 @@ class Program
                     Console.WriteLine("enter engineer's level from 0- to 2");
                     int? level = int.Parse(Console.ReadLine()!);
                     EngineerExperience enLevel;
-                    try
-                    {
-                        try
-                        {
-                            bool b = Enum.TryParse<EngineerExperience>(level.ToString(), out enLevel);
-                            if (!b)
-                                throw new Exception("I tell you to put between 0 to 2");
-                        }
-                        catch (Exception ex)
-                        {
-                            throw ex;
-                        }
+                     bool b = Enum.TryParse<EngineerExperience>(level.ToString(), out enLevel);
+                     if (!b)
+                            throw new Exception("I tell you to put between 0 to 2");
                         enLevel = (EngineerExperience)level;
                         Console.WriteLine("enter engineer's cost");
                         double cost = double.Parse(Console.ReadLine()!);
                         DO.Engineer upEngineer = new(uid, uname, uemail, enLevel, cost);
-                       
-                    }
+                    
             }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
-                break;
-            case 'e'://delete a product
-                Console.WriteLine("enter id of engineer to delete");
-                int idDelete = int.Parse(Console.ReadLine()!);
-                try
-                {
-                    s_dalEngineer.Delete(idDelete);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
-                break;
-            default:
-                break;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            break;
+        case 'e'://delete a product
+            Console.WriteLine("enter id of engineer to delete");
+            int idDelete = int.Parse(Console.ReadLine()!);
+            try
+            {
+                s_dalEngineer.Delete(idDelete);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            break;
+        default:
+            break;
         }
     }
     public static void InfoOfDependencies(char x)
