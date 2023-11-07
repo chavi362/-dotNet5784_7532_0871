@@ -92,13 +92,13 @@ public static class Initialization
 
         for (int dependentTaskId = 0; dependentTaskId < numOfTasks; dependentTaskId++)
         {
-            int numOfDependencies = s_rand.Next(3); // Randomly determine the number of dependencies for each task
-            for (int i = 0; i < numOfDependencies; i++)
+            int numOfDependencies = s_rand.Next(2,5); // Randomly determine the number of dependencies for each task
+            for (int i = dependentTaskId; i < numOfDependencies; i++)
             {
                 int dependenciesOnTaskId;
                 do
                 {
-                    dependenciesOnTaskId = s_rand.Next(numOfTasks);
+                    dependenciesOnTaskId = s_rand.Next(dependentTaskId+1 ,numOfTasks);
                 } while (dependentTaskId == dependenciesOnTaskId); // Ensure the dependency is not the same task as the dependent task
 
                 Dependency newDependency = new(0,dependentTaskId, dependenciesOnTaskId);

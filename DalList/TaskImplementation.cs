@@ -24,7 +24,7 @@ public class TaskImplementation : ITask
         }
         else
         {
-            if(CheckingDependency(toDelate))
+            if(!CheckingDependency(toDelate))
                 throw new Exception($"another task dependth on thid task with ID={id}");
             DeletingTaskDependency(toDelate);
             DataSource.Tasks.Remove(toDelate);
