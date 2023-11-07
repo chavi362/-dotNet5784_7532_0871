@@ -136,9 +136,6 @@ class Program
                 foreach (var item in arrReadAllEngineers)
                     Console.WriteLine(item);
                 break;
-        }
-
-
             case 'd'://update
             Console.WriteLine("enter id of engineer to update");
             int idUpdate = int.Parse(Console.ReadLine());//search of the id to update
@@ -163,7 +160,7 @@ class Program
                 }
                 Console.WriteLine("enter engineer's cost");
                 double cost=double.Parse(Console.ReadLine()!);
-                DO.Engineer myEngineer = new(id, name, email, enLevel, cost);
+                DO.Engineer upEngineer = new(id, name, email, enLevel, cost);
 
             }
             catch (Exception ex)
@@ -172,11 +169,11 @@ class Program
             }
             break;
         case 'e'://delete a product
-            Console.WriteLine("enter id of product to delete");
-            int idDelete = int.Parse(Console.ReadLine());
+            Console.WriteLine("enter id of engineer to delete");
+            int idDelete = int.Parse(Console.ReadLine()!);
             try
             {
-                dalProduct.delete(idDelete);
+                s_dalEngineer.Delete(idDelete);
             }
             catch (Exception ex)
             {
