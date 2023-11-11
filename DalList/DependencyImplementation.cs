@@ -9,13 +9,13 @@ public class DependencyImplementation : IDependency
 {
     public int Create(Dependency d)
     {
-       if((DataSource.Dependencies).Find(dep=>dep.DependentTask==dep.DependentTask && dep.DependensOnTask==dep.DependensOnTask)!=null)
+
+        if (DataSource.Dependencies.Any(dep => dep.DependentTask == d.DependentTask && dep.DependensOnTask == d.DependensOnTask))
                  throw new Exception($"Dependency  is already exists");
         if ((DataSource.Dependencies).Find(dep => dep.DependentTask == dep.DependensOnTask && dep.DependensOnTask == dep.DependentTask) != null)
             throw new Exception($"This doesn't realistic!");
         int id = DataSource.Config.NextDependencyId;
         Dependency copy = d with { Id = id };
-  
         DataSource.Dependencies.Add(copy);
         return id;
     }
@@ -52,6 +52,10 @@ public class DependencyImplementation : IDependency
         }
         else
         {
+            if (DataSource.Dependencies.Any(dep => dep.DependentTask == d.DependentTask && dep.DependensOnTask == d.DependensOnTask))
+                throw new Exception($"Dependency  is already exists");
+            if ((DataSource.Dependencies).Find(dep => dep.DependentTask == dep.DependensOnTask && dep.DependensOnTask == dep.DependentTask) != null)
+                throw new Exception($"This doesn't realistic!");
             DataSource.Dependencies.Remove(Read(d.Id)!);
             DataSource.Dependencies.Add(d);
         }

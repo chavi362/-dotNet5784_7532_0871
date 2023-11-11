@@ -63,14 +63,6 @@ class Program
                     string tName = Console.ReadLine()!;
                     Console.WriteLine("enter task's alias");
                     string tAlias = Console.ReadLine()!;
-                    //Console.WriteLine("enter created date");
-                    //Console.WriteLine("enter product's category(0-for cups,1-for cakes,2-for cookies)");
-                    //pUpdate._category = (ECategory)int.Parse(Console.ReadLine());
-                    //Console.WriteLine("enter product's instock");
-                    //pUpdate._inStock = int.Parse(Console.ReadLine());
-                    //Console.WriteLine("enter product's parve(0/1)");
-                    //pUpdate._parve = int.Parse(Console.ReadLine());
-                    //dalProduct.update(pUpdate);
                     DO.Task t = new(idUpdate, tName, tAlias);
                     s_dalTask?.Update(t);
 

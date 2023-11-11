@@ -9,6 +9,7 @@ public class TaskImplementation : ITask
 {
     public int Create(Task t)
     {
+
         int id = DataSource.Config.NextTaskId;
         Task copy = t with { Id = id };
         DataSource.Tasks.Add(copy);
