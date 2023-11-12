@@ -135,8 +135,6 @@ class Program
                 int idUpdate = int.Parse(Console.ReadLine()!);//search of the id to update
                 try
                 {
-                    //Console.WriteLine("enter engineer's id to update");
-                    //int uid = int.Parse(Console.ReadLine()!);
                     Console.WriteLine("enter engineer's name");
                     string uname = Console.ReadLine()!;
                     Console.WriteLine("enter engineer's email");
