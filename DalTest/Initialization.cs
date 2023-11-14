@@ -10,7 +10,7 @@ public static class Initialization
     private static IEngineer? s_dalEngineer;
     private static readonly Random s_rand = new();
     private static void createTasks()
-    {
+    {//tamples with description & alias
         (string description, string Alias)[] engineerTasks =
         {
             ("Design the project architecture", "design"),
@@ -26,13 +26,13 @@ public static class Initialization
             ("Maintain and support the project","support")
         };
         foreach (var taskData in engineerTasks)
-        {                                                                                                                                                                                                                                                                                                                                           
+        {
 
-            bool isMilestone = s_rand.Next(2) == 0;
-            DateTime startDate = DateTime.Now.AddDays(s_rand.Next(1, 3));
-            DateTime estimatedCompletionDate = startDate.AddDays(s_rand.Next(5, 15));
-            DateTime deadlineDate = startDate.AddDays(s_rand.Next(5, 10));
-            DateTime finalCompletionDate = startDate.AddDays(s_rand.Next(5, 35));
+            bool isMilestone = s_rand.Next(2) == 0;//lottery true or false
+            DateTime startDate = DateTime.Now.AddDays(s_rand.Next(1, 3));//lottery start
+            DateTime estimatedCompletionDate = startDate.AddDays(s_rand.Next(5, 15));//adding days to the start
+            DateTime deadlineDate = startDate.AddDays(s_rand.Next(5, 10)); //adding days to the start
+            DateTime finalCompletionDate = startDate.AddDays(s_rand.Next(5, 35)); //adding days to the start
 
             Task newTask = new Task(
                 0,
@@ -50,14 +50,14 @@ public static class Initialization
                 null
             );
 
-            s_dalTask!.Create(newTask);
+            s_dalTask!.Create(newTask);//creating task
         }
     }
     private static void createEngineers()
     {
 
         (string name, string email)[] engineerNamesEmails =
-        {
+        {//tamles for names&emails
         ("Dani Levi","DaniLevi@gmail.com"),
         ("Eli Amar","EliAmar@gmail.com"),
         ("Yair Cohen","YairCohen@gmail.com"),
@@ -75,14 +75,14 @@ public static class Initialization
             EngineerExperience level;
             int _id;
             do
-                _id = s_rand.Next(200000000, 400000000);
+                _id = s_rand.Next(200000000, 400000000);//lottery id
             while (s_dalEngineer!.Read(_id) != null);
-            Enum.TryParse<EngineerExperience>((s_rand.Next(0, 3)).ToString(), out level);
-            double cost = s_rand.Next(100000, 2000000);
+            Enum.TryParse<EngineerExperience>((s_rand.Next(0, 3)).ToString(), out level);//lottery engineer level
+            double cost = s_rand.Next(100000, 2000000);//lottery cost
 
             Engineer newEng = new(_id, _name.name, _name.email, level, cost);
 
-            s_dalEngineer!.Create(newEng);
+            s_dalEngineer!.Create(newEng);//creating engineer
         }
 
     }
@@ -106,7 +106,7 @@ public static class Initialization
                 {
                     s_dalDependency!.Create(newDependency);
                 }
-                catch 
+                catch
                 {
                 }
             }

@@ -7,68 +7,68 @@ using System.Collections.Generic;
 
 public class TaskImplementation : ITask
 {
-    public int Create(Task t)
+    public int Create(Task t)//add a task
     {
 
         int id = DataSource.Config.NextTaskId;
-        Task copy = t with { Id = id };
-        DataSource.Tasks.Add(copy);
+        Task copy = t with { Id = id };//puting the Running ID number
+        DataSource.Tasks.Add(copy);//add the task to the data
         return id;
     }
 
-    public void Delete(int id)
+    public void Delete(int id)//erase a task
     {
-        Task? toDelate = Read(id);
+        Task? toDelate = Read(id);//find the task with the id we got
         if (toDelate == null)
         {
             throw new Exception($"Task with ID={id} is not exist");
         }
         else
         {
-            if(!CheckingDependency(toDelate))
+            if (!CheckingDependency(toDelate))//if we can erase the task
                 throw new Exception($"another task dependth on thid task with ID={id}");
             DeletingTaskDependency(toDelate);
-            DataSource.Tasks.Remove(toDelate);
+            DataSource.Tasks.Remove(toDelate);//remove the task from the data
         }
-        
+
     }
 
-    public Task? Read(int id)
+    public Task? Read(int id)//find the task with the id we got
     {
         return DataSource.Tasks.Find(x => x.Id == id);
 
     }
 
-    public List<Task> ReadAll()
+    public List<Task> ReadAll()//read all the tasks
     {
         return new List<Task>(DataSource.Tasks);
     }
 
-    public void Update(Task t)
+    public void Update(Task t)//change somes in a task
     {
 
-        if (Read(t.Id) == null)
+        if (Read(t.Id) == null)//first find the task
         {
             throw new Exception($"Task with ID={t.Id} is not exist");
         }
         else
         {
-            DataSource.Tasks.Remove(t);
-            DataSource.Tasks.Add(t);
+            DataSource.Tasks.Remove(t);//erase it from the data
+            DataSource.Tasks.Add(t);//add the new one
         }
     }
-    public bool CheckingDependency(Task t)
+    public bool CheckingDependency(Task t)//looking if the task depend on another tasks
     {
-        if (DataSource.Dependencies.Find(x => x.DependensOnTask == t.Id) == null)
+        if (DataSource.Dependencies.Find(x => x.DependensOnTask == t.Id) == null)//finding dependency
             return true;
         return false;
     }
-    public void DeletingTaskDependency(Task t)
+    public void DeletingTaskDependency(Task t)//delete all the dependencies with this tassk
     {
         List<Dependency> d = DataSource.Dependencies.FindAll(x => x.DependentTask == t.Id);
         foreach (Dependency dependency in d)
         {
-           // Delete(dependency.Id);
+            // Delete(dependency.Id);
         }
     }
 }

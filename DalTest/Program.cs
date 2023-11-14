@@ -256,7 +256,7 @@ class Program
     }
     public static void Main(string[] args)
     {
-
+        //the Main Menu
         try
         {
 
@@ -266,6 +266,7 @@ class Program
         {
             Console.WriteLine("error in parameters");
         }
+        //Internal menu for every class and sending to funtion that treat this class
         Console.WriteLine("for tasks press 1");
         Console.WriteLine("for engeeners press 2");
         Console.WriteLine("for dependencies 3");
@@ -293,7 +294,7 @@ class Program
                     Console.WriteLine("for delete an engeener press e");
                     x = char.Parse(Console.ReadLine()!);
                     InfoOfEngineers(x);
-                    //doing this function 
+
                     break;
                 case 3:
                     Console.WriteLine("for add a dependency befor another press a");
@@ -304,7 +305,7 @@ class Program
                     x = char.Parse(Console.ReadLine()!);
                     InfoOfDependencies(x);
 
-                    //doing this function 
+
                     break;
                 default:
                     break;
