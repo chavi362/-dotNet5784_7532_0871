@@ -19,7 +19,7 @@ public class EngineerImplementation : IEngineer
         Engineer? toDelete = Read(id);
         if (toDelete != null)
         {
-            if (DataSource.Tasks.Find(x => x.EngineerId == id) != null)//checking if we can dekete it
+            if (DataSource.Tasks.Find(x => x.EngineerId == id) != null)//checking if we can delete it
                 throw new Exception($"Engineer with ID={id} has some tasks");
             else
                 DataSource.Engineers.Remove(toDelete);//remove from tha data base
