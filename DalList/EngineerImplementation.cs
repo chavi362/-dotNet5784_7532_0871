@@ -22,7 +22,7 @@ public class EngineerImplementation : IEngineer
             if (DataSource.Tasks.Find(x => x.EngineerId == id) != null)//checking if we can dekete it
                 throw new Exception($"Engineer with ID={id} has some tasks");
             else
-                DataSource.Engineers.Remove(toDelete);//remove from tha data
+                DataSource.Engineers.Remove(toDelete);//remove from tha data base
         }
         else
         {
