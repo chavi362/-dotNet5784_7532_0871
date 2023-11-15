@@ -4,7 +4,7 @@ using DO;
 namespace Dal;
 
 
-public class EngineerImplementation : IEngineer
+internal class EngineerImplementation : IEngineer
 {
     public int Create(Engineer engineer)//build a new engineer
     {
@@ -35,9 +35,20 @@ public class EngineerImplementation : IEngineer
         return DataSource.Engineers.Find(x => x.Id == id);
     }
 
-    public List<Engineer> ReadAll()//read all the engineer
+    //public List<Engineer> ReadAll()//read all the engineer
+    //{
+    //    return new List<Engineer>(DataSource.Engineers);
+    //}
+    public IEnumerable<Engineer> ReadAll(Func<Engineer, bool>? filter = null) //stage 2
     {
-        return new List<Engineer>(DataSource.Engineers);
+        if (filter != null)
+        {
+            return from item in DataSource.Engineers
+                   where filter(item)
+                   select item;
+        }
+        return from item in DataSource.Engineers
+               select item;
     }
 
     public void Update(Engineer engineer)//change some attributes in a emgineer

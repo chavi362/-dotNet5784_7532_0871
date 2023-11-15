@@ -5,9 +5,7 @@ using DalApi;
 //const int MIN_ID = 0;
 public static class Initialization
 {
-    private static ITask? s_dalTask;
-    private static IDependency? s_dalDependency;
-    private static IEngineer? s_dalEngineer;
+    private static IDal? s_dal; //stage 2
     private static readonly Random s_rand = new();
     private static void createTasks()
     {//tamples with description & alias
@@ -50,7 +48,7 @@ public static class Initialization
                 null
             );
 
-            s_dalTask!.Create(newTask);//creating task
+            s_dal!.Task.Create(newTask);//creating task
         }
     }
     private static void createEngineers()
@@ -76,19 +74,19 @@ public static class Initialization
             int _id;
             do
                 _id = s_rand.Next(200000000, 400000000);//lottery id
-            while (s_dalEngineer!.Read(_id) != null);
+            while (s_dal!.Engineer.Read(_id) != null);
             Enum.TryParse<EngineerExperience>((s_rand.Next(0, 3)).ToString(), out level);//lottery engineer level
             double cost = s_rand.Next(100000, 2000000);//lottery cost
 
             Engineer newEng = new(_id, _name.name, _name.email, level, cost);
 
-            s_dalEngineer!.Create(newEng);//creating engineer
+            s_dal!.Engineer.Create(newEng);//creating engineer
         }
 
     }
     private static void createDependencies()
     {
-        int numOfTasks = s_dalTask!.ReadAll().Count();
+        int numOfTasks = s_dal!.Task.ReadAll().Count();
 
         for (int dependentTaskId = 0; dependentTaskId < numOfTasks; dependentTaskId++)
         {
@@ -104,7 +102,7 @@ public static class Initialization
                 Dependency newDependency = new Dependency(0, dependentTaskId, dependenciesOnTaskId);
                 try
                 {
-                    s_dalDependency!.Create(newDependency);
+                    s_dal!.Dependency!.Create(newDependency);
                 }
                 catch
                 {
@@ -113,13 +111,13 @@ public static class Initialization
         }
     }
     public static void Do(
-                   ITask? dalTask, IDependency? dalDependency, IEngineer? dalEngineer)
+                  IDal dal)
     {
         // Assign the interface parameters to the respective access variables
-        s_dalTask = dalTask ?? throw new NullReferenceException("DAL for Task cannot be null!");
-        s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL for Dependency cannot be null!");
-        s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL for Engineer cannot be null!");
-
+        //s_dalTask = dalTask ?? throw new NullReferenceException("DAL for Task cannot be null!");
+        //s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL for Dependency cannot be null!");
+        //s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL for Engineer cannot be null!");
+        s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!"); //stage 2
         // Call the private methods to initialize the lists
         createTasks();
         createDependencies();

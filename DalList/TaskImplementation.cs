@@ -5,11 +5,10 @@ using DalApi;
 using DO;
 using System.Collections.Generic;
 
-public class TaskImplementation : ITask
+internal class TaskImplementation : ITask
 {
     public int Create(Task t)//add a task
     {
-
         int id = DataSource.Config.NextTaskId;
         Task copy = t with { Id = id };//puting the Running ID number
         DataSource.Tasks.Add(copy);//add the task to the data
@@ -39,11 +38,21 @@ public class TaskImplementation : ITask
 
     }
 
-    public List<Task> ReadAll()//read all the tasks
+    //public List<Task> ReadAll()//read all the tasks
+    //{
+    //    return new List<Task>(DataSource.Tasks);
+    //}
+    public IEnumerable<Task> ReadAll(Func<Task, bool>? filter = null) //stage 2
     {
-        return new List<Task>(DataSource.Tasks);
+        if (filter != null)
+        {
+            return from item in DataSource.Tasks
+                   where filter(item)
+                   select item;
+        }
+        return from item in DataSource.Tasks
+               select item;
     }
-
     public void Update(Task t)//change somes in a task
     {
 
@@ -65,10 +74,6 @@ public class TaskImplementation : ITask
     }
     public void DeletingTaskDependency(Task t)//delete all the dependencies with this tassk
     {
-        List<Dependency> d = DataSource.Dependencies.FindAll(x => x.DependentTask == t.Id);
-        foreach (Dependency dependency in d)
-        {
-            // Delete(dependency.Id);
-        }
+        DataSource.Dependencies.RemoveAll(x => x.DependentTask == t.Id);
     }
 }

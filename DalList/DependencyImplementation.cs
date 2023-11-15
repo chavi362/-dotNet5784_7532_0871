@@ -5,7 +5,7 @@ using Microsoft.VisualBasic;
 using System.Collections;
 using System.Collections.Generic;
 
-public class DependencyImplementation : IDependency
+internal class DependencyImplementation : IDependency
 {
     // Create a new dependency
     public int Create(Dependency d)
@@ -56,11 +56,22 @@ public class DependencyImplementation : IDependency
         return DataSource.Dependencies.Find(x => x.Id == id);
     }
 
-    // Read all dependencies
-    public List<Dependency> ReadAll()
+    //Read all dependencies
+    //public List<Dependency> ReadAll()
+    //{
+    //    // Create a new list containing all dependencies from the data source
+    //    //return new List<Dependency>(DataSource.Dependencies);
+    //}
+    public IEnumerable<Dependency> ReadAll(Func<Dependency, bool>? filter = null) //stage 2
     {
-        // Create a new list containing all dependencies from the data source
-        return new List<Dependency>(DataSource.Dependencies);
+        if (filter != null)
+        {
+            return from item in DataSource.Dependencies
+                   where filter(item)
+                   select item;
+        }
+        return from item in DataSource.Dependencies
+               select item;
     }
 
     // Update a dependency
