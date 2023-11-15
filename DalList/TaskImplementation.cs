@@ -4,6 +4,7 @@ namespace Dal;
 using DalApi;
 using DO;
 using System.Collections.Generic;
+using System.Linq;
 
 internal class TaskImplementation : ITask
 {
@@ -76,4 +77,9 @@ internal class TaskImplementation : ITask
     {
         DataSource.Dependencies.RemoveAll(x => x.DependentTask == t.Id);
     }
+
+    //public Task? Read(Func<Task, bool> filter)
+    //{
+    //    return (DataSource.Dependencies.Where(filter));
+    //}
 }
