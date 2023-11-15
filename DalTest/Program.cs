@@ -267,6 +267,7 @@ class Program
             Console.WriteLine("error in parameters");
         }
         //Internal menu for every class and sending to funtion that treat this class
+
         Console.WriteLine("for tasks press 1");
         Console.WriteLine("for engeeners press 2");
         Console.WriteLine("for dependencies 3");
@@ -278,30 +279,33 @@ class Program
             switch (select)
             {
                 case 1:
-                    Console.WriteLine("for add a task press a");
-                    Console.WriteLine("for read a task press b");
-                    Console.WriteLine("for read all tasks press c");
-                    Console.WriteLine("for update a task press d");
-                    Console.WriteLine("for delete a task press e");
+                    Console.WriteLine("for exit press a");
+                    Console.WriteLine("for add a task press b");
+                    Console.WriteLine("for read a task press c");
+                    Console.WriteLine("for read all tasks press d");
+                    Console.WriteLine("for update a task press e");
+                    Console.WriteLine("for delete a task press f");
                     x = char.Parse(Console.ReadLine()!);
                     InfoOfTask(x);//doing this function 
                     break;
                 case 2:
-                    Console.WriteLine("for add an engeener press a");
-                    Console.WriteLine("for read an engeener press b");
-                    Console.WriteLine("for read all engeeners press c");
-                    Console.WriteLine("for update an engeener press d");
-                    Console.WriteLine("for delete an engeener press e");
+                    Console.WriteLine("for exit press a");
+                    Console.WriteLine("for add an engeener press b");
+                    Console.WriteLine("for read an engeener press c");
+                    Console.WriteLine("for read all engeeners press d");
+                    Console.WriteLine("for update an engeener press e");
+                    Console.WriteLine("for delete an engeener press f");
                     x = char.Parse(Console.ReadLine()!);
                     InfoOfEngineers(x);
 
                     break;
                 case 3:
-                    Console.WriteLine("for add a dependency befor another press a");
-                    Console.WriteLine("for read dependency befor another press b");
-                    Console.WriteLine("for read all dependencies befor anothers press c");
-                    Console.WriteLine("for update an dependency befor another press d");
-                    Console.WriteLine("for delete an dependency befor another press e");
+                    Console.WriteLine("for exit press a");
+                    Console.WriteLine("for add a dependency befor another press b");
+                    Console.WriteLine("for read dependency befor another press c");
+                    Console.WriteLine("for read all dependencies befor anothers press d");
+                    Console.WriteLine("for update an dependency befor another press e");
+                    Console.WriteLine("for delete an dependency befor another press f");
                     x = char.Parse(Console.ReadLine()!);
                     InfoOfDependencies(x);
 
