@@ -19,7 +19,7 @@ internal class EngineerImplementation : IEngineer
         Engineer? toDelete = Read(id);
         if (toDelete != null)
         {
-            if (DataSource.Tasks.Find(x => x.EngineerId == id) != null)//checking if we can delete it
+            if (DataSource.Tasks.FirstOrDefault(x => x.EngineerId == id) != null)//checking if we can delete it
                 throw new Exception($"Engineer with ID={id} has some tasks");
             else
                 DataSource.Engineers.Remove(toDelete);//remove from tha data base
@@ -32,9 +32,12 @@ internal class EngineerImplementation : IEngineer
 
     public Engineer? Read(int id)//find the engineer with the id we got
     {
-        return DataSource.Engineers.Find(x => x.Id == id);
+        return DataSource.Engineers.FirstOrDefault(x => x.Id == id);
     }
-
+    public Engineer? Read(Func<Engineer, bool> filter)
+    {
+        return DataSource.Engineers.FirstOrDefault(item => filter(item));
+    }
     //public List<Engineer> ReadAll()//read all the engineer
     //{
     //    return new List<Engineer>(DataSource.Engineers);
@@ -50,6 +53,11 @@ internal class EngineerImplementation : IEngineer
         return from item in DataSource.Engineers
                select item;
     }
+
+    //public List<Engineer> ReadAll()
+    //{
+    //    throw new NotImplementedException();
+    //}
 
     public void Update(Engineer engineer)//change some attributes in a emgineer
     {

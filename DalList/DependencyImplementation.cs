@@ -15,7 +15,7 @@ internal class DependencyImplementation : IDependency
             throw new Exception($"Dependency is already exists");
 
         // Check if the dependency is realistic
-        if ((DataSource.Dependencies).Find(dep => dep.DependentTask == dep.DependensOnTask && dep.DependensOnTask == dep.DependentTask) != null)
+        if ((DataSource.Dependencies).FirstOrDefault(dep => dep.DependentTask == dep.DependensOnTask && dep.DependensOnTask == dep.DependentTask) != null)
             throw new Exception($"This doesn't realistic!");
 
         // Generate a new ID for the dependency
@@ -53,9 +53,12 @@ internal class DependencyImplementation : IDependency
     public Dependency? Read(int id)
     {
         // Find the dependency with the given ID and return it
-        return DataSource.Dependencies.Find(x => x.Id == id);
+        return DataSource.Dependencies.FirstOrDefault(x => x.Id == id);
     }
-
+    public Dependency? Read(Func<Dependency, bool> filter)
+    {
+        return DataSource.Dependencies.FirstOrDefault(item => filter(item));
+    }
     //Read all dependencies
     //public List<Dependency> ReadAll()
     //{
@@ -89,7 +92,7 @@ internal class DependencyImplementation : IDependency
                 throw new Exception("Dependency already exists");
 
             // Check if the updated dependency is realistic
-            if ((DataSource.Dependencies).Find(dep => dep.DependentTask == dep.DependensOnTask && dep.DependensOnTask == dep.DependentTask) != null)
+            if ((DataSource.Dependencies).FirstOrDefault(dep => dep.DependentTask == dep.DependensOnTask && dep.DependensOnTask == dep.DependentTask) != null)
                 throw new Exception(" This dependency is not realistic");
 
             // Remove the old dependency from the data source

@@ -35,7 +35,7 @@ internal class TaskImplementation : ITask
 
     public Task? Read(int id)//find the task with the id we got
     {
-        return DataSource.Tasks.Find(x => x.Id == id);
+        return DataSource.Tasks.FirstOrDefault(x => x.Id == id);
 
     }
 
@@ -69,17 +69,25 @@ internal class TaskImplementation : ITask
     }
     public bool CheckingDependency(Task t)//looking if the task depend on another tasks
     {
-        if (DataSource.Dependencies.Find(x => x.DependensOnTask == t.Id) == null)//finding dependency
+        if (DataSource.Dependencies.FirstOrDefault(x => x.DependensOnTask == t.Id) == null)//finding dependency
             return true;
         return false;
     }
     public void DeletingTaskDependency(Task t)//delete all the dependencies with this tassk
     {
         DataSource.Dependencies.RemoveAll(x => x.DependentTask == t.Id);
+        //  //    DataSource.Dependencies = DataSource.Dependencies
+        //  //.Where(x => x.DependentTask != t.Id)
+        //  //.Select(x => new Task { /* Copy relevant properties here */ })
+        //  //.ToList(); 
+        //  var list = DataSource.Dependencies
+        //  .Where(x => x.DependentTask != t.Id)
+        //  .ToList().Fo
+        //// DataSource.Dependencies = list;
     }
 
-    //public Task? Read(Func<Task, bool> filter)
-    //{
-    //    return (DataSource.Dependencies.Where(filter));
-    //}
+    public Task? Read(Func<Task, bool> filter)
+    {
+        return DataSource.Tasks.FirstOrDefault(item=>filter(item));
+    }
 }
