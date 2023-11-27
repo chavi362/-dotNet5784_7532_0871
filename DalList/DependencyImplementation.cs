@@ -12,11 +12,11 @@ internal class DependencyImplementation : IDependency
     {
         // Check if the dependency already exists
         if (DataSource.Dependencies.Any(dep => dep.DependentTask == d.DependentTask && dep.DependensOnTask == d.DependensOnTask))
-            throw new Exception($"Dependency is already exists");
+            throw new DalAlreadyExistsException($"Dependency is already exists");
 
         // Check if the dependency is realistic
         if ((DataSource.Dependencies).FirstOrDefault(dep => dep.DependentTask == dep.DependensOnTask && dep.DependensOnTask == dep.DependentTask) != null)
-            throw new Exception($"This doesn't realistic!");
+            throw new LogicException($"This doesn't realistic!");
 
         // Generate a new ID for the dependency
         int id = DataSource.Config.NextDependencyId;
@@ -40,7 +40,7 @@ internal class DependencyImplementation : IDependency
         // If the dependency does not exist, throw an exception
         if (toDelete == null)
         {
-            throw new Exception( "Dependency with ID ={ id} does not exist");
+            throw new DalDeletionImpossible( "Dependency with ID ={ id} does not exist");
         }
         else
         {
@@ -83,17 +83,17 @@ internal class DependencyImplementation : IDependency
         // Check if the dependency exists
         if (Read(d.Id) == null)
         {
-            throw new Exception(" Dependency with ID ={ d.Id}does not exist");
+            throw new DalDoesNotExistException(" Dependency with ID ={ d.Id}does not exist");
         }
         else
         {
             // Check if the updated dependency already exists
             if (DataSource.Dependencies.Any(dep => dep.DependentTask == d.DependentTask && dep.DependensOnTask == d.DependensOnTask))
-                throw new Exception("Dependency already exists");
+                throw new DalAlreadyExistsException("Dependency already exists");
 
             // Check if the updated dependency is realistic
             if ((DataSource.Dependencies).FirstOrDefault(dep => dep.DependentTask == dep.DependensOnTask && dep.DependensOnTask == dep.DependentTask) != null)
-                throw new Exception(" This dependency is not realistic");
+                throw new LogicException(" This dependency is not realistic");
 
             // Remove the old dependency from the data source
             DataSource.Dependencies.Remove(Read(d.Id)!);

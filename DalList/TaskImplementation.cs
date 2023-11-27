@@ -21,12 +21,12 @@ internal class TaskImplementation : ITask
         Task? toDelate = Read(id);//find the task with the id we got
         if (toDelate == null)
         {
-            throw new Exception($"Task with ID={id} is not exist");
+            throw new DalDoesNotExistException($"Task with ID={id} is not exist");
         }
         else
         {
             if (!CheckingDependency(toDelate))//if we can erase the task
-                throw new Exception($"another task dependth on thid task with ID={id}");
+                throw new DalDeletionImpossible($"another task dependth on thid task with ID={id}");
             DeletingTaskDependency(toDelate);
             DataSource.Tasks.Remove(toDelate);//remove the task from the data
         }
@@ -59,7 +59,7 @@ internal class TaskImplementation : ITask
 
         if (Read(t.Id) == null)//first find the task
         {
-            throw new Exception($"Task with ID={t.Id} is not exist");
+            throw new DalDoesNotExistException($"Task with ID={t.Id} is not exist");
         }
         else
         {

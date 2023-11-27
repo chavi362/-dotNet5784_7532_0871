@@ -9,7 +9,7 @@ internal class EngineerImplementation : IEngineer
     public int Create(Engineer engineer)//build a new engineer
     {
         if (Read(engineer.Id) is not null)//checking if the engineer alredy exist
-            throw new Exception($"Engineer with ID={engineer.Id} already exists");
+            throw new DalAlreadyExistsException($"Engineer with ID={engineer.Id} already exists");
         DataSource.Engineers.Add(engineer);//adding to the data list
         return engineer.Id;
     }
@@ -20,13 +20,13 @@ internal class EngineerImplementation : IEngineer
         if (toDelete != null)
         {
             if (DataSource.Tasks.FirstOrDefault(x => x.EngineerId == id) != null)//checking if we can delete it
-                throw new Exception($"Engineer with ID={id} has some tasks");
+                throw new DalDeletionImpossible($"Engineer with ID={id} has some tasks");
             else
                 DataSource.Engineers.Remove(toDelete);//remove from tha data base
         }
         else
         {
-            throw new Exception($"Engineer with ID={id} doern't exists");
+            throw new DalDoesNotExistException($"Engineer with ID={id} doern't exists");
         }
     }
 
@@ -54,17 +54,14 @@ internal class EngineerImplementation : IEngineer
                select item;
     }
 
-    //public List<Engineer> ReadAll()
-    //{
-    //    throw new NotImplementedException();
-    //}
+
 
     public void Update(Engineer engineer)//change some attributes in a emgineer
     {
         Engineer? prev = Read(engineer.Id);//checking if there is this engineer
         if (prev is null)
         {
-            throw new Exception($"Engineer with ID={engineer.Id} doern't exists");
+            throw new DalDoesNotExistException($"Engineer with ID={engineer.Id} doern't exists");
         }
         DataSource.Engineers.Remove(prev);//remove from the data
         DataSource.Engineers.Add(engineer);//add the new one
