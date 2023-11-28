@@ -5,6 +5,7 @@ using DalApi;
 using DO;
 using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 
 internal class TaskImplementation : ITask
 {
@@ -15,7 +16,9 @@ internal class TaskImplementation : ITask
 
     void ICrud<Task>.Delete(int id)
     {
-        throw new NotImplementedException();
+        XElement? Tasks = XDocument.Load("../tasks.xml").Root;
+        Tasks?.Elements().ToList().Find(task => Convert.ToInt32(task?.Element("Id")?.Value) == id)?.Remove();
+        Tasks?.Save("../Product.xml");
     }
 
     Task? ICrud<Task>.Read(int id)
