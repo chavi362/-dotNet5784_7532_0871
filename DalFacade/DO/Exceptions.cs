@@ -25,8 +25,8 @@ public class DalDeletionImpossible : Exception
     public DalDeletionImpossible(string? message) : base(message) { }
 }
 [Serializable]
-public class DalDeletionImpossible : Exception
+public class DalXMLFileLoadCreateException : Exception
 {
-    public DalDeletionImpossible(string? message) : base(message) { }
+    public DalXMLFileLoadCreateException(string? message) : base(message) { }
 }
 
