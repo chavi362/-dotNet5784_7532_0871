@@ -6,7 +6,7 @@ public record Task
 (
     int Id,
     string Description,
-    string Alias,
+    string? Alias =null,
     bool Milestone=false,
     DateTime? CreatedAt=null,
     DateTime? Start = null,
@@ -18,4 +18,8 @@ public record Task
     int EngineerId=0,
     EngineerExperience? ComplexityLevel=null
     
-    );
+    )
+{
+    // Parameterless constructor required for XmlSerializer
+    public Task() : this(0, "") { }
+}
