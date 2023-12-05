@@ -12,4 +12,5 @@ namespace DalApi
         ITask Task { get; }
         IDependency Dependency { get; }
     }
+
 }

@@ -8,6 +8,7 @@ public record Task
     string Description,
     string? Alias =null,
     bool Milestone=false,
+    //TimeSpan? RequiredEffortTime = null,
     DateTime? CreatedAt=null,
     DateTime? Start = null,
     DateTime? Forecast = null,
