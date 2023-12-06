@@ -1,79 +1,215 @@
 ﻿
-
 namespace Dal;
 using DalApi;
 using DO;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Xml.Linq;
-using System.Xml.Serialization;
-
 
 internal class TaskImplementation : ITask
 {
-    public Task? Read(Func<Task, bool> filter)
+
+    public int Create(DO.Task t)
     {
-        XElement? tasksArray = XMLTools.LoadListFromXMLElement("tasks");
         int id = Config.NextTaskId;
-        Task copy = t with { Id = id };//puting the Running ID number
-        DataSource.Tasks.Add(copy);//add the task to the data
+        const string tasksFile = @"..\xml\tasks.xml";
+        XElement? tasksElements = XDocument.Load(tasksFile).Root;
+
+        XElement newTaskElement = new XElement("Task",
+            new XElement("Id", id),
+            new XElement("Description", t.Description),
+            new XElement("Alias", t.Alias),
+            new XElement("Milestone", t.Milestone),
+            new XElement("RequiredEffortTime", t.RequiredEffortTime),
+            new XElement("CreatedAt", t.CreatedAt),
+            new XElement("Start", t.Start),
+            new XElement("Forecast", t.Forecast),
+            new XElement("DedLine", t.DedLine),
+            new XElement("Complete", t.Complete),
+            new XElement("Deliverables", t.Deliverables),
+            new XElement("Remarks", t.Remarks),
+            new XElement("EngineerId", t.EngineerId),
+            new XElement("ComplexityLevel", t.ComplexityLevel));
         return id;
     }
-
-    public int Create(Task t)
+    public void Delete(int id)
     {
-        XElement? tasksArray = XMLTools.LoadListFromXMLElement("tasks");
-        int id = Config.NextTaskId;
-        Task copy = t with { Id = id };//puting the Running ID number
-        tasksArray.Add(copy);//add the task to the data
-        return id;
-        int id = Config.NextTaskId;
-       // XElement? Config = XDocument.Load("../config.xml").Root;
-        XElement? idOrder = Config?.Element("OrderId");
-        int id = Convert.ToInt32(idOrder?.Value);
-        value.Id = id++;
-        idOrder.Value = id.ToString();
-        Config?.Save("../config.xml");
-        Task copy = t with { Id = id };//puting the Running ID number
-        DataSource.Tasks.Add(copy);//add the task to the data
-        return id;
-        //if (value.Id == 0)//status of add
-        //{
-        //    XElement? Config = XDocument.Load("../config.xml").Root;
-        //    XElement? idOrder = Config?.Element("OrderId");
-        //    int id = Convert.ToInt32(idOrder?.Value);
-        //    value.Id = id++;
-        //    idOrder.Value = id.ToString();
-        //    Config?.Save("../config.xml");
-        //}
-        //List<DO.Order> lst = GetAll().ToList();
-        //lst.Add(value);
-        //StreamWriter write = new StreamWriter("../Order.xml");
-        //XmlSerializer ser = new XmlSerializer(typeof(List<DO.Order>));
-        //ser.Serialize(write, lst);
-        //write.Close();
-        //return value.Id;
+        XElement? tasks = XDocument.Load(@"..\xml\tasks.xml").Root;
+        XElement? taskToRemove = tasks?.Elements()
+            .FirstOrDefault(task => Convert.ToInt32(task?.Element("Id")?.Value) == id);
+
+        if (taskToRemove != null)
+        {
+            if (!CheckingDependency(taskToRemove))
+                throw new DalDeletionImpossible($"Another task depends on this task with ID={id}");
+
+            DeletingTaskDependency(taskToRemove);
+            taskToRemove.Remove();
+            tasks?.Save(@"..\xml\tasks.xml");
+        }
+        else
+        {
+            throw new DalDoesNotExistException($"Task with ID={id} does not exist");
+        }
     }
 
-    void ICrud<Task>.Delete(int id)
+    public bool CheckingDependency(XElement? t)
     {
-        XElement? Tasks = XDocument.Load("../tasks.xml").Root;
-        Tasks?.Elements().ToList().Find(task => Convert.ToInt32(task?.Element("Id")?.Value) == id)?.Remove();
-        Tasks?.Save("../Product.xml");
+        XElement? tasks = XDocument.Load(@"..\xml\tasks.xml").Root;
+        if (tasks?.Elements()
+                .FirstOrDefault(x => Convert.ToInt32(x?.Element("DependsOnTask")?.Value) == Convert.ToInt32(t?.Element("Id")?.Value)) != null)
+        {
+            return false; // Another task depends on this task
+        }
+
+        return true; // No dependencies found
     }
 
-    Task? ICrud<Task>.Read(int id)
+    public void DeletingTaskDependency(XElement t)
     {
-        throw new NotImplementedException();
+        XElement? tasks = XDocument.Load(@"..\xml\tasks.xml").Root;
+        int taskId = Convert.ToInt32(t.Element("Id")?.Value);
+
+        // Remove all dependencies where this task is the DependentTask
+        tasks?.Elements().Where(x => Convert.ToInt32(x?.Element("DependsOnTask")?.Value) == taskId).Remove();
+
+        tasks?.Save(@"..\xml\tasks.xml");
     }
 
-    IEnumerable<Task?> ICrud<Task>.ReadAll(Func<Task, bool>? filter)
+    public DO.Task? Read(int id)
+{
+    XElement? tasks = XDocument.Load(@"..\xml\tasks.xml").Root;
+
+    if (tasks != null)
     {
-        throw new NotImplementedException();
+        XElement? taskElement = tasks.Elements("Task")
+            .FirstOrDefault(task => Convert.ToInt32(task.Element("Id")?.Value) == id);
+
+        if (taskElement != null)
+        {
+            return new DO.Task
+            {
+                Id = Convert.ToInt32(taskElement.Element("Id")?.Value),
+                Description = taskElement.Element("Description")!.Value,
+                Alias = taskElement.Element("Alias")?.Value,
+                Milestone = Convert.ToBoolean(taskElement.Element("Milestone")?.Value),
+                RequiredEffortTime = taskElement.Element("RequiredEffortTime")?.Value != null
+                    ? (TimeSpan?)TimeSpan.Parse(taskElement.Element("RequiredEffortTime")!.Value)
+                    : null,
+                CreatedAt = taskElement.Element("CreatedAt")?.Value != null
+                    ? (DateTime?)DateTime.Parse(taskElement.Element("CreatedAt")!.Value)
+                    : null,
+                Start = taskElement.Element("Start")?.Value != null
+                    ? (DateTime?)DateTime.Parse(taskElement.Element("Start")!.Value)
+                    : null,
+                Forecast = taskElement.Element("Forecast")?.Value != null
+                    ? (DateTime?)DateTime.Parse(taskElement.Element("Forecast")!.Value)
+                    : null,
+                DedLine = taskElement.Element("DedLine")?.Value != null
+                    ? (DateTime?)DateTime.Parse(taskElement.Element("DedLine")!.Value)
+                    : null,
+                Complete = taskElement.Element("Complete")?.Value != null
+                    ? (DateTime?)DateTime.Parse(taskElement.Element("Complete")!.Value)
+                    : null,
+                Deliverables = taskElement.Element("Deliverables")?.Value,
+                Remarks = taskElement.Element("Remarks")?.Value,
+                EngineerId = Convert.ToInt32(taskElement.Element("EngineerId")?.Value),
+                ComplexityLevel = taskElement.Element("ComplexityLevel")?.Value != null
+                    ? (EngineerExperience?)Enum.Parse(typeof(EngineerExperience), taskElement.Element("ComplexityLevel")!.Value)
+                    : null
+            };
+        }
     }
 
-    void ICrud<Task>.Update(Task item)
+    return null; // Task with the given ID not found
+}
+
+
+
+    public IEnumerable<DO.Task?> ReadAll(Func<DO.Task, bool>? filter = null)
     {
-        throw new NotImplementedException();
+        XElement? tasks = XDocument.Load(@"..\xml\tasks.xml").Root;
+
+        if (tasks != null)
+        {
+            IEnumerable<DO.Task> allTasks = tasks.Elements("Task").Select(taskElement => new DO.Task
+            {
+                Id = Convert.ToInt32(taskElement.Element("Id")?.Value),
+                Description = taskElement.Element("Description")!.Value,
+                Alias = taskElement.Element("Alias")?.Value,
+                Milestone = Convert.ToBoolean(taskElement.Element("Milestone")?.Value),
+                RequiredEffortTime = taskElement.Element("RequiredEffortTime")?.Value != null
+                    ? (TimeSpan?)TimeSpan.Parse(taskElement.Element("RequiredEffortTime")!.Value)
+                    : null,
+                CreatedAt = taskElement.Element("CreatedAt")?.Value != null
+                    ? (DateTime?)DateTime.Parse(taskElement.Element("CreatedAt")!.Value)
+                    : null,
+                Start = taskElement.Element("Start")?.Value != null
+                    ? (DateTime?)DateTime.Parse(taskElement.Element("Start")!.Value)
+                    : null,
+                Forecast = taskElement.Element("Forecast")?.Value != null
+                    ? (DateTime?)DateTime.Parse(taskElement.Element("Forecast")!.Value)
+                    : null,
+                DedLine = taskElement.Element("DedLine")?.Value != null
+                    ? (DateTime?)DateTime.Parse(taskElement.Element("DedLine")!.Value)
+                    : null,
+                Complete = taskElement.Element("Complete")?.Value != null
+                    ? (DateTime?)DateTime.Parse(taskElement.Element("Complete")!.Value)
+                    : null,
+                Deliverables = taskElement.Element("Deliverables")?.Value,
+                Remarks = taskElement.Element("Remarks")?.Value,
+                EngineerId = Convert.ToInt32(taskElement.Element("EngineerId")?.Value),
+                ComplexityLevel = taskElement.Element("ComplexityLevel")?.Value != null
+                    ? (EngineerExperience?)Enum.Parse(typeof(EngineerExperience), taskElement.Element("ComplexityLevel")!.Value)
+                    : null
+            });
+
+            if (filter != null)
+            {
+                return allTasks.Where(filter);
+            }
+
+            return allTasks;
+        }
+
+        return Enumerable.Empty<DO.Task>();
+    }
+
+
+    public void Update(DO.Task t)
+    {
+        const string tasksFile = @"..\xml\tasks.xml";
+        XElement? tasksElements = XDocument.Load(tasksFile).Root;
+        XElement? taskToRemove = tasksElements?.Elements()
+           .FirstOrDefault(task => Convert.ToInt32(task?.Element("Id")?.Value) == Convert.ToInt32(task?.Element("Id")?.Value));
+
+        if (taskToRemove != null)
+        {
+            Delete(Convert.ToInt32(t.Id));
+            XElement newTaskElement = new XElement("Task",
+            new XElement("Id", t.Id),
+            new XElement("Description", t.Description),
+            new XElement("Alias", t.Alias),
+            new XElement("Milestone", t.Milestone),
+            new XElement("RequiredEffortTime", t.RequiredEffortTime),
+            new XElement("CreatedAt", t.CreatedAt),
+            new XElement("Start", t.Start),
+            new XElement("Forecast", t.Forecast),
+            new XElement("DedLine", t.DedLine),
+            new XElement("Complete", t.Complete),
+            new XElement("Deliverables", t.Deliverables),
+            new XElement("Remarks", t.Remarks),
+            new XElement("EngineerId", t.EngineerId),
+            new XElement("ComplexityLevel", t.ComplexityLevel));
+        }
+        else
+            throw new DalDoesNotExistException($"Task with ID={t.Id} does not exist");
+    }
+
+    public DO.Task? Read(Func<DO.Task, bool> filter)
+    {
+        List<DO.Task> tasksList=ReadAll().ToList()!;
+        return tasksList.FirstOrDefault(item => filter(item));
     }
 }

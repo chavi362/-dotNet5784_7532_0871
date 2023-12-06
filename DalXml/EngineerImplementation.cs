@@ -10,17 +10,17 @@ internal class EngineerImplementation : IEngineer
 {
     public int Create(Engineer item)
     {
-         List<Engineer> engineersList = XMLTools.LoadListFromXMLSerializer<Engineer>("engineers");
-        try
+        List<Engineer> engineersList = XMLTools.LoadListFromXMLSerializer<Engineer>("engineers");
+
+        // Check if Engineer with the same ID already exists
+        if (Read(item.Id) == null)
         {
-            ((ICrud<Engineer>)this).Read(item.Id);
-        }
-       catch (DalDoesNotExistException ex) {
             engineersList.Add(item);
             XMLTools.SaveListToXMLSerializer<Engineer>(engineersList, "engineers");
             return item.Id;
         }
-         throw new DalAlreadyExistsException($"An object of type Engineer with ID {item.Id} already exists");
+
+        throw new DalAlreadyExistsException($"An object of type Engineer with ID {item.Id} already exists");
     }
 
     public void Delete(int id)
@@ -46,7 +46,7 @@ internal class EngineerImplementation : IEngineer
     public Engineer? Read(int id)
     {
         List<Engineer> engineersList = XMLTools.LoadListFromXMLSerializer<Engineer>("engineers");
-        return engineersList.FirstOrDefault(x => x.Id == id);
+        return engineersList.FirstOrDefault(engineer => engineer.Id == id);
     }
 
     public Engineer? Read(Func<Engineer, bool> filter)
