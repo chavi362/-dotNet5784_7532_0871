@@ -15,7 +15,6 @@ internal class TaskImplementation : ITask
         int id = Config.NextTaskId;
         const string tasksFile = @"..\xml\tasks.xml";
         XElement? tasksElements = XDocument.Load(tasksFile).Root;
-
         XElement newTaskElement = new XElement("Task",
             new XElement("Id", id),
             new XElement("Description", t.Description),
@@ -31,6 +30,8 @@ internal class TaskImplementation : ITask
             new XElement("Remarks", t.Remarks),
             new XElement("EngineerId", t.EngineerId),
             new XElement("ComplexityLevel", t.ComplexityLevel));
+        tasksElements?.Add(newTaskElement);
+        tasksElements?.Save(@"..\xml\tasks.xml");
         return id;
     }
     public void Delete(int id)
@@ -73,57 +74,56 @@ internal class TaskImplementation : ITask
 
         // Remove all dependencies where this task is the DependentTask
         tasks?.Elements().Where(x => Convert.ToInt32(x?.Element("DependsOnTask")?.Value) == taskId).Remove();
-
         tasks?.Save(@"..\xml\tasks.xml");
     }
 
     public DO.Task? Read(int id)
-{
-    XElement? tasks = XDocument.Load(@"..\xml\tasks.xml").Root;
-
-    if (tasks != null)
     {
-        XElement? taskElement = tasks.Elements("Task")
-            .FirstOrDefault(task => Convert.ToInt32(task.Element("Id")?.Value) == id);
+        XElement? tasks = XDocument.Load(@"..\xml\tasks.xml").Root;
 
-        if (taskElement != null)
+        if (tasks != null)
         {
-            return new DO.Task
-            {
-                Id = Convert.ToInt32(taskElement.Element("Id")?.Value),
-                Description = taskElement.Element("Description")!.Value,
-                Alias = taskElement.Element("Alias")?.Value,
-                Milestone = Convert.ToBoolean(taskElement.Element("Milestone")?.Value),
-                RequiredEffortTime = taskElement.Element("RequiredEffortTime")?.Value != null
-                    ? (TimeSpan?)TimeSpan.Parse(taskElement.Element("RequiredEffortTime")!.Value)
-                    : null,
-                CreatedAt = taskElement.Element("CreatedAt")?.Value != null
-                    ? (DateTime?)DateTime.Parse(taskElement.Element("CreatedAt")!.Value)
-                    : null,
-                Start = taskElement.Element("Start")?.Value != null
-                    ? (DateTime?)DateTime.Parse(taskElement.Element("Start")!.Value)
-                    : null,
-                Forecast = taskElement.Element("Forecast")?.Value != null
-                    ? (DateTime?)DateTime.Parse(taskElement.Element("Forecast")!.Value)
-                    : null,
-                DedLine = taskElement.Element("DedLine")?.Value != null
-                    ? (DateTime?)DateTime.Parse(taskElement.Element("DedLine")!.Value)
-                    : null,
-                Complete = taskElement.Element("Complete")?.Value != null
-                    ? (DateTime?)DateTime.Parse(taskElement.Element("Complete")!.Value)
-                    : null,
-                Deliverables = taskElement.Element("Deliverables")?.Value,
-                Remarks = taskElement.Element("Remarks")?.Value,
-                EngineerId = Convert.ToInt32(taskElement.Element("EngineerId")?.Value),
-                ComplexityLevel = taskElement.Element("ComplexityLevel")?.Value != null
-                    ? (EngineerExperience?)Enum.Parse(typeof(EngineerExperience), taskElement.Element("ComplexityLevel")!.Value)
-                    : null
-            };
-        }
-    }
+            XElement? taskElement = tasks.Elements("Task")
+                .FirstOrDefault(task => Convert.ToInt32(task.Element("Id")?.Value) == id);
 
-    return null; // Task with the given ID not found
-}
+            if (taskElement != null)
+            {
+                return new DO.Task
+                {
+                    Id = Convert.ToInt32(taskElement.Element("Id")?.Value),
+                    Description = taskElement.Element("Description")!.Value,
+                    Alias = taskElement.Element("Alias")?.Value,
+                    Milestone = Convert.ToBoolean(taskElement.Element("Milestone")?.Value),
+                    RequiredEffortTime = taskElement.Element("RequiredEffortTime")?.Value != null
+                        ? (TimeSpan?)TimeSpan.Parse(taskElement.Element("RequiredEffortTime")!.Value)
+                        : null,
+                    CreatedAt = taskElement.Element("CreatedAt")?.Value != null
+                        ? (DateTime?)DateTime.Parse(taskElement.Element("CreatedAt")!.Value)
+                        : null,
+                    Start = taskElement.Element("Start")?.Value != null
+                        ? (DateTime?)DateTime.Parse(taskElement.Element("Start")!.Value)
+                        : null,
+                    Forecast = taskElement.Element("Forecast")?.Value != null
+                        ? (DateTime?)DateTime.Parse(taskElement.Element("Forecast")!.Value)
+                        : null,
+                    DedLine = taskElement.Element("DedLine")?.Value != null
+                        ? (DateTime?)DateTime.Parse(taskElement.Element("DedLine")!.Value)
+                        : null,
+                    Complete = taskElement.Element("Complete")?.Value != null
+                        ? (DateTime?)DateTime.Parse(taskElement.Element("Complete")!.Value)
+                        : null,
+                    Deliverables = taskElement.Element("Deliverables")?.Value,
+                    Remarks = taskElement.Element("Remarks")?.Value,
+                    EngineerId = Convert.ToInt32(taskElement.Element("EngineerId")?.Value),
+                    ComplexityLevel = taskElement.Element("ComplexityLevel")?.Value != null
+                        ? (EngineerExperience?)Enum.Parse(typeof(EngineerExperience), taskElement.Element("ComplexityLevel")!.Value)
+                        : null
+                };
+            }
+        }
+
+        return null; //Task with the given ID not found
+    }
 
 
 
@@ -202,6 +202,9 @@ internal class TaskImplementation : ITask
             new XElement("Remarks", t.Remarks),
             new XElement("EngineerId", t.EngineerId),
             new XElement("ComplexityLevel", t.ComplexityLevel));
+            // Add the new task element back to the XML file
+            tasksElements?.Add(newTaskElement);
+            tasksElements?.Save(tasksFile);
         }
         else
             throw new DalDoesNotExistException($"Task with ID={t.Id} does not exist");
@@ -209,7 +212,7 @@ internal class TaskImplementation : ITask
 
     public DO.Task? Read(Func<DO.Task, bool> filter)
     {
-        List<DO.Task> tasksList=ReadAll().ToList()!;
+        List<DO.Task> tasksList = ReadAll().ToList()!;
         return tasksList.FirstOrDefault(item => filter(item));
     }
 }
