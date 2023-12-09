@@ -12,7 +12,6 @@ internal class DependencyImplementation : IDependency
     public int Create(Dependency d)
     {
         List<Dependency> dependenciesList = XMLTools.LoadListFromXMLSerializer<Dependency>("dependencies");
-
         // Check if the dependency already exists
         if (dependenciesList.Any(dep => dep.DependentTask == d.DependentTask && dep.DependensOnTask == d.DependensOnTask))
             throw new DalAlreadyExistsException($"Dependency already exists");

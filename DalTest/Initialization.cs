@@ -111,19 +111,12 @@ public static class Initialization
             }
         }
     }
-    public static void Do(
-                  IDal dal)
+    public static void Do(IDal dal)
     {
-        // Assign the interface parameters to the respective access variables
-        //s_dalTask = dalTask ?? throw new NullReferenceException("DAL for Task cannot be null!");
-        //s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL for Dependency cannot be null!");
-        //s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL for Engineer cannot be null!");
-        s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!"); //stage 2
+        s_dal = dal ?? throw new NullReferenceException("DAL object cannot be null!"); // Stage 2
         // Call the private methods to initialize the lists
         createTasks();
-        createDependencies();
         createEngineers();
+        createDependencies();
     }
-
-
 }
