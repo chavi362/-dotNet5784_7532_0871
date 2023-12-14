@@ -266,9 +266,9 @@ namespace DalTest
 
                     Initialization.Do(s_dal);
                 }
-                catch
+                catch(Exception ex)
                 {
-                    Console.WriteLine("error in parameters");
+                    Console.WriteLine("error in parameters"+ex);
                 }
             //Internal menu for every class and sending to funtion that treat this class
 

@@ -22,5 +22,5 @@ public record Task
     )
 {
     // Parameterless constructor required for XmlSerializer
-    public Task() : this(0, "") { }
+    public Task() : this(0, "", "", false, TimeSpan.Zero) { }
 }

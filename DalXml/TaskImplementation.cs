@@ -4,6 +4,7 @@ using DalApi;
 using DO;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -129,8 +130,8 @@ internal class TaskImplementation : ITask
 
     public IEnumerable<DO.Task?> ReadAll(Func<DO.Task, bool>? filter = null)
     {
-        XElement? tasks = XDocument.Load(@"..\xml\tasks.xml").Root;
-
+        XElement? tasks = XMLTools.LoadListFromXMLElement("tasks");
+       
         if (tasks != null)
         {
             IEnumerable<DO.Task> allTasks = tasks.Elements("Task").Select(taskElement => new DO.Task
@@ -139,9 +140,10 @@ internal class TaskImplementation : ITask
                 Description = taskElement.Element("Description")!.Value,
                 Alias = taskElement.Element("Alias")?.Value,
                 Milestone = Convert.ToBoolean(taskElement.Element("Milestone")?.Value),
-                RequiredEffortTime = taskElement.Element("RequiredEffortTime")?.Value != null
-                    ? (TimeSpan?)TimeSpan.Parse(taskElement.Element("RequiredEffortTime")!.Value)
-                    : null,
+                RequiredEffortTime = null,
+                //taskElement.Element("RequiredEffortTime")?.Value != null
+                //? (TimeSpan?)TimeSpan.Parse(taskElement.Element("RequiredEffortTime")!.Value)
+                //:
                 CreatedAt = taskElement.Element("CreatedAt")?.Value != null
                     ? (DateTime?)DateTime.Parse(taskElement.Element("CreatedAt")!.Value)
                     : null,
@@ -164,7 +166,7 @@ internal class TaskImplementation : ITask
                     ? (EngineerExperience?)Enum.Parse(typeof(EngineerExperience), taskElement.Element("ComplexityLevel")!.Value)
                     : null
             });
-
+            Console.WriteLine("read all");
             if (filter != null)
             {
                 return allTasks.Where(filter);
@@ -172,7 +174,6 @@ internal class TaskImplementation : ITask
 
             return allTasks;
         }
-
         return Enumerable.Empty<DO.Task>();
     }
 
