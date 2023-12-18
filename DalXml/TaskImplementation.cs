@@ -21,7 +21,7 @@ internal class TaskImplementation : ITask
             new XElement("Description", t.Description),
             new XElement("Alias", t.Alias),
             new XElement("Milestone", t.Milestone),
-            new XElement("RequiredEffortTime", t.RequiredEffortTime),
+            new XElement("RequiredEffortTime", t.RequiredEffortTime.ToString()),
             new XElement("CreatedAt", t.CreatedAt),
             new XElement("Start", t.Start),
             new XElement("Forecast", t.Forecast),
@@ -132,18 +132,19 @@ internal class TaskImplementation : ITask
     {
         XElement? tasks = XMLTools.LoadListFromXMLElement("tasks");
        
-        if (tasks != null)
+        if (tasks != null      )
         {
+            
             IEnumerable<DO.Task> allTasks = tasks.Elements("Task").Select(taskElement => new DO.Task
             {
                 Id = Convert.ToInt32(taskElement.Element("Id")?.Value),
                 Description = taskElement.Element("Description")!.Value,
                 Alias = taskElement.Element("Alias")?.Value,
                 Milestone = Convert.ToBoolean(taskElement.Element("Milestone")?.Value),
-                RequiredEffortTime = null,
-                //taskElement.Element("RequiredEffortTime")?.Value != null
-                //? (TimeSpan?)TimeSpan.Parse(taskElement.Element("RequiredEffortTime")!.Value)
-                //:
+                RequiredEffortTime =
+                taskElement.Element("RequiredEffortTime")?.Value != null
+                ? (TimeSpan?)TimeSpan.Parse(taskElement.Element("RequiredEffortTime")!.Value)
+                : null,
                 CreatedAt = taskElement.Element("CreatedAt")?.Value != null
                     ? (DateTime?)DateTime.Parse(taskElement.Element("CreatedAt")!.Value)
                     : null,
@@ -162,7 +163,7 @@ internal class TaskImplementation : ITask
                 Deliverables = taskElement.Element("Deliverables")?.Value,
                 Remarks = taskElement.Element("Remarks")?.Value,
                 EngineerId = Convert.ToInt32(taskElement.Element("EngineerId")?.Value),
-                ComplexityLevel = taskElement.Element("ComplexityLevel")?.Value != null
+                ComplexityLevel = taskElement.Element("ComplexityLevel")?.Value != ""
                     ? (EngineerExperience?)Enum.Parse(typeof(EngineerExperience), taskElement.Element("ComplexityLevel")!.Value)
                     : null
             });
