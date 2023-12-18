@@ -1,15 +1,28 @@
 ﻿
 
 using DalApi;
+using System.Diagnostics;
 
 namespace Dal;
 
-sealed public class DalXml : IDal
+sealed internal class DalXml : IDal
 
 {
+    // Step 3: Public static property for accessing the single instance
+    public static IDal Instance => LazyInstance.Value;
+
+    // Step 5: Make the constructor private
+    private DalXml() { }
+
+
     public IEngineer Engineer => new EngineerImplementation();
     public ITask Task => new TaskImplementation();
     public IDependency Dependency => new DependencyImplementation();
+
+
+
+    // Step 4: Add a private static instance with lazy initialization
+    private static readonly Lazy<IDal> LazyInstance = new Lazy<IDal>(() => new DalXml());
 
     public void Reset()
     {
@@ -18,3 +31,4 @@ sealed public class DalXml : IDal
         Dependency.Delete();
     }
 }
+
