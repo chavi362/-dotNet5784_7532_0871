@@ -16,9 +16,11 @@ internal class TaskImplementation : ITask
         return id;
     }
 
-    public void Delete(int id)//erase a task
+    public void Delete(int? id=null)//erase a task
     {
-        Task? toDelate = Read(id);//find the task with the id we got
+        if (id == null)
+            DataSource.Tasks.Clear();
+        Task? toDelate = Read((int)id!);//find the task with the id we got
         if (toDelate == null)
         {
             throw new DalDoesNotExistException($"Task with ID={id} is not exist");

@@ -91,7 +91,7 @@ public static class Initialization
 
         for (int dependentTaskId = 0; dependentTaskId < numOfTasks; dependentTaskId++)
         {
-            int numOfDependencies = s_rand.Next(1, 4); // Randomly determine the number of dependencies for each task
+            int numOfDependencies = s_rand.Next(1,2); // Randomly determine the number of dependencies for each task
             for (int i = 0; i < numOfDependencies; i++)
             {
                 int dependenciesOnTaskId;

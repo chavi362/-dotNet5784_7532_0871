@@ -14,9 +14,11 @@ internal class EngineerImplementation : IEngineer
         return engineer.Id;
     }
 
-    public void Delete(int id)//erase an engineer
+    public void Delete(int? id=null)//erase an engineer
     {
-        Engineer? toDelete = Read(id);
+        if (id == null)
+            DataSource.Engineers.Clear();
+        Engineer? toDelete = Read((int)id!);
         if (toDelete != null)
         {
             if (DataSource.Tasks.FirstOrDefault(x => x.EngineerId == id) != null)//checking if we can delete it

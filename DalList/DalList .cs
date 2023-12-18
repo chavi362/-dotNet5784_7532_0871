@@ -7,4 +7,10 @@ sealed public class DalList : IDal
     public ITask Task =>  new TaskImplementation();
 
     public IDependency Dependency =>  new DependencyImplementation();
+    public void Reset()
+    {
+        Engineer.Delete();
+        Task.Delete();
+        Dependency.Delete();
+    }
 }

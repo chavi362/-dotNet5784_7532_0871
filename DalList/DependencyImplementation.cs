@@ -32,10 +32,12 @@ internal class DependencyImplementation : IDependency
     }
 
     // Delete a dependency by ID
-    public void Delete(int id)
+    public void Delete(int? id=null)
     {
+        if (id == null)
+            DataSource.Dependencies.Clear();
         // Find the dependency with the given ID
-        Dependency? toDelete = Read(id);
+        Dependency? toDelete = Read((int)id!);
 
         // If the dependency does not exist, throw an exception
         if (toDelete == null)

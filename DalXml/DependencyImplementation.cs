@@ -34,22 +34,30 @@ internal class DependencyImplementation : IDependency
     }
 
 
-    public void Delete(int id)
+    public void Delete(int? id = null)
     {
         List<Dependency> dependenciesList = XMLTools.LoadListFromXMLSerializer<Dependency>("dependencies");
-        Dependency? toDelete = Read(id);
+
+        // Delete all dependencies
+        if (id == null)
+        {
+            List<Dependency> emptyList = new List<Dependency>();
+            XMLTools.SaveListToXMLSerializer<Dependency>(emptyList, "dependencies");
+            return;
+        }
+
+        // Delete a specific dependency by ID
+        Dependency? toDelete = Read((int)id);
 
         // If the dependency does not exist, throw an exception
         if (toDelete == null)
         {
-            throw new DalDeletionImpossible("Dependency with ID ={ id} does not exist");
+            throw new DalDeletionImpossible($"Dependency with ID = {id} does not exist");
         }
-        else
-        {
-            // Remove the dependency from the data source
-            dependenciesList.Remove(toDelete);
-            XMLTools.SaveListToXMLSerializer<Dependency>(dependenciesList, "dependencies");
-        }
+
+        // Remove the dependency from the data source
+        dependenciesList.Remove(toDelete);
+        XMLTools.SaveListToXMLSerializer<Dependency>(dependenciesList, "dependencies");
     }
 
 

@@ -35,26 +35,37 @@ internal class TaskImplementation : ITask
         tasksElements?.Save(@"..\xml\tasks.xml");
         return id;
     }
-    public void Delete(int id)
+    public void Delete(int? id = null)
     {
-        XElement? tasks = XDocument.Load(@"..\xml\tasks.xml").Root;
-        XElement? taskToRemove = tasks?.Elements()
-            .FirstOrDefault(task => Convert.ToInt32(task?.Element("Id")?.Value) == id);
+        XElement tasks = XDocument.Load(@"..\xml\tasks.xml").Root;
 
-        if (taskToRemove != null)
+        if (id == null)
         {
-            if (!CheckingDependency(taskToRemove))
-                throw new DalDeletionImpossible($"Another task depends on this task with ID={id}");
-
-            DeletingTaskDependency(taskToRemove);
-            taskToRemove.Remove();
-            tasks?.Save(@"..\xml\tasks.xml");
+            // Delete all tasks
+            tasks?.RemoveNodes();
         }
         else
         {
-            throw new DalDoesNotExistException($"Task with ID={id} does not exist");
+            XElement taskToRemove = tasks?.Elements()
+                .FirstOrDefault(task => Convert.ToInt32(task?.Element("Id")?.Value) == id)!;
+
+            if (taskToRemove != null)
+            {
+                if (!CheckingDependency(taskToRemove))
+                    throw new DalDeletionImpossible($"Another task depends on this task with ID={id}");
+
+                DeletingTaskDependency(taskToRemove);
+                taskToRemove.Remove();
+            }
+            else
+            {
+                throw new DalDoesNotExistException($"Task with ID={id} does not exist");
+            }
         }
+
+        tasks?.Save(@"..\xml\tasks.xml");
     }
+
 
     public bool CheckingDependency(XElement? t)
     {
@@ -167,7 +178,6 @@ internal class TaskImplementation : ITask
                     ? (EngineerExperience?)Enum.Parse(typeof(EngineerExperience), taskElement.Element("ComplexityLevel")!.Value)
                     : null
             });
-            Console.WriteLine("read all");
             if (filter != null)
             {
                 return allTasks.Where(filter);

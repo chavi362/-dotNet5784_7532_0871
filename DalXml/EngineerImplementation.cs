@@ -23,10 +23,16 @@ internal class EngineerImplementation : IEngineer
         throw new DalAlreadyExistsException($"An object of type Engineer with ID {item.Id} already exists");
     }
 
-    public void Delete(int id)
+    public void Delete(int? id=null)
     {
         List<Engineer> engineersList = XMLTools.LoadListFromXMLSerializer<Engineer>("engineers");
-        Engineer? toDelete = Read(id);
+        if (id == null)
+        {
+            List<Engineer> emptyList = new List<Engineer>();
+            XMLTools.SaveListToXMLSerializer<Engineer>(emptyList, "engineers");
+            return;
+        }
+        Engineer? toDelete = Read((int)id);
         if (toDelete != null)
         {
             if (engineersList.FirstOrDefault(x => x.Id == id) != null)//checking if we can delete it

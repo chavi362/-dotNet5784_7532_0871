@@ -257,13 +257,13 @@ namespace DalTest
         {
             //the Main Menu
             Console.Write("Would you like to create Initial data? (Y/N)"); //stage 3
-            string? ans = "Y";
-                //Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
+                                                                           //string? ans = "Y";
+            string? ans=Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
             if (ans == "Y") //stage 3
 
                 try
                 {
-
+                    s_dal.Reset();
                     Initialization.Do(s_dal);
                 }
                 catch(Exception ex)
