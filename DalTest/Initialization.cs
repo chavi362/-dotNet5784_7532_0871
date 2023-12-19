@@ -11,9 +11,9 @@ public static class Initialization
     {//tamples with description & alias
         (string description, string Alias)[] engineerTasks =
         {
-            ("Design the project architecture", "design"),
+            ("Design the project architecture", "design architecture"),
             ("Develop the backend logic","Develop"),
-            ("Implement the user interface","Implement"),
+            ("Implement the user interface","UI"),
             ("Perform testing and debugging","debug"),
             ("Optimize the code for performance","Optimizing"),
             ("Document the project specifications","Doucument"),
@@ -111,10 +111,12 @@ public static class Initialization
             }
         }
     }
-    public static void Do(IDal dal)
+  //  public static void Do(IDal dal)
+ 	public static void Do() //stage 4
     {
-        s_dal = dal ?? throw new NullReferenceException("DAL object cannot be null!"); // Stage 2
+        //s_dal = dal ?? throw new NullReferenceException("DAL object cannot be null!"); // Stage 2
         // Call the private methods to initialize the lists
+        s_dal = DalApi.Factory.Get; //stage 4
         createTasks();
         createEngineers();
         createDependencies();

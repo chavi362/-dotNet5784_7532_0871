@@ -11,7 +11,8 @@ namespace DalTest
         //private static IDependency? s_dalDependency = new DependencyImplementation(); //stage 1
         //private static ITask? s_dalTask = new TaskImplementation(); //stage 1
         //static readonly IDal s_dal = new DalList(); //stage 2
-        static readonly IDal s_dal = new Dal.DalXml(); //stage 3
+       /* static readonly IDal s_dal = new Dal.DalXml();*/ //stage 3
+        static readonly IDal s_dal = Factory.Get;
         static void InfoOfTask(char x)
         {
             switch (x)
@@ -100,7 +101,7 @@ namespace DalTest
                     string name = Console.ReadLine()!;
                     Console.WriteLine("enter engineer's email");
                     string email = Console.ReadLine()!;
-                    DO.Engineer myEngineer = new(id, name, email);
+                    DO.Engineer myEngineer = new(id, name, email,null,null);
                     try
                     {
                         int result = s_dal.Engineer.Create(myEngineer);
@@ -264,7 +265,8 @@ namespace DalTest
                 try
                 {
                     s_dal.Reset();
-                    Initialization.Do(s_dal);
+                    //Initialization.Do(s_dal);
+                  	Initialization.Do(); //stage 4
                 }
                 catch(Exception ex)
                 {
@@ -273,7 +275,7 @@ namespace DalTest
             //Internal menu for every class and sending to funtion that treat this class
 
             Console.WriteLine("for tasks press 1");
-            Console.WriteLine("for engeeners press 2");
+            Console.WriteLine("for engineers press 2");
             Console.WriteLine("for dependencies 3");
             Console.WriteLine("for exit press 0");
             int select = int.Parse(Console.ReadLine()!);
@@ -294,11 +296,11 @@ namespace DalTest
                         break;
                     case 2:
                         Console.WriteLine("for exit press a");
-                        Console.WriteLine("for add an engeener press b");
-                        Console.WriteLine("for read an engeener press c");
-                        Console.WriteLine("for read all engeeners press d");
-                        Console.WriteLine("for update an engeener press e");
-                        Console.WriteLine("for delete an engeener press f");
+                        Console.WriteLine("for add an engineer press b");
+                        Console.WriteLine("for read an engineer press c");
+                        Console.WriteLine("for read all engineer press d");
+                        Console.WriteLine("for update an engineer press e");
+                        Console.WriteLine("for delete an engineer press f");
                         x = char.Parse(Console.ReadLine()!);
                         InfoOfEngineers(x);
 
