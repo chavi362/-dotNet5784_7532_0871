@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DO;
 
 namespace BO
 {
-    internal class MilestoneInList
+    public class MilestoneInList
     {
+        public int Id { get; init; }
+        public string Description { get; set; }
+        public string Alias { get; set; }
+        public string? status { get; set; } = null;
+        public double? CompletionPrecentage { get; set; } = null;
+
+
     }
 }

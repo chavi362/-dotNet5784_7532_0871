@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DO;
 
 namespace BO
 {
-    internal class TaskInList
+    public class TaskInList
     {
+        public int Id { get; init; }
+        public string Description { get; set; }
+        public string Alias { get; set; }
+        public string? Status { get; set; } = null;
     }
 }
