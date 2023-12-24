@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DO;
 
 namespace BO
 {
-    internal class MilestoneInTask
+    public class MilestoneInTask
     {
+        public int id;
+        public string Alias { get; set; }/* = string.Empty*/
     }
 }
