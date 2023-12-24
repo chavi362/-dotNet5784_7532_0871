@@ -2,9 +2,9 @@
 
 namespace BO
 {
-    public class TaskInEngineer
+    internal class EngineerInTask
     {
         public int Id { get; init; }
-        public string Alias { get; set; }
+        public string Name { get; set; }
     }
 }
