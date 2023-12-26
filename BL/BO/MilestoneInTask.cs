@@ -5,6 +5,6 @@ namespace BO
     public class MilestoneInTask
     {
         public int id;
-        public string Alias { get; set; }/* = string.Empty*/
+        public required string Alias { get; set; }
     }
 }
