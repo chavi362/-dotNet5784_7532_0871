@@ -10,6 +10,6 @@ namespace BO
         public required string Email { get; set; }
         public EngineerExperience? Level { get; set; } = null;
         public double Cost { get; set; }
-        public TaskInEngineer? Task { get; set; }
+        public Tuple<int,string>? CurrentTask { get; set; }
     }
 }

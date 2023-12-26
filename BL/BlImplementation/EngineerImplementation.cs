@@ -3,6 +3,7 @@
 using BlApi;
 using BO;
 
+
 namespace BlImplementation
 {
     internal class EngineerImplementation : IEngineer
@@ -14,6 +15,7 @@ namespace BlImplementation
             try
             {
                 int idEngineer = _dal.Engineer.Create(doEngineer);
+               
                 return idEngineer;
             }
             catch (DO.DalAlreadyExistsException ex)
@@ -32,7 +34,7 @@ namespace BlImplementation
         {
             DO.Engineer? doEngineer = _dal.Engineer.Read(id);
             if (doEngineer == null)
-                throw new BO.BlDoesNotExistException($"Engineer with ID={id} does Not exist");
+                throw new BO.BlDoesNotExistException($"Engineer with ID={id} does Not exist",null!);
 
             return new BO.Engineer()
             {
@@ -41,27 +43,44 @@ namespace BlImplementation
                 Email = doEngineer.Email,
                 Level = (EngineerExperience)doEngineer.Level!,
                 Cost = (double)doEngineer.Cost!,
+                CurrentTask=FindCurrentTask(doEngineer.Id)
 
             };
         }
-
-        public IEnumerable<Engineer> ReadAll(Func<Engineer, bool>? filter = null)
+        private Tuple<int,string> FindCurrentTask(int id)
         {
-            return (from DO.Engineer doEngineer in _dal.Engineer.ReadAll()
+            DateTime today= DateTime.Now;
+            List<DO.Task> tasks = (List<DO.Task>)_dal.Task.ReadAll((task) => task.EngineerId == id&&task.Complete>today&&task.Start<today);
+            return new Tuple<int, string>(tasks.First().Id, tasks.First().Alias!);
+        }
+        public IEnumerable<Engineer> ReadAll(Func<BO.Engineer, bool>? filter = null)
+        {
+            return (from DO.Engineer doEngineer in _dal.Engineer.ReadAll(filter)
                     select new Engineer
                     {
                         Id = doEngineer.Id,
                         Name = doEngineer.Name,
-                       Email= doEngineer.Email,
-                       Cost = (double)doEngineer.Cost!,
-                       Level= (EngineerExperience)doEngineer.Level!,
+                        Email = doEngineer.Email,
+                        Cost = (double)doEngineer.Cost!,
+                        Level = (EngineerExperience)doEngineer.Level!,
+                        CurrentTask = FindCurrentTask(doEngineer.Id)
                     });
-
         }
 
-        public int Update(Engineer item)
+
+        public int Update(BO.Engineer boEngineer)
         {
-            throw new NotImplementedException();
+            DO.Engineer doEngineer = new DO.Engineer
+                (boEngineer.Id, boEngineer.Name, boEngineer.Email, (DO.EngineerExperience)boEngineer.Level!, boEngineer.Cost);
+            try
+            {
+                _dal.Engineer.Update(doEngineer);
+            }
+            catch (DO.DalDoesNotExistException ex)
+            {
+                throw new BlDoesNotExistException($"Engineer with ID={boEngineer.Id} doern't exists",ex);
+            }
+            return boEngineer.Id;
         }
     }
 }
