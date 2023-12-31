@@ -5,6 +5,7 @@ using DalApi;
 using DO;
 using System.Collections.Generic;
 using System.Linq;
+using static Dal.DataSource;
 
 internal class TaskImplementation : ITask
 {
@@ -29,6 +30,8 @@ internal class TaskImplementation : ITask
         {
             if (!CheckingDependency(toDelate))//if we can erase the task
                 throw new DalDeletionImpossible($"another task dependth on thid task with ID={id}");
+            if (Config.projectBegining == null)
+                throw new DalDeletionImpossible("the project alredy began");
             DeletingTaskDependency(toDelate);
             DataSource.Tasks.Remove(toDelate);//remove the task from the data
         }

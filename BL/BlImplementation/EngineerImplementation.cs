@@ -4,6 +4,7 @@ using BlApi;
 using BO;
 
 
+
 namespace BlImplementation
 {
     internal class EngineerImplementation : IEngineer
@@ -15,7 +16,7 @@ namespace BlImplementation
             try
             {
                 int idEngineer = _dal.Engineer.Create(doEngineer);
-               
+
                 return idEngineer;
             }
             catch (DO.DalAlreadyExistsException ex)
@@ -27,14 +28,33 @@ namespace BlImplementation
 
         public int Delete(int id)
         {
-            throw new NotImplementedException();
+            if (FindCurrentTask(id) != null)
+            {
+                //if (!_dal.Task.ReadAll((task) => task.EngineerId == id && task.Complete < DateTime.Now).Any())
+
+                try
+                {
+                    _dal.Engineer.Delete(id);
+                }
+                catch (DO.DalDoesNotExistException)
+                {
+                    throw new BO.BlDoesNotExistException($"Student with ID={id} already exists", null!);
+                }
+                catch (DO.DalDeletionImpossible)
+
+                {
+                    throw new BO.BlDeletionImpossible($"Engineer with ID={id} has some tasks");
+                }
+
+            }
+            return id;
         }
 
         public Engineer? Read(int id)
         {
             DO.Engineer? doEngineer = _dal.Engineer.Read(id);
             if (doEngineer == null)
-                throw new BO.BlDoesNotExistException($"Engineer with ID={id} does Not exist",null!);
+                throw new BO.BlDoesNotExistException($"Engineer with ID={id} does Not exist", null!);
 
             return new BO.Engineer()
             {
@@ -43,14 +63,14 @@ namespace BlImplementation
                 Email = doEngineer.Email,
                 Level = (EngineerExperience)doEngineer.Level!,
                 Cost = (double)doEngineer.Cost!,
-                CurrentTask=FindCurrentTask(doEngineer.Id)
+                CurrentTask = FindCurrentTask(doEngineer.Id)
 
             };
         }
-        private Tuple<int,string> FindCurrentTask(int id)
+        private Tuple<int, string> FindCurrentTask(int id)
         {
-            DateTime today= DateTime.Now;
-            List<DO.Task> tasks = (List<DO.Task>)_dal.Task.ReadAll((task) => task.EngineerId == id&&task.Complete>today&&task.Start<today);
+            DateTime today = DateTime.Now;
+            List<DO.Task> tasks = (List<DO.Task>)_dal.Task.ReadAll((task) => task.EngineerId == id && task.Complete > today && task.Start < today);
             return new Tuple<int, string>(tasks.First().Id, tasks.First().Alias!);
         }
         public IEnumerable<Engineer> ReadAll(Func<BO.Engineer, bool>? filter = null)
@@ -61,8 +81,8 @@ namespace BlImplementation
                         Id = doEngineer.Id,
                         Name = doEngineer.Name,
                         Email = doEngineer.Email,
-                        Cost = (double)doEngineer.Cost!,
                         Level = (EngineerExperience)doEngineer.Level!,
+                        Cost = (double)doEngineer.Cost!,
                         CurrentTask = FindCurrentTask(doEngineer.Id)
                     });
         }
@@ -78,7 +98,7 @@ namespace BlImplementation
             }
             catch (DO.DalDoesNotExistException ex)
             {
-                throw new BlDoesNotExistException($"Engineer with ID={boEngineer.Id} doern't exists",ex);
+                throw new BlDoesNotExistException($"Engineer with ID={boEngineer.Id} doern't exists", ex);
             }
             return boEngineer.Id;
         }

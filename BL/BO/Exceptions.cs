@@ -3,15 +3,15 @@ namespace BO;
 
 
 [Serializable]
-public class DalDoesNotExistException : Exception
+public class BlDoesNotExistException : Exception
 {
-    public DalDoesNotExistException(string? message) : base(message) { }
+    public BlDoesNotExistException(string? message,Exception ex) : base(message,ex) { }
 }
 
 [Serializable]
 public class BlAlreadyExistsException : Exception
 {
-    public BlAlreadyExistsException(string? message) : base(message) { }
+    public BlAlreadyExistsException(string? message,Exception ex) : base(message,ex) { }
 }
 [Serializable]
 public class LogicException : Exception
@@ -19,7 +19,7 @@ public class LogicException : Exception
     public LogicException(string? message) : base(message) { }
 }
 [Serializable]
-public class DalDeletionImpossible : Exception
+public class BlDeletionImpossible : Exception
 {
-    public DalDeletionImpossible(string? message) : base(message) { }
+    public BlDeletionImpossible(string? message) : base(message) { }
 }

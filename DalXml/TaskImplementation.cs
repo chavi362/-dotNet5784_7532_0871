@@ -51,6 +51,8 @@ internal class TaskImplementation : ITask
 
             if (taskToRemove != null)
             {
+                if (Config.projectBegining == null)
+                    throw new DalDeletionImpossible("the project alredy began");
                 if (!CheckingDependency(taskToRemove))
                     throw new DalDeletionImpossible($"Another task depends on this task with ID={id}");
 
