@@ -2,8 +2,6 @@
 
 using BlApi;
 using BO;
-using DO;
-using System.Numerics;
 
 namespace BlImplementation
 {
@@ -55,7 +53,7 @@ namespace BlImplementation
             }
             catch (DO.DalDoesNotExistException ex)
             {
-                throw new BlDoesNotExistException($"task with id {id} doesnt exist",ex);
+                throw new BlDoesNotExistException($"task with id {id} doesnt exist", ex);
             }
             return id;
         }
@@ -97,16 +95,20 @@ namespace BlImplementation
                 Alias = doTask.Alias!,
                 CreatedAtDate = doTask.CreatedAt ?? DateTime.MinValue,
                 Status = GetTaskStatus(doTask),
-                DependenceList = _dal.Dependency.ReadAll((dependency) => dependency.DependensOnTask == doTask.Id).Select(dependency => { DO.Task dependTask = _dal.Task.Read(dependency.DependentTask)!;
-                new BO.TaskInList
-                {
-                    // Map properties from dependency to BO.TaskInList
-                    // Adjust the property names based on your actual class
-                    Id = dependTask.Id,
-                    Description = dependTask.Description,
-                    Alias = dependTask.Alias!,
-                    Status = GetTaskStatus(dependTask),
-                }).ToList(),
+                DependenceList = _dal.Dependency
+                    .ReadAll((dependency) => dependency.DependensOnTask == doTask.Id)
+                     .Select(dependency =>
+                         {
+                             DO.Task dependTask = _dal.Task.Read(dependency!.DependentTask)!;
+                             return new BO.TaskInList
+                             {
+                                 Id = dependTask.Id,
+                                 Description = dependTask.Description,
+                                 Alias = dependTask.Alias!,
+                                 Status = GetTaskStatus(dependTask)
+                             };
+                         })
+                        .ToList(),
                 //Milestone = doTask.Milestone
                 //? new BO.MilestoneInTask(doTask.Id, doTask.Alias) // Set Milestone based on some condition
                 //: ,
@@ -120,19 +122,84 @@ namespace BlImplementation
                 Engineer = doTask.EngineerId != null ? new BO.EngineerInTask
                 (doTask.EngineerId, _dal.Engineer.Read(doTask.EngineerId)!.Name)
                 : null,
-                ComplexityLevel = ()doTask.ComplexityLevel
+                ComplexityLevel = (BO.EngineerExperience)doTask.ComplexityLevel!
             };
         }
 
 
         public IEnumerable<BO.Task> ReadAll(Func<System.Threading.Tasks.Task, bool>? filter = null)
         {
-            throw new NotImplementedException();
+            return (from DO.Task doTask in _dal.Task.ReadAll(filter)
+                    select new BO.Task
+                    {
+                        Id = doTask.Id,
+                        Description = doTask.Description,
+                        Alias = doTask.Alias!,
+                        CreatedAtDate = doTask.CreatedAt ?? DateTime.MinValue,
+                        Status = GetTaskStatus(doTask),
+                        DependenceList = _dal.Dependency
+                    .ReadAll((dependency) => dependency.DependensOnTask == doTask.Id)
+                     .Select(dependency =>
+                     {
+                         DO.Task dependTask = _dal.Task.Read(dependency!.DependentTask)!;
+                         return new BO.TaskInList
+                         {
+                             Id = dependTask.Id,
+                             Description = dependTask.Description,
+                             Alias = dependTask.Alias!,
+                             Status = GetTaskStatus(dependTask)
+                         };
+                     })
+                        .ToList(),
+                        //Milestone = doTask.Milestone
+                        //? new BO.MilestoneInTask(doTask.Id, doTask.Alias) // Set Milestone based on some condition
+                        //: ,
+                        BaselineStartDate = doTask.CreatedAt,
+                        StartDate = doTask.Start,
+                        ForecastDate = doTask.Forecast,
+                        DeadlineDate = doTask.DedLine,
+                        CompleteDate = doTask.Complete,
+                        Deliverables = doTask.Deliverables,
+                        Remarks = doTask.Remarks,
+                        Engineer = doTask.EngineerId != null ? new BO.EngineerInTask
+                (doTask.EngineerId, _dal.Engineer.Read(doTask.EngineerId)!.Name)
+                : null,
+                        ComplexityLevel = (BO.EngineerExperience)doTask.ComplexityLevel!
+                    });
         }
 
         public int Update(BO.Task item)
         {
-            throw new NotImplementedException();
+            if (item.Id < 0 || item.Alias == "")
+                throw new ArgumentException("the item is not valid");
+            try
+            {
+                item.DependenceList!.ForEach((dependency) =>
+                {
+                    _dal.Dependency.Create(new DO.Dependency(0, item.Id, dependency.Id));
+                });
+                _dal.Task.Update(new DO.Task(
+                    0,
+                    item.Description,
+                    item.Alias,
+                    false,  // Assuming the default value for Milestone is false
+                    null,   // Assuming the default value for RequiredEffortTime is null
+                    DateTime.Today,  // Assuming CreatedAt is set to the current date
+                    null,   // Assuming the default value for Start is null
+                    item.ForecastDate,
+                    item.DeadlineDate,
+                    item.CompleteDate,  // Assuming item.CompleteDate corresponds to Complete property
+                    item.Deliverables,
+                    item.Remarks,
+                    item.Engineer!.Id,
+                    (DO.EngineerExperience)item.ComplexityLevel!
+                    ));
+            }
+            catch (DO.DalAlreadyExistsException)
+            {
+                throw new Exception("cant add the dependencies for this task");
+            }
+            return item.Id;
         }
     }
 }

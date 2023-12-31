@@ -10,7 +10,7 @@ namespace BlImplementation
         private DalApi.IDal _dal = DalApi.Factory.Get;
         public int Create(Milestone item)
         {
-            throw new NotImplementedException();
+            
         }
 
         public int Delete(int id)

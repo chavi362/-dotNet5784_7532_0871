@@ -21,7 +21,7 @@ namespace BlImplementation
             }
             catch (DO.DalAlreadyExistsException ex)
             {
-                throw new BO.BlAlreadyExistsException($"Student with ID={boEngineer.Id} already exists", ex);
+                throw new BO.BlAlreadyExistsException($"Engineer with ID={boEngineer.Id} already exists", ex);
             }
 
         }
@@ -38,7 +38,7 @@ namespace BlImplementation
                 }
                 catch (DO.DalDoesNotExistException)
                 {
-                    throw new BO.BlDoesNotExistException($"Student with ID={id} already exists", null!);
+                    throw new BO.BlDoesNotExistException($"Engineer with ID={id} already exists", null!);
                 }
                 catch (DO.DalDeletionImpossible)
 
