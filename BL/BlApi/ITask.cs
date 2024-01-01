@@ -8,7 +8,7 @@ namespace BlApi
         public int Update(BO.Task item);    
         public int Delete(int id);
         public BO.Task? Read(int id);
-        public IEnumerable<BO.Task> ReadAll(Func<Task, bool>? filter = null);
+        public IEnumerable<BO.Task> ReadAll(Func<BO.Task, bool>? filter = null);
 
     }
 }

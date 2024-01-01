@@ -30,7 +30,7 @@ internal class TaskImplementation : ITask
         {
             if (!CheckingDependency(toDelate))//if we can erase the task
                 throw new DalDeletionImpossible($"another task dependth on thid task with ID={id}");
-            if (Config.projectBegining == null)
+            if (Config.projectBegining >= DateTime.Now)
                 throw new DalDeletionImpossible("the project alredy began");
             DeletingTaskDependency(toDelate);
             DataSource.Tasks.Remove(toDelate);//remove the task from the data

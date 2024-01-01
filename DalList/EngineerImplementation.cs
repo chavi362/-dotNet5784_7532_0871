@@ -21,7 +21,7 @@ internal class EngineerImplementation : IEngineer
         Engineer? toDelete = Read((int)id!);
         if (toDelete != null)
         {
-            if (DataSource.Tasks.FirstOrDefault(x => x.EngineerId == id) != null)//checking if we can delete it
+            if (DataSource.Tasks.FirstOrDefault(x => x.EngineerId == id&&x.Start<DateTime.Now) != null)//checking if we can delete it
                 throw new DalDeletionImpossible($"Engineer with ID={id} has some tasks");
             else
                 DataSource.Engineers.Remove(toDelete);//remove from tha data base

@@ -26,6 +26,7 @@ internal class EngineerImplementation : IEngineer
     public void Delete(int? id=null)
     {
         List<Engineer> engineersList = XMLTools.LoadListFromXMLSerializer<Engineer>("engineers");
+        List<Task> taskList = XMLTools.LoadListFromXMLSerializer<Task>("tasks");
         if (id == null)
         {
             List<Engineer> emptyList = new List<Engineer>();
@@ -35,7 +36,7 @@ internal class EngineerImplementation : IEngineer
         Engineer? toDelete = Read((int)id);
         if (toDelete != null)
         {
-            if (engineersList.FirstOrDefault(x => x.Id == id) != null)//checking if we can delete it
+            if (taskList.FirstOrDefault(x => x.EngineerId == id && x.Start < DateTime.Now) != null)//checking if we can delete it
                 throw new DalDeletionImpossible($"Engineer with ID={id} has some tasks");
             else
             {

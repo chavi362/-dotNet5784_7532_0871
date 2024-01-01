@@ -16,10 +16,15 @@ public class BlAlreadyExistsException : Exception
 [Serializable]
 public class LogicException : Exception
 {
-    public LogicException(string? message) : base(message) { }
+    public LogicException(string? message, Exception inner) : base(message,inner) { }
 }
 [Serializable]
 public class BlDeletionImpossible : Exception
 {
-    public BlDeletionImpossible(string? message) : base(message) { }
+    public BlDeletionImpossible(string? message,Exception inner) : base(message, inner) { }
+}
+[Serializable]
+public class BlNotValid : Exception
+{
+    public BlNotValid(string? message) : base(message) { }
 }

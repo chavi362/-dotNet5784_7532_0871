@@ -2,6 +2,7 @@
 
 using BlApi;
 using BO;
+using System.Collections.Generic;
 
 namespace BlImplementation
 {
@@ -18,6 +19,10 @@ namespace BlImplementation
                 {
                     _dal.Dependency.Create(new DO.Dependency(0, item.Id, dependency.Id));
                 });
+                int? idEngineer = null;
+                if(item.Engineer!=null) {
+                    idEngineer = item.Engineer.Id; 
+                }
                 _dal.Task.Create(new DO.Task(
                     0,
                     item.Description,
@@ -31,7 +36,7 @@ namespace BlImplementation
                     item.CompleteDate,  // Assuming item.CompleteDate corresponds to Complete property
                     item.Deliverables,
                     item.Remarks,
-                    item.Engineer!.Id,
+                    idEngineer,
                     (DO.EngineerExperience)item.ComplexityLevel!
                     ));
             }
@@ -47,9 +52,9 @@ namespace BlImplementation
             {
                 _dal.Task.Delete(id);
             }
-            catch (DO.DalDeletionImpossible)
+            catch (DO.DalDeletionImpossible ex)
             {
-                throw new BlDeletionImpossible($"task with id {id} has some dependencies tasks or the project already began");
+                throw new BlDeletionImpossible($"task with id {id} has some dependencies tasks or the project already began",ex);
             }
             catch (DO.DalDoesNotExistException ex)
             {
@@ -87,12 +92,14 @@ namespace BlImplementation
 
             if (doTask == null)
                 throw new BO.BlDoesNotExistException($"Task with ID={id} does not exist", null!);
-
+            EngineerInTask? engineerInTask = null;
+            if (doTask?.EngineerId != null)
+                engineerInTask = new BO.EngineerInTask() { Id = (int)doTask.EngineerId, Name = _dal.Engineer.Read((int)doTask.EngineerId)!.Name };
             return new BO.Task
             {
-                Id = doTask.Id,
-                Description = doTask.Description,
-                Alias = doTask.Alias!,
+                Id = doTask!.Id,
+                 Alias = doTask.Alias!,
+                 Description = doTask.Description,
                 CreatedAtDate = doTask.CreatedAt ?? DateTime.MinValue,
                 Status = GetTaskStatus(doTask),
                 DependenceList = _dal.Dependency
@@ -119,57 +126,73 @@ namespace BlImplementation
                 CompleteDate = doTask.Complete,
                 Deliverables = doTask.Deliverables,
                 Remarks = doTask.Remarks,
-                Engineer = doTask.EngineerId != null ? new BO.EngineerInTask
-                (doTask.EngineerId, _dal.Engineer.Read(doTask.EngineerId)!.Name)
-                : null,
+                Engineer =  engineerInTask,
                 ComplexityLevel = (BO.EngineerExperience)doTask.ComplexityLevel!
             };
         }
 
 
-        public IEnumerable<BO.Task> ReadAll(Func<System.Threading.Tasks.Task, bool>? filter = null)
+        public IEnumerable<BO.Task> ReadAll(Func<BO.Task, bool>? filter = null)
         {
-            return (from DO.Task doTask in _dal.Task.ReadAll(filter)
-                    select new BO.Task
+            IEnumerable<BO.Task> tasks = _dal.Task.ReadAll().Select(doTask =>
+            {
+                EngineerInTask? engineerInTask = null;
+
+                if (doTask?.EngineerId != null)
+                {
+                    engineerInTask = new BO.EngineerInTask
                     {
-                        Id = doTask.Id,
-                        Description = doTask.Description,
-                        Alias = doTask.Alias!,
-                        CreatedAtDate = doTask.CreatedAt ?? DateTime.MinValue,
-                        Status = GetTaskStatus(doTask),
-                        DependenceList = _dal.Dependency
-                    .ReadAll((dependency) => dependency.DependensOnTask == doTask.Id)
-                     .Select(dependency =>
-                     {
-                         DO.Task dependTask = _dal.Task.Read(dependency!.DependentTask)!;
-                         return new BO.TaskInList
-                         {
-                             Id = dependTask.Id,
-                             Description = dependTask.Description,
-                             Alias = dependTask.Alias!,
-                             Status = GetTaskStatus(dependTask)
-                         };
-                     })
+                        Id = (int)doTask.EngineerId,
+                        Name = _dal.Engineer.Read((int)doTask.EngineerId)!.Name
+                    };
+                }
+
+                return new BO.Task
+                {
+                    Id = doTask!.Id,
+                    Description = doTask.Description,
+                    Alias = doTask.Alias!,
+                    CreatedAtDate = doTask.CreatedAt ?? DateTime.MinValue,
+                    Status = GetTaskStatus(doTask),
+                    DependenceList = _dal.Dependency
+                        .ReadAll(dependency => dependency.DependensOnTask == doTask.Id)
+                        .Select(dependency =>
+                        {
+                            DO.Task dependTask = _dal.Task.Read(dependency!.DependentTask)!;
+                            return new BO.TaskInList
+                            {
+                                Id = dependTask.Id,
+                                Description = dependTask.Description,
+                                Alias = dependTask.Alias!,
+                                Status = GetTaskStatus(dependTask)
+                            };
+                        })
                         .ToList(),
-                        //Milestone = doTask.Milestone
-                        //? new BO.MilestoneInTask(doTask.Id, doTask.Alias) // Set Milestone based on some condition
-                        //: ,
-                        BaselineStartDate = doTask.CreatedAt,
-                        StartDate = doTask.Start,
-                        ForecastDate = doTask.Forecast,
-                        DeadlineDate = doTask.DedLine,
-                        CompleteDate = doTask.Complete,
-                        Deliverables = doTask.Deliverables,
-                        Remarks = doTask.Remarks,
-                        Engineer = doTask.EngineerId != null ? new BO.EngineerInTask
-                (doTask.EngineerId, _dal.Engineer.Read(doTask.EngineerId)!.Name)
-                : null,
-                        ComplexityLevel = (BO.EngineerExperience)doTask.ComplexityLevel!
-                    });
+                    BaselineStartDate = doTask.CreatedAt,
+                    StartDate = doTask.Start,
+                    ForecastDate = doTask.Forecast,
+                    DeadlineDate = doTask.DedLine,
+                    CompleteDate = doTask.Complete,
+                    Deliverables = doTask.Deliverables,
+                    Remarks = doTask.Remarks,
+                    Engineer = engineerInTask,
+                    ComplexityLevel = (BO.EngineerExperience)doTask.ComplexityLevel!
+                };
+            });
+            if (filter == null)
+                return tasks;
+            return tasks.Where(filter);
         }
+
+
 
         public int Update(BO.Task item)
         {
+            int? idEngineer = null;
+            if (item.Engineer != null)
+            {
+                idEngineer = item.Engineer.Id;
+            }
             if (item.Id < 0 || item.Alias == "")
                 throw new ArgumentException("the item is not valid");
             try
@@ -191,7 +214,7 @@ namespace BlImplementation
                     item.CompleteDate,  // Assuming item.CompleteDate corresponds to Complete property
                     item.Deliverables,
                     item.Remarks,
-                    item.Engineer!.Id,
+                  idEngineer,
                     (DO.EngineerExperience)item.ComplexityLevel!
                     ));
             }

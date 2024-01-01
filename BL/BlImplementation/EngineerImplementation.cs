@@ -7,11 +7,52 @@ using BO;
 
 namespace BlImplementation
 {
+
     internal class EngineerImplementation : IEngineer
     {
-        private DalApi.IDal _dal = DalApi.Factory.Get;
+        private bool ValidateEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return false;
+            }
+
+            string[] parts = email.Split('@');
+            if (parts.Length != 2)
+            {
+                return false; // email must have exactly one @ symbol
+            }
+
+            string localPart = parts[0];
+            string domainPart = parts[1];
+            if (string.IsNullOrWhiteSpace(localPart) || string.IsNullOrWhiteSpace(domainPart))
+            {
+                return false; // local and domain parts cannot be empty
+            }
+
+            // check local part for valid characters
+            foreach (char c in localPart)
+            {
+                if (!char.IsLetterOrDigit(c) && c != '.' && c != '_' && c != '-')
+                {
+                    return false; // local part contains invalid character
+                }
+            }
+
+            // check domain part for valid format
+            if (domainPart.Length < 2 || !domainPart.Contains(".") || domainPart.Split(".").Length != 2 || domainPart.EndsWith(".") || domainPart.StartsWith("."))
+            {
+                return false; // domain part is not a valid format
+            }
+
+            return true;
+        }
+    
+    private DalApi.IDal _dal = DalApi.Factory.Get;
         public int Create(Engineer boEngineer)
         {
+            if (boEngineer.Id <= 0 || boEngineer.Name == "" || boEngineer.Cost < 0|| !ValidateEmail(boEngineer.Email))
+                throw new BO.BlNotValid("one or more of the details is not valid");
             DO.Engineer doEngineer = new DO.Engineer(boEngineer.Id, boEngineer.Name, boEngineer.Email, (DO.EngineerExperience)boEngineer.Level!, boEngineer.Cost);
             try
             {
@@ -40,10 +81,10 @@ namespace BlImplementation
                 {
                     throw new BO.BlDoesNotExistException($"Engineer with ID={id} already exists", null!);
                 }
-                catch (DO.DalDeletionImpossible)
+                catch (DO.DalDeletionImpossible ex)
 
                 {
-                    throw new BO.BlDeletionImpossible($"Engineer with ID={id} has some tasks");
+                    throw new BO.BlDeletionImpossible($"Engineer with ID={id} has some tasks",ex);
                 }
 
             }
@@ -75,16 +116,19 @@ namespace BlImplementation
         }
         public IEnumerable<Engineer> ReadAll(Func<BO.Engineer, bool>? filter = null)
         {
-            return (from DO.Engineer doEngineer in _dal.Engineer.ReadAll(filter)
-                    select new Engineer
+            IEnumerable<Engineer> engineers=_dal.Engineer.ReadAll().Select(doEngineer =>
+                     new Engineer
                     {
-                        Id = doEngineer.Id,
+                        Id = doEngineer!.Id,
                         Name = doEngineer.Name,
                         Email = doEngineer.Email,
                         Level = (EngineerExperience)doEngineer.Level!,
                         Cost = (double)doEngineer.Cost!,
                         CurrentTask = FindCurrentTask(doEngineer.Id)
                     });
+            if(filter == null)
+                return engineers;
+            return engineers.Where(filter);
         }
 
 

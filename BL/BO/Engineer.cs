@@ -1,5 +1,4 @@
 ﻿
-using DO;
 
 namespace BO
 {
@@ -11,5 +10,9 @@ namespace BO
         public EngineerExperience? Level { get; set; } = null;
         public double Cost { get; set; }
         public Tuple<int,string>? CurrentTask { get; set; }
+        public override string ToString()
+        {
+            return this.ToStringProperty();
+        }
     }
 }
