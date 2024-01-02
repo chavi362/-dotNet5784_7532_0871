@@ -1,7 +1,6 @@
  
 namespace Dal;
 using DalApi;
-using DO;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -52,16 +51,16 @@ internal class TaskImplementation : ITask
             if (taskToRemove != null)
             {
                 if (Config.projectBegining >= DateTime.Now)
-                    throw new DalDeletionImpossible("the project alredy began");
+                    throw new DO.DalDeletionImpossible("the project alredy began");
                 if (!CheckingDependency(taskToRemove))
-                    throw new DalDeletionImpossible($"Another task depends on this task with ID={id}");
+                    throw new DO.DalDeletionImpossible($"Another task depends on this task with ID={id}");
 
                 DeletingTaskDependency(taskToRemove);
                 taskToRemove.Remove();
             }
             else
             {
-                throw new DalDoesNotExistException($"Task with ID={id} does not exist");
+                throw new DO.DalDoesNotExistException($"Task with ID={id} does not exist");
             }
         }
 
@@ -163,7 +162,7 @@ internal class TaskImplementation : ITask
             tasksElements?.Save(tasksFile);
         }
         else
-            throw new DalDoesNotExistException($"Task with ID={t.Id} does not exist");
+            throw new DO.DalDoesNotExistException($"Task with ID={t.Id} does not exist");
     }
 
     public DO.Task? Read(Func<DO.Task, bool> filter)
@@ -214,7 +213,7 @@ internal class TaskImplementation : ITask
             Remarks = taskElement.Element("Remarks")?.Value,
             EngineerId = Convert.ToInt32(taskElement.Element("EngineerId")?.Value),
             ComplexityLevel = taskElement.Element("ComplexityLevel")?.Value !=""
-                       ? (EngineerExperience?)Enum.Parse(typeof(EngineerExperience), taskElement.Element("ComplexityLevel")!.Value)
+                       ? (DO.EngineerExperience?)Enum.Parse(typeof(DO.EngineerExperience), taskElement.Element("ComplexityLevel")!.Value)
                        : null
         };
     }
