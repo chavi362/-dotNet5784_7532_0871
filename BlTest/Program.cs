@@ -1,4 +1,5 @@
-﻿using DalApi;
+﻿using BO;
+using DalApi;
 using DalTest;
 
 namespace BlTest
@@ -17,11 +18,39 @@ namespace BlTest
                     string alias = Console.ReadLine()!;
                     Console.WriteLine("enter task's description");
                     string description = Console.ReadLine()!;
-                    DO.Task task = new(4, description, alias);
+                    Console.WriteLine("enter task's Deliverables");
+                    string deliverables = Console.ReadLine()!;
+                    Console.WriteLine("enter task's Remarks");
+                    string remarks = Console.ReadLine()!;
+                    Console.WriteLine("enter task's EngineerExperience required");
+                    Console.WriteLine("enter engineer's level from 0- to 4");
+                    int? level = int.Parse(Console.ReadLine()!);
+                    BO.EngineerExperience enLevel;
+                    bool b = Enum.TryParse<BO.EngineerExperience>(level.ToString(), out enLevel);
+                    if (!b)
+                        throw new Exception("I tell you to put between 0 to 4");
+                    BO.Task task = new BO.Task()
+                    {
+                        Id = 4,
+                        Description = description,
+                        Alias= alias,
+                        CreatedAtDate= DateTime.Now,
+                        Status=0,
+                        DependenceList=null,
+                        Milestone=null,
+                        BaselineStartDate=null,
+                        StartDate=null,
+                        ForecastDate=null,
+                        DeadlineDate=null,
+                        CompleteDate=null,
+                        Deliverables=deliverables,
+                        Remarks=remarks,
+                        Engineer=null,
+                        ComplexityLevel=enLevel
+                    };
                     try
                     {
-
-                        int result = s_dal!.Task.Create(task);
+                        int result = s_bl!.Task.Create(task);
                         Console.WriteLine("the task was added");
                     }
                     catch (Exception ex)
@@ -34,7 +63,7 @@ namespace BlTest
                     int id = int.Parse(Console.ReadLine()!);
                     try
                     {
-                        Console.WriteLine(s_dal.Task.Read(id));
+                        Console.WriteLine(s_bl.Task.Read(id)!.ToString());
                     }
                     catch (Exception ex)
                     {
@@ -43,22 +72,50 @@ namespace BlTest
                     break;
                 case 'd'://read all
                     Console.WriteLine("all the tasks:");
-                    var arrReadAllTasks = s_dal.Task.ReadAll();
+                    var arrReadAllTasks = s_bl.Task.ReadAll();
                     foreach (var item in arrReadAllTasks)
-                        Console.WriteLine(item);
+                        Console.WriteLine(item.ToString());
                     break;
                 case 'e'://update
                     Console.WriteLine("enter id of task to update");
                     int idUpdate = int.Parse(Console.ReadLine()!);//search of the id to update
                     try
                     {
-                        Console.WriteLine(s_dal.Task.Read(idUpdate));
+                        Console.WriteLine("enter task alias");
+                        string alias = Console.ReadLine()!;
                         Console.WriteLine("enter task's description");
-                        string tName = Console.ReadLine()!;
-                        Console.WriteLine("enter task's alias");
-                        string tAlias = Console.ReadLine()!;
-                        DO.Task t = new(idUpdate, tName, tAlias);
-                        s_dal.Task.Update(t);
+                        string description = Console.ReadLine()!;
+                        Console.WriteLine("enter task's Deliverables");
+                        string deliverables = Console.ReadLine()!;
+                        Console.WriteLine("enter task's Remarks");
+                        string remarks = Console.ReadLine()!;
+                        Console.WriteLine("enter task's EngineerExperience required");
+                        Console.WriteLine("enter engineer's level from 0- to 4");
+                        int? level = int.Parse(Console.ReadLine()!);
+                        BO.EngineerExperience enLevel;
+                        bool b = Enum.TryParse<BO.EngineerExperience>(level.ToString(), out enLevel);
+                        if (!b)
+                            throw new Exception("I tell you to put between 0 to 4");
+                        BO.Task task = new BO.Task()
+                        {
+                            Id = 4,
+                            Description = description,
+                            Alias = alias,
+                            CreatedAtDate = DateTime.Now,
+                            Status = 0,
+                            DependenceList = null,
+                            Milestone = null,
+                            BaselineStartDate = null,
+                            StartDate = null,
+                            ForecastDate = null,
+                            DeadlineDate = null,
+                            CompleteDate = null,
+                            Deliverables = deliverables,
+                            Remarks = remarks,
+                            Engineer = null,
+                            ComplexityLevel = enLevel
+                        };
+                        s_bl.Task.Update(task);
 
                     }
                     catch (Exception ex)
@@ -66,18 +123,18 @@ namespace BlTest
                         Console.WriteLine(ex);
                     }
                     break;
-                case 'f'://delete a task
-                    Console.WriteLine("enter id of task to delete");
-                    int idDelete = int.Parse(Console.ReadLine()!);
-                    try
-                    {
-                        s_dal.Task.Delete(idDelete);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                    break;
+                //case 'f'://delete a task
+                //    Console.WriteLine("enter id of task to delete");
+                //    int idDelete = int.Parse(Console.ReadLine()!);
+                //    try
+                //    {
+                //        s_bl.Task.Delete(idDelete);
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        Console.WriteLine(ex);
+                //    }
+                //    break;
                 default:
                     break;
             }
