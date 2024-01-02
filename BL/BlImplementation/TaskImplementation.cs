@@ -134,57 +134,56 @@ namespace BlImplementation
 
         public IEnumerable<BO.Task> ReadAll(Func<BO.Task, bool>? filter = null)
         {
-            IEnumerable<BO.Task> tasks = _dal.Task.ReadAll().Select(doTask =>
-            {
-                EngineerInTask? engineerInTask = null;
-
-                if (doTask?.EngineerId != null)
-                {
-                    engineerInTask = new BO.EngineerInTask
-                    {
-                        Id = (int)doTask.EngineerId,
-                        Name = _dal.Engineer.Read((int)doTask.EngineerId)!.Name
-                    };
-                }
-
-                return new BO.Task
-                {
-                    Id = doTask!.Id,
-                    Description = doTask.Description,
-                    Alias = doTask.Alias!,
-                    CreatedAtDate = doTask.CreatedAt ?? DateTime.MinValue,
-                    Status = GetTaskStatus(doTask),
-                    DependenceList = _dal.Dependency
-                        .ReadAll(dependency => dependency.DependensOnTask == doTask.Id)
-                        .Select(dependency =>
-                        {
-                            DO.Task dependTask = _dal.Task.Read(dependency!.DependentTask)!;
-                            return new BO.TaskInList
-                            {
-                                Id = dependTask.Id,
-                                Description = dependTask.Description,
-                                Alias = dependTask.Alias!,
-                                Status = GetTaskStatus(dependTask)
-                            };
-                        })
-                        .ToList(),
-                    BaselineStartDate = doTask.CreatedAt,
-                    StartDate = doTask.Start,
-                    ForecastDate = doTask.Forecast,
-                    DeadlineDate = doTask.DedLine,
-                    CompleteDate = doTask.Complete,
-                    Deliverables = doTask.Deliverables,
-                    Remarks = doTask.Remarks,
-                    Engineer = engineerInTask,
-                    ComplexityLevel = (BO.EngineerExperience)doTask.ComplexityLevel!
-                };
-            });
+            IEnumerable<BO.Task> tasks = _dal.Task.ReadAll().Select(doTask => Read(doTask!.Id))!;
             if (filter == null)
                 return tasks;
             return tasks.Where(filter);
         }
 
 
+        //    EngineerInTask? engineerInTask = null;
+
+        //    if (doTask?.EngineerId != null)
+        //    {
+        //        engineerInTask = new BO.EngineerInTask
+        //        {
+        //            Id = (int)doTask.EngineerId,
+        //            Name = _dal.Engineer.Read((int)doTask.EngineerId)!.Name
+        //        };
+        //    }
+
+        //    return new BO.Task
+        //    {
+        //        Id = doTask!.Id,
+        //        Description = doTask.Description,
+        //        Alias = doTask.Alias!,
+        //        CreatedAtDate = doTask.CreatedAt ?? DateTime.MinValue,
+        //        Status = GetTaskStatus(doTask),
+        //        DependenceList = _dal.Dependency
+        //            .ReadAll(dependency => dependency.DependensOnTask == doTask.Id)
+        //            .Select(dependency =>
+        //            {
+        //                DO.Task dependTask = _dal.Task.Read(dependency!.DependentTask)!;
+        //                return new BO.TaskInList
+        //                {
+        //                    Id = dependTask.Id,
+        //                    Description = dependTask.Description,
+        //                    Alias = dependTask.Alias!,
+        //                    Status = GetTaskStatus(dependTask)
+        //                };
+        //            })
+        //            .ToList(),
+        //        BaselineStartDate = doTask.CreatedAt,
+        //        StartDate = doTask.Start,
+        //        ForecastDate = doTask.Forecast,
+        //        DeadlineDate = doTask.DedLine,
+        //        CompleteDate = doTask.Complete,
+        //        Deliverables = doTask.Deliverables,
+        //        Remarks = doTask.Remarks,
+        //        Engineer = engineerInTask,
+        //        ComplexityLevel = (BO.EngineerExperience)doTask.ComplexityLevel!
+        //    };
+        //}
 
         public int Update(BO.Task item)
         {

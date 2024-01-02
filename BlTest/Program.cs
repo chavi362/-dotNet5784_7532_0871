@@ -1,6 +1,7 @@
 ﻿using DalApi;
 using DalTest;
 
+
 namespace BlTest
 {
     internal class Program
@@ -95,10 +96,18 @@ namespace BlTest
                     string name = Console.ReadLine()!;
                     Console.WriteLine("enter engineer's email");
                     string email = Console.ReadLine()!;
-                    DO.Engineer myEngineer = new(id, name, email, null, null);
+                    Console.WriteLine("enter engineer's level 0- to 4");
+                    BO.EngineerExperience engineerLevel;
+                    int? level = int.Parse(Console.ReadLine()!);
+                    bool b = Enum.TryParse<BO.EngineerExperience>(level.ToString(), out engineerLevel);
+                    if (!b)
+                        throw new Exception("error in parameter");
+                    Console.WriteLine("enter engineer's cost");
+                    double cost = double.Parse(Console.ReadLine()!);
+                    BO.Engineer myEngineer = new BO.Engineer() { Id = id, Name = name, Email = email, Level = engineerLevel, Cost = cost };
                     try
                     {
-                        int result = s_dal.Engineer.Create(myEngineer);
+                        int result = s_bl.Engineer.Create(myEngineer);
                         Console.WriteLine("the engineer was added");
                     }
                     catch (Exception ex)
@@ -111,7 +120,7 @@ namespace BlTest
                     int idRead = int.Parse(Console.ReadLine()!);
                     try
                     {
-                        Console.WriteLine(s_dal.Engineer.Read(idRead));
+                        Console.WriteLine(s_bl.Engineer.Read(idRead)!.ToString());
                     }
                     catch (Exception ex)
                     {
@@ -120,9 +129,9 @@ namespace BlTest
                     break;
                 case 'd'://read all
                     Console.WriteLine("all the engineers:");
-                    var arrReadAllEngineers = s_dal.Engineer.ReadAll();
+                    var arrReadAllEngineers = s_bl.Engineer.ReadAll();
                     foreach (var item in arrReadAllEngineers)
-                        Console.WriteLine(item);
+                        Console.WriteLine(item.ToString());
                     break;
                 case 'e'://update
                     Console.WriteLine("enter id of engineer to update");
@@ -133,29 +142,29 @@ namespace BlTest
                         string uname = Console.ReadLine()!;
                         Console.WriteLine("enter engineer's email");
                         string uemail = Console.ReadLine()!;
-                        Console.WriteLine("enter engineer's level from 0- to 2");
-                        int? level = int.Parse(Console.ReadLine()!);
-                        EngineerExperience enLevel;
-                        bool b = Enum.TryParse<EngineerExperience>(level.ToString(), out enLevel);
-                        if (!b)
-                            throw new Exception("I tell you to put between 0 to 2");
-                        enLevel = (EngineerExperience)level;
+                        Console.WriteLine("enter engineer's level from 0- to 4");
+                        int? ulevel = int.Parse(Console.ReadLine()!);
+                        BO.EngineerExperience uenLevel;
+                        bool bo = Enum.TryParse<BO.EngineerExperience>(ulevel.ToString(), out uenLevel);
+                        if (!bo)
+                            throw new Exception("I tell you to put between 0 to 4");
+                       // enLevel = (EngineerExperience)level;
                         Console.WriteLine("enter engineer's cost");
-                        double cost = double.Parse(Console.ReadLine()!);
-                        DO.Engineer upEngineer = new(idUpdate, uname, uemail, enLevel, cost);
-                        s_dal.Engineer.Update(upEngineer);
+                        double ucost = double.Parse(Console.ReadLine()!);
+                        BO.Engineer upEngineer = new BO.Engineer() { Id = idUpdate,Name=uname,Email=uemail,Level=uenLevel,Cost=ucost };
+                        s_bl.Engineer.Update(upEngineer);
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex);
                     }
                     break;
-                case 'f'://delete a product
+                case 'f'://delete a engineer
                     Console.WriteLine("enter id of engineer to delete");
                     int idDelete = int.Parse(Console.ReadLine()!);
                     try
                     {
-                        s_dal.Engineer.Delete(idDelete);
+                        s_bl.Engineer.Delete(idDelete);
                     }
                     catch (Exception ex)
                     {
@@ -268,7 +277,7 @@ namespace BlTest
             Console.WriteLine("for exit press 0");
             Console.WriteLine("for tasks press 1");
             Console.WriteLine("for engineers press 2");
-            Console.WriteLine("for dependencies 3");
+            Console.WriteLine("for Milestone 3");
 
             int select = int.Parse(Console.ReadLine()!);
             char x;
@@ -318,9 +327,4 @@ namespace BlTest
         }
     }
 }
-        static void Main(string[] args)
-        {
-           
-        }
-    }
-}
+
