@@ -111,9 +111,21 @@ namespace BlImplementation
         private Tuple<int, string> FindCurrentTask(int id)
         {
             DateTime today = DateTime.Now;
-            List<DO.Task> tasks = (List<DO.Task>)_dal.Task.ReadAll((task) => task.EngineerId == id && task.Complete > today && task.Start < today);
-            return new Tuple<int, string>(tasks.First().Id, tasks.First().Alias!);
+
+            // Use ToList() to materialize the result into a List
+            List<DO.Task> tasks = _dal.Task.ReadAll(task => task.EngineerId == id && task.Complete > today && task.Start < today).ToList()!;
+
+            if (tasks.Any())
+            {
+                return new Tuple<int, string>(tasks.First().Id, tasks.First().Alias!);
+            }
+            else
+            {
+                // Handle the case where no tasks are found
+                return new Tuple<int, string>(-1, "NoTaskFound");
+            }
         }
+
         public IEnumerable<Engineer> ReadAll(Func<BO.Engineer, bool>? filter = null)
         {
             IEnumerable<Engineer> engineers=_dal.Engineer.ReadAll().Select(doEngineer =>

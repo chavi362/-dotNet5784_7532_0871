@@ -1,5 +1,4 @@
-﻿using BO;
-using DalApi;
+﻿using DalApi;
 using DalTest;
 
 
@@ -7,7 +6,6 @@ namespace BlTest
 {
     internal class Program
     {
-
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         static void InfoOfTask(char x)
         {
@@ -34,24 +32,24 @@ namespace BlTest
                     {
                         Id = 4,
                         Description = description,
-                        Alias= alias,
-                        CreatedAtDate= DateTime.Now,
-                        Status=0,
-                        DependenceList=null,
-                        Milestone=null,
-                        BaselineStartDate=null,
-                        StartDate=null,
-                        ForecastDate=null,
-                        DeadlineDate=null,
-                        CompleteDate=null,
-                        Deliverables=deliverables,
-                        Remarks=remarks,
-                        Engineer=null,
-                        ComplexityLevel=enLevel
+                        Alias = alias,
+                        CreatedAtDate = DateTime.Now,
+                        Status = 0,
+                        DependenceList = null,
+                        Milestone = null,
+                        BaselineStartDate = null,
+                        StartDate = null,
+                        ForecastDate = null,
+                        DeadlineDate = null,
+                        CompleteDate = null,
+                        Deliverables = deliverables,
+                        Remarks = remarks,
+                        Engineer = null,
+                        ComplexityLevel = enLevel
                     };
                     try
                     {
-                        int result = s_bl!.Task.Create(task);
+                        int result = s_bl.Task.Create(task);
                         Console.WriteLine("the task was added");
                     }
                     catch (Exception ex)
@@ -83,40 +81,40 @@ namespace BlTest
                     try
                     {
                         Console.WriteLine("enter task alias");
-                        string alias = Console.ReadLine()!;
+                        string ualias = Console.ReadLine()!;
                         Console.WriteLine("enter task's description");
-                        string description = Console.ReadLine()!;
+                        string udescription = Console.ReadLine()!;
                         Console.WriteLine("enter task's Deliverables");
-                        string deliverables = Console.ReadLine()!;
+                        string udeliverables = Console.ReadLine()!;
                         Console.WriteLine("enter task's Remarks");
-                        string remarks = Console.ReadLine()!;
+                        string uremarks = Console.ReadLine()!;
                         Console.WriteLine("enter task's EngineerExperience required");
                         Console.WriteLine("enter engineer's level from 0- to 4");
-                        int? level = int.Parse(Console.ReadLine()!);
-                        BO.EngineerExperience enLevel;
-                        bool b = Enum.TryParse<BO.EngineerExperience>(level.ToString(), out enLevel);
-                        if (!b)
+                        int? ulevel = int.Parse(Console.ReadLine()!);
+                        BO.EngineerExperience uenLevel;
+                        bool bo = Enum.TryParse<BO.EngineerExperience>(ulevel.ToString(), out uenLevel);
+                        if (!bo)
                             throw new Exception("I tell you to put between 0 to 4");
-                        BO.Task task = new BO.Task()
+                        BO.Task utask = new BO.Task()
                         {
                             Id = 4,
-                            Description = description,
-                            Alias = alias,
+                            Description = udescription,
+                            Alias = ualias,
                             CreatedAtDate = DateTime.Now,
                             Status = 0,
-                            DependenceList = null,
-                            Milestone = null,
-                            BaselineStartDate = null,
-                            StartDate = null,
-                            ForecastDate = null,
-                            DeadlineDate = null,
-                            CompleteDate = null,
-                            Deliverables = deliverables,
-                            Remarks = remarks,
-                            Engineer = null,
-                            ComplexityLevel = enLevel
+                            //DependenceList = null,
+                            //Milestone = null,
+                            //BaselineStartDate = null,
+                            //StartDate = null,
+                            //ForecastDate = null,
+                            //DeadlineDate = null,
+                            //CompleteDate = null,
+                            Deliverables = udeliverables,
+                            Remarks = uremarks,
+                            //Engineer = null,
+                            ComplexityLevel = uenLevel
                         };
-                        s_bl.Task.Update(task);
+                        s_bl.Task.Update(utask);
 
                     }
                     catch (Exception ex)
@@ -140,6 +138,7 @@ namespace BlTest
                     break;
             }
         }
+
 
         public static void InfoOfEngineers(char x)
         {
@@ -205,10 +204,10 @@ namespace BlTest
                         bool bo = Enum.TryParse<BO.EngineerExperience>(ulevel.ToString(), out uenLevel);
                         if (!bo)
                             throw new Exception("I tell you to put between 0 to 4");
-                       // enLevel = (EngineerExperience)level;
+                        // enLevel = (EngineerExperience)level;
                         Console.WriteLine("enter engineer's cost");
                         double ucost = double.Parse(Console.ReadLine()!);
-                        BO.Engineer upEngineer = new BO.Engineer() { Id = idUpdate,Name=uname,Email=uemail,Level=uenLevel,Cost=ucost };
+                        BO.Engineer upEngineer = new BO.Engineer() { Id = idUpdate, Name = uname, Email = uemail, Level = uenLevel, Cost = ucost };
                         s_bl.Engineer.Update(upEngineer);
                     }
                     catch (Exception ex)
@@ -232,88 +231,88 @@ namespace BlTest
                     break;
             }
         }
-        public static void InfoOfDependencies(char x)
-        {
-            switch (x)
-            {
-                case 'a': break;
-                case 'b'://add                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            t = new Task();
-                    Console.WriteLine("enter  dependent task id");
-                    int tId = int.Parse(Console.ReadLine()!);
-                    Console.WriteLine("enter task befor id");
-                    int tIdBefor = int.Parse(Console.ReadLine()!);
-                    DO.Dependency d = new(4, tId, tIdBefor);
-                    try
-                    {
+        //public static void InfoOfDependencies(char x)
+        //{
+        //    switch (x)
+        //    {
+        //        case 'a': break;
+        //        case 'b'://add                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            t = new Task();
+        //            Console.WriteLine("enter  dependent task id");
+        //            int tId = int.Parse(Console.ReadLine()!);
+        //            Console.WriteLine("enter task befor id");
+        //            int tIdBefor = int.Parse(Console.ReadLine()!);
+        //            DO.Dependency d = new(4, tId, tIdBefor);
+        //            try
+        //            {
 
-                        int result = s_dal!.Dependency.Create(d);
-                        Console.WriteLine("the dependency was added");
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                    break;
-                case 'c'://read by id
-                    Console.WriteLine("enter dependency id to read");
-                    int id = int.Parse(Console.ReadLine()!);
-                    try
-                    {
-                        Console.WriteLine(s_dal.Dependency.Read(id));
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                    break;
-                case 'd'://read all
-                    Console.WriteLine("all the dependencies:");
-                    var arrReadAllDepdndencies = s_dal.Dependency.ReadAll();
-                    foreach (var item in arrReadAllDepdndencies)
-                        Console.WriteLine(item);
-                    break;
-                case 'e'://update
-                    Console.WriteLine("enter id of dependency to update");
-                    int idUpdate = int.Parse(Console.ReadLine()!);//search of the id to update
-                    try
-                    {
-                        Console.WriteLine("enter  dependent task id");
-                        int dId = int.Parse(Console.ReadLine()!);
-                        Console.WriteLine("enter task befor id");
-                        int dIdBefor = int.Parse(Console.ReadLine()!);
-                        DO.Dependency depend = new(idUpdate, dId, dIdBefor);
-                        //Console.WriteLine("enter created date");
-                        //Console.WriteLine("enter product's category(0-for cups,1-for cakes,2-for cookies)");
-                        //pUpdate._category = (ECategory)int.Parse(Console.ReadLine());
-                        //Console.WriteLine("enter product's instock");
-                        //pUpdate._inStock = int.Parse(Console.ReadLine());
-                        //Console.WriteLine("enter product's parve(0/1)");
-                        //pUpdate._parve = int.Parse(Console.ReadLine());
-                        //dalProduct.update(pUpdate);
-                        s_dal.Dependency.Update(depend);
+        //                int result = s_dal!.Dependency.Create(d);
+        //                Console.WriteLine("the dependency was added");
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                Console.WriteLine(ex);
+        //            }
+        //            break;
+        //        case 'c'://read by id
+        //            Console.WriteLine("enter dependency id to read");
+        //            int id = int.Parse(Console.ReadLine()!);
+        //            try
+        //            {
+        //                Console.WriteLine(s_dal.Dependency.Read(id));
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                Console.WriteLine(ex);
+        //            }
+        //            break;
+        //        case 'd'://read all
+        //            Console.WriteLine("all the dependencies:");
+        //            var arrReadAllDepdndencies = s_dal.Dependency.ReadAll();
+        //            foreach (var item in arrReadAllDepdndencies)
+        //                Console.WriteLine(item);
+        //            break;
+        //        case 'e'://update
+        //            Console.WriteLine("enter id of dependency to update");
+        //            int idUpdate = int.Parse(Console.ReadLine()!);//search of the id to update
+        //            try
+        //            {
+        //                Console.WriteLine("enter  dependent task id");
+        //                int dId = int.Parse(Console.ReadLine()!);
+        //                Console.WriteLine("enter task befor id");
+        //                int dIdBefor = int.Parse(Console.ReadLine()!);
+        //                DO.Dependency depend = new(idUpdate, dId, dIdBefor);
+        //                //Console.WriteLine("enter created date");
+        //                //Console.WriteLine("enter product's category(0-for cups,1-for cakes,2-for cookies)");
+        //                //pUpdate._category = (ECategory)int.Parse(Console.ReadLine());
+        //                //Console.WriteLine("enter product's instock");
+        //                //pUpdate._inStock = int.Parse(Console.ReadLine());
+        //                //Console.WriteLine("enter product's parve(0/1)");
+        //                //pUpdate._parve = int.Parse(Console.ReadLine());
+        //                //dalProduct.update(pUpdate);
+        //                s_dal.Dependency.Update(depend);
 
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                    break;
-                case 'f'://delete a dependency
-                    Console.WriteLine("enter id of dependency to delete");
-                    int idDelete = int.Parse(Console.ReadLine()!);
-                    try
-                    {
-                        s_dal.Dependency.Delete(idDelete);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                Console.WriteLine(ex);
+        //            }
+        //            break;
+        //        case 'f'://delete a dependency
+        //            Console.WriteLine("enter id of dependency to delete");
+        //            int idDelete = int.Parse(Console.ReadLine()!);
+        //            try
+        //            {
+        //                s_dal.Dependency.Delete(idDelete);
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                Console.WriteLine(ex);
+        //            }
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
         public static void Main(string[] args)
         {
             Console.Write("Would you like to create Initial data? (Y/N)");                                                              //string? ans = "Y";
@@ -323,8 +322,8 @@ namespace BlTest
                 try
                 {
                     //s_dal.Reset();
-                    //Initialization.Do(s_dal);
-                   DalTest.Initialization.Do(); //stage 4
+                    //Initialization.Do(s_dal);                    
+                    DalTest.Initialization.Do(); //stage 4
                 }
                 catch (Exception ex)
                 {
@@ -334,7 +333,7 @@ namespace BlTest
             Console.WriteLine("for exit press 0");
             Console.WriteLine("for tasks press 1");
             Console.WriteLine("for engineers press 2");
-            Console.WriteLine("for Milestone 3");
+            Console.WriteLine("for Milestone press 3");
 
             int select = int.Parse(Console.ReadLine()!);
             char x;
@@ -371,14 +370,18 @@ namespace BlTest
                         Console.WriteLine("for update an dependency befor another press e");
                         Console.WriteLine("for delete an dependency befor another press f");
                         x = char.Parse(Console.ReadLine()!);
-                        InfoOfDependencies(x);
+                        //InfoOfDependencies(x);
 
 
                         break;
                     default:
                         break;
                 }
-                Console.WriteLine("enter a number");
+
+                Console.WriteLine("for exit press 0");
+                Console.WriteLine("for tasks press 1");
+                Console.WriteLine("for engineers press 2");
+                Console.WriteLine("for Milestone press 3");
                 select = int.Parse(Console.ReadLine()!);
             }
         }
