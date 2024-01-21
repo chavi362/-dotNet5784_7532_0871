@@ -138,7 +138,7 @@ namespace BlImplementation
                         Cost = (double)doEngineer.Cost!,
                         CurrentTask = FindCurrentTask(doEngineer.Id)
                     });
-            if(filter == null)
+            if (filter == null)
                 return engineers;
             return engineers.Where(filter);
         }

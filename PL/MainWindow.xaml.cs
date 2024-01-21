@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PL.Engineer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,22 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void HandleToEngineersScreen(object sender, RoutedEventArgs e)
+        {
+            new EngineerListWindow().Show();
+        }
+
+        private void Intilazation(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to perform the initialization?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                // User clicked "Yes," call the initialization method
+                DalTest.Initialization.Do();
+            }
         }
     }
 }
