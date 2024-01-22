@@ -45,7 +45,7 @@ public static class Initialization
                 finalCompletionDate,
                 null,
                 null,
-                0,
+                null,
                 null
             );
 
@@ -117,6 +117,7 @@ public static class Initialization
         //s_dal = dal ?? throw new NullReferenceException("DAL object cannot be null!"); // Stage 2
         // Call the private methods to initialize the lists
         s_dal = DalApi.Factory.Get; //stage 4
+        s_dal.Reset();
         createTasks();
         createEngineers();
         createDependencies();

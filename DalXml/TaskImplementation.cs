@@ -3,8 +3,6 @@ namespace Dal;
 using DalApi;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 internal class TaskImplementation : ITask
@@ -14,24 +12,48 @@ internal class TaskImplementation : ITask
     {
         int id = Config.NextTaskId;
         const string tasksFile = @"..\xml\tasks.xml";
+
         XElement? tasksElements = XDocument.Load(tasksFile).Root;
+        XNamespace xsiNamespace = "http://www.w3.org/2001/XMLSchema-instance";  // Define the XML namespace for xsi
+
         XElement newTaskElement = new XElement("Task",
             new XElement("Id", id),
             new XElement("Description", t.Description),
             new XElement("Alias", t.Alias),
             new XElement("Milestone", t.Milestone),
-            new XElement("RequiredEffortTime", t.RequiredEffortTime.ToString()),
+            new XElement("RequiredEffortTime", t.RequiredEffortTime == null ?
+                new XAttribute(xsiNamespace + "nil", "true") :
+                new XText(t.RequiredEffortTime.ToString()!)),
             new XElement("CreatedAt", t.CreatedAt),
-            new XElement("Start", t.Start),
-            new XElement("Forecast", t.Forecast),
-            new XElement("DedLine", t.DedLine),
-            new XElement("Complete", t.Complete),
-            new XElement("Deliverables", t.Deliverables),
-            new XElement("Remarks", t.Remarks),
-            new XElement("EngineerId", t.EngineerId),
-            new XElement("ComplexityLevel", t.ComplexityLevel));
+            new XElement("Start", t.Start == null ?
+                new XAttribute(xsiNamespace + "nil", "true") :
+                new XText(t.Start.ToString()!)),
+            new XElement("Forecast", t.Forecast == null ?
+                new XAttribute(xsiNamespace + "nil", "true") :
+                new XText(t.Forecast.ToString()!)),
+            new XElement("DedLine", t.DedLine == null ?
+                new XAttribute(xsiNamespace + "nil", "true") :
+                new XText(t.DedLine.ToString()!)),
+            new XElement("Complete", t.Complete == null ?
+                new XAttribute(xsiNamespace + "nil", "true") :
+                new XText(t.Complete.ToString()!)),
+            new XElement("Deliverables", t.Deliverables == null ? new XAttribute(xsiNamespace + "nil", "true") : new XText(t.Deliverables.ToString()!)),
+            new XElement("Remarks", t.Remarks==null? new XAttribute(xsiNamespace + "nil", "true") :
+                new XText(t.Remarks.ToString()!)),
+            new XElement("EngineerId", t.EngineerId == null ?
+                new XAttribute(xsiNamespace + "nil", "true") :
+                new XText(t.EngineerId.ToString()!)),
+            new XElement("ComplexityLevel", t.ComplexityLevel==null? new XAttribute(xsiNamespace + "nil", "true") :
+                new XText(t.ComplexityLevel.ToString()!))
+        );
+
         tasksElements?.Add(newTaskElement);
         tasksElements?.Save(@"..\xml\tasks.xml");
+
+
+        //List<DO.Task> taskList = XMLTools.LoadListFromXMLSerializer<DO.Task>("tasks");
+        //taskList.Add(t);
+        //XMLTools.SaveListToXMLSerializer<DO.Task>(taskList, "tasks");
         return id;
     }
     public void Delete(int? id = null)
@@ -185,6 +207,9 @@ internal class TaskImplementation : ITask
 
     private DO.Task ConvertToTask(XElement taskElement)
     {
+        int? engineerId = null;
+        if (taskElement.Element("EngineerId")?.Value !="")
+            engineerId = Convert.ToInt32(taskElement.Element("EngineerId")?.Value);
         return new DO.Task
         {
             Id = Convert.ToInt32(taskElement.Element("Id")?.Value),
@@ -211,7 +236,7 @@ internal class TaskImplementation : ITask
                        : null,
             Deliverables = taskElement.Element("Deliverables")?.Value,
             Remarks = taskElement.Element("Remarks")?.Value,
-            EngineerId = Convert.ToInt32(taskElement.Element("EngineerId")?.Value),
+            EngineerId = engineerId,
             ComplexityLevel = taskElement.Element("ComplexityLevel")?.Value !=""
                        ? (DO.EngineerExperience?)Enum.Parse(typeof(DO.EngineerExperience), taskElement.Element("ComplexityLevel")!.Value)
                        : null

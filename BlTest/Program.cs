@@ -321,8 +321,8 @@ namespace BlTest
 
                 try
                 {
-                    //s_dal.Reset();
-                    //Initialization.Do(s_dal);                    
+                    //Initialization.Do(s_dal);
+                    
                     DalTest.Initialization.Do(); //stage 4
                 }
                 catch (Exception ex)

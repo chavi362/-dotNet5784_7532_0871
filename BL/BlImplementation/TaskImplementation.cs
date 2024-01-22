@@ -15,13 +15,14 @@ namespace BlImplementation
                 throw new ArgumentException("the item is not valid");
             try
             {
-                item.DependenceList!.ForEach((dependency) =>
-                {
-                    _dal.Dependency.Create(new DO.Dependency(0, item.Id, dependency.Id));
-                });
+                //item.DependenceList!.ForEach((dependency) =>
+                //{
+                //    _dal.Dependency.Create(new DO.Dependency(0, item.Id, dependency.Id));
+                //});
                 int? idEngineer = null;
-                if(item.Engineer!=null) {
-                    idEngineer = item.Engineer.Id; 
+                if (item.Engineer != null)
+                {
+                    idEngineer = item.Engineer.Id;
                 }
                 _dal.Task.Create(new DO.Task(
                     0,
@@ -88,14 +89,40 @@ namespace BlImplementation
         }
         public BO.Task? Read(int id)
         {
+            IEnumerable<DO.Dependency> dependencies;
+            List<BO.TaskInList>? dependenciesOfTask=null;
             try
             {
-                Console.WriteLine(_dal.Dependency.ReadAll((dependency) => dependency.DependensOnTask == id));
+                dependencies = _dal.Dependency.ReadAll((dependency) => dependency.DependensOnTask == id)!;
+                if(dependencies.Any())
+                {
+                    dependenciesOfTask = dependencies
+                     .Select(dependency =>
+                     {
+                         DO.Task dependTask = _dal.Task.Read(dependency!.DependentTask)!;
+
+                         return new BO.TaskInList
+                         {
+                             Id = dependTask.Id,
+                             Description = dependTask.Description,
+                             Alias = dependTask.Alias!,
+                             Status = GetTaskStatus(dependTask)
+                         };
+                     }).Where(dependTask => dependTask != null) // Filter out null values
+                        .ToList();
+                }
+               
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
+
+            BO.EngineerExperience? level = null;
+            //  if(doTask.ComplexityLevel!=null)
+            //{
+            //    level = (BO.EngineerExperience)doTask.ComplexityLevel!;
+            //}
             // Retrieve the task information from the data access layer
             DO.Task? doTask = _dal.Task.Read(id);
             // Check if the task with the given ID exists
@@ -103,42 +130,29 @@ namespace BlImplementation
                 throw new BO.BlDoesNotExistException($"Task with ID={id} does not exist", null!);
             BO.EngineerInTask? engineerInTask = null;
             if (doTask?.EngineerId != null)
-                engineerInTask = new BO.EngineerInTask() { Id = (int)doTask.EngineerId, Name = _dal.Engineer.Read((int)doTask.EngineerId)!.Name };
-            return new BO.Task
+                engineerInTask = new BO.EngineerInTask() { Id = (int)doTask.EngineerId, Name = _dal.Engineer.Read((int)doTask.EngineerId)!.Name }; 
+
+                return new BO.Task
             {
-                Id = doTask!.Id,
+                  Id = doTask!.Id,
                  Alias = doTask.Alias!,
                  Description = doTask.Description,
                 CreatedAtDate = doTask.CreatedAt ?? DateTime.MinValue,
                 Status = GetTaskStatus(doTask),
-                DependenceList = _dal.Dependency
-                    .ReadAll((dependency) => dependency.DependensOnTask == doTask.Id)
-                     .Select(dependency =>
-                         {
-                             DO.Task dependTask = _dal.Task.Read(dependency!.DependentTask)!;
-
-                             return new BO.TaskInList
-                             {
-                                 Id = dependTask.Id,
-                                 Description = dependTask.Description,
-                                 Alias = dependTask.Alias!,
-                                 Status = GetTaskStatus(dependTask)
-                             };
-                         }).Where(dependTask => dependTask != null) // Filter out null values
-                        .ToList(),
-                //Milestone = doTask.Milestone
-                //? new BO.MilestoneInTask(doTask.Id, doTask.Alias) // Set Milestone based on some condition
-                //: ,
-                BaselineStartDate = doTask.CreatedAt,
-                StartDate = doTask.Start,
-                ForecastDate = doTask.Forecast,
-                DeadlineDate = doTask.DedLine,
-                CompleteDate = doTask.Complete,
-                Deliverables = doTask.Deliverables,
-                Remarks = doTask.Remarks,
-                Engineer =  engineerInTask,
-                ComplexityLevel = (BO.EngineerExperience)doTask.ComplexityLevel!
-            };
+                DependenceList = dependenciesOfTask,
+                    //Milestone = doTask.Milestone
+                    //? new BO.MilestoneInTask(doTask.Id, doTask.Alias) // Set Milestone based on some condition
+                    //: ,
+                    BaselineStartDate = doTask.CreatedAt,
+                    StartDate = doTask.Start,
+                    ForecastDate = doTask.Forecast,
+                    DeadlineDate = doTask.DedLine,
+                    CompleteDate = doTask.Complete,
+                    Deliverables = doTask.Deliverables,
+                    Remarks = doTask.Remarks,
+                    Engineer = engineerInTask,
+                    ComplexityLevel = (BO.EngineerExperience)doTask.ComplexityLevel!
+                };
         }
 
 
@@ -149,7 +163,7 @@ namespace BlImplementation
                 return tasks;
             return tasks.Where(filter);
         }
-        public int Update(BO.Task item)
+        public void Update(BO.Task item)
         {
             int? idEngineer = null;
             if (item.Engineer != null)
@@ -185,7 +199,7 @@ namespace BlImplementation
             {
                 throw new Exception("cant add the dependencies for this task");
             }
-            return item.Id;
+           // return item.Id;
         }
     }
 }
