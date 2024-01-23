@@ -10,4 +10,11 @@ internal class EngineerExperienceCollection : IEnumerable
 
     public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
 }
+internal class TaskStatusCollection : IEnumerable
+{
+    static readonly IEnumerable<BO.Status> st_enums =
+(Enum.GetValues(typeof(BO.Status)) as IEnumerable<BO.Status>)!;
+
+    public IEnumerator GetEnumerator() => st_enums.GetEnumerator();
+}
 

@@ -1,33 +1,40 @@
 ﻿using BO;
+using PL.Engineer;
 using System;
+
 using System.Windows;
 using System.Windows.Controls;
 
-namespace PL.Engineer
+
+namespace PL.Task
 {
-    public partial class EngineerWIndow : Window
+    /// <summary>
+    /// Interaction logic for TaskWindow.xaml
+    /// </summary>
+    public partial class TaskWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-       // public BO.EngineerExperience Experience { get; set; } = BO.EngineerExperience.None;
-        public BO.Engineer? Engineer
+        // public BO.EngineerExperience Experience { get; set; } = BO.EngineerExperience.None;
+        public BO.Task? Task
         {
-            get { return (BO.Engineer)GetValue(EngineerProperty); }
-            set { SetValue(EngineerProperty, value); }
+            get { return (BO.Task)GetValue(TaskProperty); }
+            set { SetValue(TaskProperty, value); }
         }
 
-        public static readonly DependencyProperty EngineerProperty =
-            DependencyProperty.Register("Engineer", typeof(BO.Engineer), typeof(EngineerWIndow), new PropertyMetadata(null));
-        public EngineerWIndow(int id = 0)
+        public static readonly DependencyProperty TaskProperty =
+            DependencyProperty.Register("Task", typeof(BO.Task), typeof(TaskWindow), new PropertyMetadata(null));
+        public TaskWindow(int id = 0)
         {
             InitializeComponent();
-            try {
-                EngineerExperience level;
-                Enum.TryParse<EngineerExperience>(0.ToString(), out level);
-                Engineer = id != 0 ? s_bl.Engineer.Read(id) : new BO.Engineer { Id = 0, Name = "", Email = "" ,Level=level }; 
+            try
+            {
+                Status status;
+                Enum.TryParse<Status>(0.ToString(), out status);
+                Task = id != 0 ? s_bl.Task.Read(id) : new BO.Task { Id = 0, Description = "", Alias = "", Status = status,CreatedAtDate=DateTime.Now };
             }
             catch (BO.BlDoesNotExistException ex)
             {
-                Engineer = null;
+                Task = null;
                 MessageBox.Show(ex.Message, "Operation Fail", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 this.Close();
             }
@@ -46,8 +53,8 @@ namespace PL.Engineer
                     //tbd: test all fields are ok
                     //...
 
-                    int? id = s_bl.Engineer.Create(Engineer!);
-                    MessageBox.Show($"Engineer {id} was successfully added!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    int? id = s_bl.Task.Create(Task!);
+                    MessageBox.Show($"Task {id} was successfully added!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                     this.Close();
                 }
                 catch (BO.BlAlreadyExistsException ex)
@@ -66,8 +73,8 @@ namespace PL.Engineer
                     //tbd: test all fields are ok
                     //...
 
-                    s_bl.Engineer.Update(Engineer!);
-                    MessageBox.Show($"Engineer {Engineer?.Id} was successfully updated!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    s_bl.Task.Update(Task!);
+                    MessageBox.Show($"Task {Task?.Id} was successfully updated!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                     this.Close();
                 }
                 catch (BO.BlDoesNotExistException ex)
@@ -82,3 +89,4 @@ namespace PL.Engineer
         }
     }
 }
+

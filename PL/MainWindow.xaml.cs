@@ -1,4 +1,5 @@
 ﻿using PL.Engineer;
+using PL.Task;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,11 @@ namespace PL
                 // User clicked "Yes," call the initialization method
                 DalTest.Initialization.Do();
             }
+        }
+
+        private void GoToTasks(object sender, RoutedEventArgs e)
+        {
+            new TaskListWindow().Show();
         }
     }
 }

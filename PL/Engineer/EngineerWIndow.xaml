@@ -5,19 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Engineer"
         mc:Ignorable="d"
-        Title="EngineerWindow" Height="450" Width="800">
+        Title="EngineerWindow" Height="450" Width="800"
+        DataContext="{Binding Engineer, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
     <Grid>
         <Label Content="ID" HorizontalAlignment="Left" Margin="221,93,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.443,2.577"/>
         <Label Content="Name" HorizontalAlignment="Left" Margin="221,136,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.443,2.577"/>
         <Label Content="Email" HorizontalAlignment="Left" Margin="221,236,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.443,2.577"/>
         <Label Content="Level" HorizontalAlignment="Left" Margin="221,187,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.443,2.577"/>
         <Label Content="Cost" HorizontalAlignment="Left" Margin="221,290,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.443,2.577"/>
-        <TextBox HorizontalAlignment="Left" Margin="339,93,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="186" Height="30"/>
-        <TextBox HorizontalAlignment="Left" Margin="339,136,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="186" Height="30"/>
-        <TextBox HorizontalAlignment="Left" Margin="339,232,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="186" Height="30"/>
-        <TextBox HorizontalAlignment="Left" Margin="339,286,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="186" Height="30"/>
-        <ComboBox HorizontalAlignment="Left" Margin="339,187,0,0" VerticalAlignment="Top" Width="186" Height="30"/>
-        <Button Content="" HorizontalAlignment="Left" Margin="315,389,0,0" VerticalAlignment="Top" Height="35" Width="103"/>
+        <TextBox Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="30" Margin="339,97,0,0"  VerticalAlignment="Top" Width="186" IsReadOnly="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToBoolKey}}"/>
+        <TextBox Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="30" Margin="339,143,0,0"  VerticalAlignment="Top" Width="186"/>
+        <TextBox Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="30" Margin="339,234,0,0"  VerticalAlignment="Top" Width="186"/>
+        <TextBox Text="{Binding Cost, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="30" Margin="339,286,0,0"  VerticalAlignment="Top" Width="186"/>
+        <ComboBox 
+            SelectedValue="{Binding Level, Mode=TwoWay}"
+         ItemsSource="{Binding Source={StaticResource EngineerExperienceCollectionKey}}" HorizontalAlignment="Left" Margin="339,189,0,0" VerticalAlignment="Top" Width="186" Height="30"/>
+        <Button Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
+ HorizontalAlignment="Left" Margin="297,358,0,0" VerticalAlignment="Top" Height="35" Width="103" Click="AddOrUpdate_Click" />
 
     </Grid>
 </Window>

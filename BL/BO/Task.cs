@@ -23,6 +23,10 @@ namespace BO
         public string? Remarks { get; set; }
         public BO.EngineerInTask? Engineer { get; set; }
         public EngineerExperience? ComplexityLevel { get; set; }
+        public override string ToString()
+        {
+            return this.ToStringProperty();
+        }
 
     }
 }

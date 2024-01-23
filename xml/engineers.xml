@@ -43,13 +43,6 @@
     <Cost>293977</Cost>
   </Engineer>
   <Engineer>
-    <Id>202632547</Id>
-    <Name>Chavi Chaimson</Name>
-    <Email>ChaviChaimson@gmail.com</Email>
-    <Level>Competent</Level>
-    <Cost>477571</Cost>
-  </Engineer>
-  <Engineer>
     <Id>242272858</Id>
     <Name>Avigail Catz</Name>
     <Email>AvigailCatz@gmail.com</Email>
@@ -69,5 +62,19 @@
     <Email>ChaniLev@gmail.com</Email>
     <Level>AdvancedBeginner</Level>
     <Cost>1801244</Cost>
+  </Engineer>
+  <Engineer>
+    <Id>202632547</Id>
+    <Name>Chavi Chaimson</Name>
+    <Email>ChaviChaimson@gmail.com</Email>
+    <Level>Competent</Level>
+    <Cost>50</Cost>
+  </Engineer>
+  <Engineer>
+    <Id>123456789</Id>
+    <Name>v</Name>
+    <Email>ch@gmail.com</Email>
+    <Level>Competent</Level>
+    <Cost>300</Cost>
   </Engineer>
 </ArrayOfEngineer>

@@ -1,6 +1,7 @@
 ﻿
 
 using BlApi;
+using BO;
 using DalApi;
 using System.Collections.Generic;
 
@@ -11,6 +12,9 @@ namespace BlImplementation
         private DalApi.IDal _dal = DalApi.Factory.Get;
         public int Create(BO.Task item)
         {
+            DO.EngineerExperience? engineerExperience = null;
+            if (item.ComplexityLevel != null)
+                engineerExperience = (DO.EngineerExperience)item.ComplexityLevel!;
             if (item.Id < 0 || item.Alias == "")
                 throw new ArgumentException("the item is not valid");
             try
@@ -38,7 +42,7 @@ namespace BlImplementation
                     item.Deliverables,
                     item.Remarks,
                     idEngineer,
-                    (DO.EngineerExperience)item.ComplexityLevel!
+                   engineerExperience
                     ));
             }
             catch (DO.DalAlreadyExistsException)
@@ -130,8 +134,10 @@ namespace BlImplementation
                 throw new BO.BlDoesNotExistException($"Task with ID={id} does not exist", null!);
             BO.EngineerInTask? engineerInTask = null;
             if (doTask?.EngineerId != null)
-                engineerInTask = new BO.EngineerInTask() { Id = (int)doTask.EngineerId, Name = _dal.Engineer.Read((int)doTask.EngineerId)!.Name }; 
-
+                engineerInTask = new BO.EngineerInTask() { Id = (int)doTask.EngineerId, Name = _dal.Engineer.Read((int)doTask.EngineerId)!.Name };
+            EngineerExperience? complevel = null;
+            if (doTask?.ComplexityLevel != null)
+                complevel = (BO.EngineerExperience)doTask.ComplexityLevel!;
                 return new BO.Task
             {
                   Id = doTask!.Id,
@@ -151,10 +157,9 @@ namespace BlImplementation
                     Deliverables = doTask.Deliverables,
                     Remarks = doTask.Remarks,
                     Engineer = engineerInTask,
-                    ComplexityLevel = (BO.EngineerExperience)doTask.ComplexityLevel!
+                    ComplexityLevel =complevel
                 };
         }
-
 
         public IEnumerable<BO.Task> ReadAll(Func<BO.Task, bool>? filter = null)
         {

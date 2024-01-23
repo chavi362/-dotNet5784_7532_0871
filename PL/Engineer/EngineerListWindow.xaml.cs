@@ -21,8 +21,7 @@ namespace PL.Engineer
     public partial class EngineerListWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        public BO.EngineerExperience Experience { get; set; } = BO.EngineerExperience.None;
-
+     
         public IEnumerable<BO.Engineer> EngineerList
         {
             get { return (IEnumerable<BO.Engineer>)GetValue(EngineerListProperty); }
@@ -30,17 +29,45 @@ namespace PL.Engineer
         }
 
         public static readonly DependencyProperty EngineerListProperty =
-            DependencyProperty.Register("EngineersList", typeof(IEnumerable<BO.Engineer>), typeof(EngineerListWindow), new PropertyMetadata(null));
+            DependencyProperty.Register("EngineerList", typeof(IEnumerable<BO.Engineer>), typeof(EngineerListWindow), new PropertyMetadata(null));
+        public BO.EngineerExperience EExperience { get; set; } = BO.EngineerExperience.None;
         public EngineerListWindow()
         {
             InitializeComponent();
+            //EngineerList = s_bl?.Engineer.ReadAll()!;
+        }
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            QueryEngineerList();
+        }
+        private void QueryEngineerList()
+        {
             EngineerList = s_bl?.Engineer.ReadAll()!;
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void SearchByLevel(object sender, SelectionChangedEventArgs e)
         {
-            EngineerList = (Experience == BO.EngineerExperience.None) ?
-            s_bl?.Engineer.ReadAll()! : s_bl?.Engineer.ReadAll(item => item.Level == Experience)!;
+           
+            EngineerList = (EExperience == BO.EngineerExperience.None) ?
+            s_bl?.Engineer.ReadAll()! : s_bl?.Engineer.ReadAll(item => item.Level == EExperience)!;
+        }
+
+        private void AddEngineerClick(object sender, RoutedEventArgs e)
+        {
+            new EngineerWIndow().ShowDialog();
+        }
+
+        private void DubbleClickEngineer(object sender, MouseButtonEventArgs e)
+        {
+            BO.Engineer? engineer = (sender as ListView)?.SelectedItem as BO.Engineer;
+            new EngineerWIndow(engineer!.Id).ShowDialog();
         }
     }
+    //private void EngineerListWindow_Activated(object sender, EventArgs e)
+    //{
+    //    var temp = s_bl?.Engineer.ReadAll();
+    //    EngineerList = (temp == null) ? new() : new(temp!);
+    //    var updatedEngineer = s_bl?.Engineer.ReadAll();
+    //    EngineerList = updatedEngineer == null ? new() : new(updatedEngineer!);
+    //}
 }

@@ -8,9 +8,10 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <!--for engineers screen-->
-        <Button Content="Handle Engineers" HorizontalAlignment="Left" Margin="414,165,0,0" VerticalAlignment="Top" Height="69" Width="155" Click="HandleToEngineersScreen"/>
+        <Button Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" Content="Engineers" HorizontalAlignment="Left" Margin="414,165,0,0" VerticalAlignment="Top" Height="69" Width="155" Click="HandleToEngineersScreen"/>
         <!--for intialization-->
-        <Button Content="Handle Intialization" HorizontalAlignment="Left" Margin="157,165,0,0" VerticalAlignment="Top" Height="69" Width="155" Click="Intilazation"/>
+        <Button Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" Content="Intialization" HorizontalAlignment="Left" Margin="157,165,0,0" VerticalAlignment="Top" Height="69" Width="155" Click="Intilazation"/>
+        <Button Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" Content="Tasks" HorizontalAlignment="Left" Margin="615,165,0,0" VerticalAlignment="Top" Height="69" Width="155" Click="GoToTasks"/>
 
     </Grid>
 </Window>

@@ -1,0 +1,41 @@
+﻿<Window x:Class="PL.Task.TaskWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Task"
+        mc:Ignorable="d"
+        Title="TaskWindow" Height="800" Width="800"
+        DataContext="{Binding Task, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
+    <Grid>
+        <Label Content="ID" HorizontalAlignment="Left" Margin="221,93,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.443,2.577"/>
+        <Label Content="Description" HorizontalAlignment="Left" Margin="221,136,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.443,2.577"/>
+        <Label Content="Alias" HorizontalAlignment="Left" Margin="221,186,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.443,2.577"/>
+        <Label Content="Status" HorizontalAlignment="Left" Margin="221,231,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.443,2.577"/>
+        <Label Content="CreatedAtDate" HorizontalAlignment="Left" Margin="221,290,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.443,2.577"/>
+        <Label Content="BaselineStartDate" HorizontalAlignment="Left" Margin="221,337,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="0.443,2.577"/>
+        <Label Content="StartDate" HorizontalAlignment="Left" Margin="221,374,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.443,2.577"/>
+        <Label Content="ForecastDate" HorizontalAlignment="Left" Margin="221,418,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.443,2.577"/>
+        <Label Content="DeadlineDate" HorizontalAlignment="Left" Margin="221,457,0,0" VerticalAlignment="Top" Width="94" RenderTransformOrigin="0.443,2.577"/>
+        <Label Content="CompleteDate" HorizontalAlignment="Left" Margin="221,501,0,0" VerticalAlignment="Top" Width="94" RenderTransformOrigin="0.443,2.577"/>
+        <Label Content="Deliverables" HorizontalAlignment="Left" Margin="221,545,0,0" VerticalAlignment="Top" Width="94" RenderTransformOrigin="0.443,2.577"/>
+        <Label Content="Remarks" HorizontalAlignment="Left" Margin="221,586,0,0" VerticalAlignment="Top" Width="94" RenderTransformOrigin="0.443,2.577"/>
+        <TextBox Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="30" Margin="339,97,0,0"  VerticalAlignment="Top" Width="186" IsReadOnly="True"/>
+        <TextBox Text="{Binding Description, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="30" Margin="339,139,0,0"  VerticalAlignment="Top" Width="186"/>
+        <TextBox Text="{Binding Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="30" Margin="339,187,0,0"  VerticalAlignment="Top" Width="186"/>
+        <TextBox Text="{Binding Deliverables, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="30" Margin="339,544,0,0"  VerticalAlignment="Top" Width="186"/>
+        <TextBox Text="{Binding Remarks, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="30" Margin="339,583,0,0"  VerticalAlignment="Top" Width="186"/>
+        <ComboBox 
+            SelectedValue="{Binding Status, Mode=TwoWay}"
+         ItemsSource="{Binding Source={StaticResource TaskStatusCollectionKey}}" HorizontalAlignment="Left" Margin="339,233,0,0" VerticalAlignment="Top" Width="186" Height="30"/>
+        <DatePicker SelectedDate="{Binding CreatedAtDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Margin="339,290,0,0" VerticalAlignment="Top" Height="26" Width="186"/>
+        <DatePicker SelectedDate="{Binding BaselineStartDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Left" Margin="339,337,0,0" VerticalAlignment="Top" Height="26" Width="186"/>
+        <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Left" Margin="339,0,0,0" VerticalAlignment="Center" Height="26" Width="186"/>
+        <DatePicker SelectedDate="{Binding ForecastDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Left" Margin="339,418,0,0" VerticalAlignment="Top" Height="26" Width="186"/>
+        <DatePicker SelectedDate="{Binding DeadlineDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Left" Margin="339,462,0,0" VerticalAlignment="Top" Height="26" Width="186"/>
+        <DatePicker SelectedDate="{Binding CompleteDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Left" Margin="339,501,0,0" VerticalAlignment="Top" Height="26" Width="186"/>
+        <Button Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
+ HorizontalAlignment="Left" Margin="297,705,0,0" VerticalAlignment="Top" Height="35" Width="103" Click="AddOrUpdate_Click" />
+
+    </Grid>
+</Window>
