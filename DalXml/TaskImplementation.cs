@@ -24,16 +24,16 @@ internal class TaskImplementation : ITask
             new XElement("RequiredEffortTime", t.RequiredEffortTime == null ?
                 new XAttribute(xsiNamespace + "nil", "true") :
                 new XText(t.RequiredEffortTime.ToString()!)),
-            new XElement("CreatedAt", t.CreatedAt),
+            new XElement("CreatedAtDate", t.CreatedAtDate),
             new XElement("Start", t.Start == null ?
                 new XAttribute(xsiNamespace + "nil", "true") :
                 new XText(t.Start.ToString()!)),
             new XElement("Forecast", t.Forecast == null ?
                 new XAttribute(xsiNamespace + "nil", "true") :
                 new XText(t.Forecast.ToString()!)),
-            new XElement("DedLine", t.DedLine == null ?
+            new XElement("DeadLineDate", t.DeadLineDate == null ?
                 new XAttribute(xsiNamespace + "nil", "true") :
-                new XText(t.DedLine.ToString()!)),
+                new XText(t.DeadLineDate.ToString()!)),
             new XElement("Complete", t.Complete == null ?
                 new XAttribute(xsiNamespace + "nil", "true") :
                 new XText(t.Complete.ToString()!)),
@@ -169,10 +169,10 @@ internal class TaskImplementation : ITask
             new XElement("Alias", t.Alias),
             new XElement("Milestone", t.Milestone),
             new XElement("RequiredEffortTime", t.RequiredEffortTime),
-            new XElement("CreatedAt", t.CreatedAt),
+            new XElement("CreatedAtDate", t.CreatedAtDate),
             new XElement("Start", t.Start),
             new XElement("Forecast", t.Forecast),
-            new XElement("DedLine", t.DedLine),
+            new XElement("DeadLineDate", t.DeadLineDate),
             new XElement("Complete", t.Complete),
             new XElement("Deliverables", t.Deliverables),
             new XElement("Remarks", t.Remarks),
@@ -219,8 +219,8 @@ internal class TaskImplementation : ITask
             RequiredEffortTime = taskElement.Element("RequiredEffortTime")?.Value != null
                        ? (TimeSpan?)TimeSpan.Parse(taskElement.Element("RequiredEffortTime")!.Value)
                        : null,
-            CreatedAt = taskElement.Element("CreatedAt")?.Value != null
-                       ? (DateTime?)DateTime.Parse(taskElement.Element("CreatedAt")!.Value)
+            CreatedAtDate = taskElement.Element("CreatedAtDate")?.Value != null
+                       ? (DateTime?)DateTime.Parse(taskElement.Element("CreatedAtDate")!.Value)
                        : null,
             Start = taskElement.Element("Start")?.Value != null
                        ? (DateTime?)DateTime.Parse(taskElement.Element("Start")!.Value)
@@ -228,8 +228,8 @@ internal class TaskImplementation : ITask
             Forecast = taskElement.Element("Forecast")?.Value != null
                        ? (DateTime?)DateTime.Parse(taskElement.Element("Forecast")!.Value)
                        : null,
-            DedLine = taskElement.Element("DedLine")?.Value != null
-                       ? (DateTime?)DateTime.Parse(taskElement.Element("DedLine")!.Value)
+            DeadLineDate = taskElement.Element("DeadLineDate")?.Value != null
+                       ? (DateTime?)DateTime.Parse(taskElement.Element("DeadLineDate")!.Value)
                        : null,
             Complete = taskElement.Element("Complete")?.Value != null
                        ? (DateTime?)DateTime.Parse(taskElement.Element("Complete")!.Value)

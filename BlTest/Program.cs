@@ -1,4 +1,5 @@
-﻿using DalApi;
+﻿using BO;
+using DalApi;
 using DalTest;
 
 
@@ -33,7 +34,7 @@ namespace BlTest
                         Id = 4,
                         Description = description,
                         Alias = alias,
-                        CreatedAtDate = DateTime.Now,
+                        CreatedAtDateDate = DateTime.Now,
                         Status = 0,
                         DependenceList = null,
                         Milestone = null,
@@ -100,7 +101,7 @@ namespace BlTest
                             Id = 4,
                             Description = udescription,
                             Alias = ualias,
-                            CreatedAtDate = DateTime.Now,
+                            CreatedAtDateDate = DateTime.Now,
                             Status = 0,
                             //DependenceList = null,
                             //Milestone = null,
@@ -231,89 +232,39 @@ namespace BlTest
                     break;
             }
         }
-        //public static void InfoOfDependencies(char x)
-        //{
-        //    switch (x)
-        //    {
-        //        case 'a': break;
-        //        case 'b'://add                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            t = new Task();
-        //            Console.WriteLine("enter  dependent task id");
-        //            int tId = int.Parse(Console.ReadLine()!);
-        //            Console.WriteLine("enter task befor id");
-        //            int tIdBefor = int.Parse(Console.ReadLine()!);
-        //            DO.Dependency d = new(4, tId, tIdBefor);
-        //            try
-        //            {
+       public void infoOfMilestone()
+        {
 
-        //                int result = s_dal!.Dependency.Create(d);
-        //                Console.WriteLine("the dependency was added");
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                Console.WriteLine(ex);
-        //            }
-        //            break;
-        //        case 'c'://read by id
-        //            Console.WriteLine("enter dependency id to read");
-        //            int id = int.Parse(Console.ReadLine()!);
-        //            try
-        //            {
-        //                Console.WriteLine(s_dal.Dependency.Read(id));
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                Console.WriteLine(ex);
-        //            }
-        //            break;
-        //        case 'd'://read all
-        //            Console.WriteLine("all the dependencies:");
-        //            var arrReadAllDepdndencies = s_dal.Dependency.ReadAll();
-        //            foreach (var item in arrReadAllDepdndencies)
-        //                Console.WriteLine(item);
-        //            break;
-        //        case 'e'://update
-        //            Console.WriteLine("enter id of dependency to update");
-        //            int idUpdate = int.Parse(Console.ReadLine()!);//search of the id to update
-        //            try
-        //            {
-        //                Console.WriteLine("enter  dependent task id");
-        //                int dId = int.Parse(Console.ReadLine()!);
-        //                Console.WriteLine("enter task befor id");
-        //                int dIdBefor = int.Parse(Console.ReadLine()!);
-        //                DO.Dependency depend = new(idUpdate, dId, dIdBefor);
-        //                //Console.WriteLine("enter created date");
-        //                //Console.WriteLine("enter product's category(0-for cups,1-for cakes,2-for cookies)");
-        //                //pUpdate._category = (ECategory)int.Parse(Console.ReadLine());
-        //                //Console.WriteLine("enter product's instock");
-        //                //pUpdate._inStock = int.Parse(Console.ReadLine());
-        //                //Console.WriteLine("enter product's parve(0/1)");
-        //                //pUpdate._parve = int.Parse(Console.ReadLine());
-        //                //dalProduct.update(pUpdate);
-        //                s_dal.Dependency.Update(depend);
+            try
+            {
+                var doTask = _dal.Task.Read(id);
+                var dependencies = _dal.Dependency.ReadAll(d => d.DependentTask == id);
+                List<BO.TaskInList>? tasks = doTask.Milestone && dependencies != null
+                    ? dependencies.Select(d => ReadTaskInList(d.DependsOnTask)).ToList()
+                    : null;
 
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                Console.WriteLine(ex);
-        //            }
-        //            break;
-        //        case 'f'://delete a dependency
-        //            Console.WriteLine("enter id of dependency to delete");
-        //            int idDelete = int.Parse(Console.ReadLine()!);
-        //            try
-        //            {
-        //                s_dal.Dependency.Delete(idDelete);
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                Console.WriteLine(ex);
-        //            }
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
-        public static void Main(string[] args)
+                return new BO.Milestone
+                {
+                    Id = doTask.Id,
+                    Description = doTask.Description!,
+                    Alias = doTask.Alias!,
+                    CreatedAtDate = doTask.CreatedAtDate,
+                    ForecastAtDate = doTask.Forecast,
+                    Complete = doTask.Complete,
+                    Remarks = doTask.Remarks,
+                    DependenceList = tasks,
+                    Status = GetStatus(doTask),
+                    ProgressPercentage = tasks != null && tasks.Any()
+                        ? tasks.Count(task => task.Status == Status.InJeopardy) / (double)tasks.Count() * 100
+                        : 0
+                };
+            }
+            catch (DO.DalDoesNotExistException exception)
+            {
+                throw new BO.BlDoesNotExistException($"Task with id: {id} does not exist", exception);
+            }
+
+            public static void Main(string[] args)
         {
             Console.Write("Would you like to create Initial data? (Y/N)");                                                              //string? ans = "Y";
             string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
@@ -363,12 +314,7 @@ namespace BlTest
 
                         break;
                     case 3:
-                        Console.WriteLine("for exit press a");
-                        Console.WriteLine("for add a dependency befor another press b");
-                        Console.WriteLine("for read dependency befor another press c");
-                        Console.WriteLine("for read all dependencies befor anothers press d");
-                        Console.WriteLine("for update an dependency befor another press e");
-                        Console.WriteLine("for delete an dependency befor another press f");
+                        Console.WriteLine("Choose the method that you want to execute:\n 1 to exit\n 2 to Create Projects Schedule \n 3 to Read\n 4 Update\n ");
                         x = char.Parse(Console.ReadLine()!);
                         //InfoOfDependencies(x);
 

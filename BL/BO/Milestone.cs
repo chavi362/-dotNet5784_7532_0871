@@ -9,7 +9,7 @@ namespace BO
         public int Id { get; init; }
         public required string Description { get; set; }
         public required string Alias { get; set; }
-        public DateTime? CreatedAt { get; set; }
+        public DateTime? CreatedAtDate { get; set; }
         public Status? Status { get; set; }
         public DateTime? StartAtDate { get; set; }
         public DateTime? ForecastAtDate { get; set; }

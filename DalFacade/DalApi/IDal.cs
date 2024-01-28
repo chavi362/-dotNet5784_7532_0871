@@ -13,5 +13,7 @@ namespace DalApi
         IDependency Dependency { get; }
         public void Reset();
     }
+    public DateTime? ProjectStartDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public DateTime? ProjectEndDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 }

@@ -52,7 +52,7 @@ namespace BlImplementation
         public int Create(Engineer boEngineer)
         {
             if (boEngineer.Id <= 0 || boEngineer.Name == "" || boEngineer.Cost < 0|| !ValidateEmail(boEngineer.Email))
-                throw new BO.BlNotValid("one or more of the details is not valid");
+                throw new BO.BlInvalidPropertyException("one or more of the details is not valid");
             DO.EngineerExperience? level = null;
             if (boEngineer.Level != null)
                 level = (DO.EngineerExperience)boEngineer.Level!;

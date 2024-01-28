@@ -34,7 +34,7 @@ namespace BlImplementation
                     item.Alias,
                     false,  // Assuming the default value for Milestone is false
                     null,   // Assuming the default value for RequiredEffortTime is null
-                    DateTime.Today,  // Assuming CreatedAt is set to the current date
+                    DateTime.Today,  // Assuming CreatedAtDate is set to the current date
                     null,   // Assuming the default value for Start is null
                     item.ForecastDate,
                     item.DeadlineDate,
@@ -74,7 +74,7 @@ namespace BlImplementation
                 return BO.Status.Complete;
             }
 
-            if (doTask.Start == null || doTask.Forecast == null || doTask.DedLine == null)
+            if (doTask.Start == null || doTask.Forecast == null || doTask.DeadLineDate == null)
             {
                 return BO.Status.Unscheduled;
             }
@@ -84,7 +84,7 @@ namespace BlImplementation
                 return BO.Status.Scheduled;
             }
 
-            if (DateTime.Now <= doTask.DedLine)
+            if (DateTime.Now <= doTask.DeadLineDate)
             {
                 return BO.Status.OnTrack;
             }
@@ -97,7 +97,7 @@ namespace BlImplementation
             List<BO.TaskInList>? dependenciesOfTask=null;
             try
             {
-                dependencies = _dal.Dependency.ReadAll((dependency) => dependency.DependensOnTask == id)!;
+                dependencies = _dal.Dependency.ReadAll((dependency) => dependency.DependsOnTask == id)!;
                 if(dependencies.Any())
                 {
                     dependenciesOfTask = dependencies
@@ -143,16 +143,16 @@ namespace BlImplementation
                   Id = doTask!.Id,
                  Alias = doTask.Alias!,
                  Description = doTask.Description,
-                CreatedAtDate = doTask.CreatedAt ?? DateTime.MinValue,
+                CreatedAtDateDate = doTask.CreatedAtDate ?? DateTime.MinValue,
                 Status = GetTaskStatus(doTask),
                 DependenceList = dependenciesOfTask,
                     //Milestone = doTask.Milestone
                     //? new BO.MilestoneInTask(doTask.Id, doTask.Alias) // Set Milestone based on some condition
                     //: ,
-                    BaselineStartDate = doTask.CreatedAt,
+                    BaselineStartDate = doTask.CreatedAtDate,
                     StartDate = doTask.Start,
                     ForecastDate = doTask.Forecast,
-                    DeadlineDate = doTask.DedLine,
+                    DeadlineDate = doTask.DeadLineDate,
                     CompleteDate = doTask.Complete,
                     Deliverables = doTask.Deliverables,
                     Remarks = doTask.Remarks,
@@ -189,7 +189,7 @@ namespace BlImplementation
                     item.Alias,
                     false,  // Assuming the default value for Milestone is false
                     null,   // Assuming the default value for RequiredEffortTime is null
-                    DateTime.Today,  // Assuming CreatedAt is set to the current date
+                    DateTime.Today,  // Assuming CreatedAtDate is set to the current date
                     null,   // Assuming the default value for Start is null
                     item.ForecastDate,
                     item.DeadlineDate,
