@@ -1,19 +1,20 @@
-﻿using BO;
-using DalApi;
-using DalTest;
-
+﻿using System;
+using BO;
+using BlApi;
 
 namespace BlTest
 {
     internal class Program
     {
-        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        static readonly IBl s_bl = Factory.Get();
+
         static void InfoOfTask(char x)
         {
             switch (x)
             {
-                case 'a': break;
-                case 'b'://add                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            t = new Task();
+                case 'a':
+                    break;
+                case 'b':
                     Console.WriteLine("enter task alias");
                     string alias = Console.ReadLine()!;
                     Console.WriteLine("enter task's description");
@@ -29,25 +30,19 @@ namespace BlTest
                     bool b = Enum.TryParse<BO.EngineerExperience>(level.ToString(), out enLevel);
                     if (!b)
                         throw new Exception("I tell you to put between 0 to 4");
+
                     BO.Task task = new BO.Task()
                     {
                         Id = 4,
                         Description = description,
                         Alias = alias,
-                        CreatedAtDateDate = DateTime.Now,
+                        CreatedAtDate = DateTime.Now,
                         Status = 0,
-                        DependenceList = null,
-                        Milestone = null,
-                        BaselineStartDate = null,
-                        StartDate = null,
-                        ForecastDate = null,
-                        DeadlineDate = null,
-                        CompleteDate = null,
                         Deliverables = deliverables,
                         Remarks = remarks,
-                        Engineer = null,
                         ComplexityLevel = enLevel
                     };
+
                     try
                     {
                         int result = s_bl.Task.Create(task);
@@ -58,7 +53,7 @@ namespace BlTest
                         Console.WriteLine(ex);
                     }
                     break;
-                case 'c'://read by id
+                case 'c':
                     Console.WriteLine("enter tasks's id to read");
                     int id = int.Parse(Console.ReadLine()!);
                     try
@@ -70,15 +65,16 @@ namespace BlTest
                         Console.WriteLine(ex);
                     }
                     break;
-                case 'd'://read all
+                case 'd':
                     Console.WriteLine("all the tasks:");
                     var arrReadAllTasks = s_bl.Task.ReadAll();
                     foreach (var item in arrReadAllTasks)
                         Console.WriteLine(item.ToString());
                     break;
-                case 'e'://update
+                case 'e':
                     Console.WriteLine("enter id of task to update");
-                    int idUpdate = int.Parse(Console.ReadLine()!);//search of the id to update
+                    int idUpdate = int.Parse(Console.ReadLine()!);
+
                     try
                     {
                         Console.WriteLine("enter task alias");
@@ -96,57 +92,38 @@ namespace BlTest
                         bool bo = Enum.TryParse<BO.EngineerExperience>(ulevel.ToString(), out uenLevel);
                         if (!bo)
                             throw new Exception("I tell you to put between 0 to 4");
+
                         BO.Task utask = new BO.Task()
                         {
-                            Id = 4,
+                            Id = idUpdate,
                             Description = udescription,
                             Alias = ualias,
-                            CreatedAtDateDate = DateTime.Now,
+                            CreatedAtDate = DateTime.Now,
                             Status = 0,
-                            //DependenceList = null,
-                            //Milestone = null,
-                            //BaselineStartDate = null,
-                            //StartDate = null,
-                            //ForecastDate = null,
-                            //DeadlineDate = null,
-                            //CompleteDate = null,
                             Deliverables = udeliverables,
                             Remarks = uremarks,
-                            //Engineer = null,
                             ComplexityLevel = uenLevel
                         };
-                        s_bl.Task.Update(utask);
 
+                        s_bl.Task.Update(utask);
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex);
                     }
                     break;
-                //case 'f'://delete a task
-                //    Console.WriteLine("enter id of task to delete");
-                //    int idDelete = int.Parse(Console.ReadLine()!);
-                //    try
-                //    {
-                //        s_bl.Task.Delete(idDelete);
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        Console.WriteLine(ex);
-                //    }
-                //    break;
                 default:
                     break;
             }
         }
 
-
-        public static void InfoOfEngineers(char x)
+        static void InfoOfEngineers(char x)
         {
             switch (x)
             {
-                case 'a': break;
-                case 'b'://add                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            t = new Task();
+                case 'a':
+                    break;
+                case 'b':
                     Console.WriteLine("enter engineer's id to add");
                     int id = int.Parse(Console.ReadLine()!);
                     Console.WriteLine("enter engineer's name");
@@ -172,7 +149,7 @@ namespace BlTest
                         Console.WriteLine(ex);
                     }
                     break;
-                case 'c'://read by id
+                case 'c':
                     Console.WriteLine("enter engineer's id to read");
                     int idRead = int.Parse(Console.ReadLine()!);
                     try
@@ -184,15 +161,16 @@ namespace BlTest
                         Console.WriteLine(ex);
                     }
                     break;
-                case 'd'://read all
+                case 'd':
                     Console.WriteLine("all the engineers:");
                     var arrReadAllEngineers = s_bl.Engineer.ReadAll();
                     foreach (var item in arrReadAllEngineers)
                         Console.WriteLine(item.ToString());
                     break;
-                case 'e'://update
+                case 'e':
                     Console.WriteLine("enter id of engineer to update");
-                    int idUpdate = int.Parse(Console.ReadLine()!);//search of the id to update
+                    int idUpdate = int.Parse(Console.ReadLine()!);
+
                     try
                     {
                         Console.WriteLine("enter engineer's name");
@@ -205,7 +183,7 @@ namespace BlTest
                         bool bo = Enum.TryParse<BO.EngineerExperience>(ulevel.ToString(), out uenLevel);
                         if (!bo)
                             throw new Exception("I tell you to put between 0 to 4");
-                        // enLevel = (EngineerExperience)level;
+
                         Console.WriteLine("enter engineer's cost");
                         double ucost = double.Parse(Console.ReadLine()!);
                         BO.Engineer upEngineer = new BO.Engineer() { Id = idUpdate, Name = uname, Email = uemail, Level = uenLevel, Cost = ucost };
@@ -216,7 +194,7 @@ namespace BlTest
                         Console.WriteLine(ex);
                     }
                     break;
-                case 'f'://delete a engineer
+                case 'f':
                     Console.WriteLine("enter id of engineer to delete");
                     int idDelete = int.Parse(Console.ReadLine()!);
                     try
@@ -232,55 +210,103 @@ namespace BlTest
                     break;
             }
         }
-       public void infoOfMilestone()
+
+        static void InfoOfMilestone(char x)
         {
-
-            try
+            switch (x)
             {
-                var doTask = _dal.Task.Read(id);
-                var dependencies = _dal.Dependency.ReadAll(d => d.DependentTask == id);
-                List<BO.TaskInList>? tasks = doTask.Milestone && dependencies != null
-                    ? dependencies.Select(d => ReadTaskInList(d.DependsOnTask)).ToList()
-                    : null;
+                case 'a':
+                    break;
+                case 'b':
+                    Console.WriteLine("Enter milestone's id for reading:\n");
+                    bool succesTryParse;
+                    int _id;
+                    succesTryParse = int.TryParse(Console.ReadLine(), out _id);
+                    if (!succesTryParse || _id < 0)
+                        throw new BlInvalidPropertyException("Invalid id number.\n");
+                    try
+                    {
+                        Console.WriteLine(s_bl.Milestone.Read(_id)!.ToString());
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                    break;
+                case 'c':
+                    bool succesTryParse = true;
+                    Console.WriteLine("enter date of starting project");
+                    DateTime _start;
+                    succesTryParse = DateTime.TryParse(Console.ReadLine(), out _start);
+                    if (!succesTryParse)
+                        throw new BlInvalidInput("Invalid input.\n");
 
-                return new BO.Milestone
-                {
-                    Id = doTask.Id,
-                    Description = doTask.Description!,
-                    Alias = doTask.Alias!,
-                    CreatedAtDate = doTask.CreatedAtDate,
-                    ForecastAtDate = doTask.Forecast,
-                    Complete = doTask.Complete,
-                    Remarks = doTask.Remarks,
-                    DependenceList = tasks,
-                    Status = GetStatus(doTask),
-                    ProgressPercentage = tasks != null && tasks.Any()
-                        ? tasks.Count(task => task.Status == Status.InJeopardy) / (double)tasks.Count() * 100
-                        : 0
-                };
-            }
-            catch (DO.DalDoesNotExistException exception)
-            {
-                throw new BO.BlDoesNotExistException($"Task with id: {id} does not exist", exception);
-            }
+                    Console.WriteLine("enter date of ending project");
+                    DateTime _end;
+                    succesTryParse = DateTime.TryParse(Console.ReadLine(), out _end);
+                    if (!succesTryParse || _end < _start)
+                        throw new BlInvalidInput("Invalid input.\n");
+                    s_bl.Milestone.SetDates(_start, _end);
+                    s_bl.Milestone.CreateProjectsSchedule();
+                    Console.WriteLine("Projects schedule created successfully");
+                    break;
+                case 'd':
+                    string? userInput;
+                    Console.WriteLine("Enter id of milestone to update");
+                    int id = Convert.ToInt32(Console.ReadLine());
+                    Milestone baseMil = s_bl.Milestone.Read(id) ?? throw new BlDoesNotExistException($"Milestone with id {id} does not exist");
+                    Console.WriteLine(baseMil);
+                    Console.WriteLine("Enter milestone's details to update. If you don't want to change, press enter.\n");
 
-            public static void Main(string[] args)
+                    Console.WriteLine("descriptions:");
+                    userInput = Console.ReadLine();
+                    string? _descriptions = string.IsNullOrEmpty(userInput) ? baseMil.Description : userInput;
+
+                    Console.WriteLine("alias:");
+                    userInput = Console.ReadLine();
+                    string? _alias = string.IsNullOrEmpty(userInput) ? baseMil.Alias : userInput;
+
+                    Console.WriteLine("remarks:");
+                    userInput = Console.ReadLine();
+                    string? _remarks = string.IsNullOrEmpty(userInput) ? baseMil.Remarks : userInput;
+
+                    Milestone updateMil = new()
+                    {
+                        Id = id,
+                        Description = _descriptions,
+                        Alias = _alias,
+                        Status = baseMil.Status,
+                        CreatedAtDate = baseMil.CreatedAtDate,
+                        ForecastAtDate = baseMil.ForecastAtDate,
+                        DeadlineDate = baseMil.DeadlineDate,
+                        CompleteDate = baseMil.CompleteDate,
+                        CompletionPercentage = baseMil.CompletionPercentage,
+                        Remarks = _remarks
+                    };
+
+                    s_bl.Milestone.Update(updateMil);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public static void Main(string[] args)
         {
-            Console.Write("Would you like to create Initial data? (Y/N)");                                                              //string? ans = "Y";
-            string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
-            if (ans == "Y") //stage 3
-
+            Console.Write("Would you like to create Initial data? (Y/N)");
+            string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
+            if (ans == "Y")
+            {
                 try
                 {
-                    //Initialization.Do(s_dal);
-                    
-                    DalTest.Initialization.Do(); //stage 4
+                    DalTest.Initialization.Do();
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("error in parameters" + ex);
                 }
-            //Internal menu for every class and sending to funtion that treat this class
+            }
+
             Console.WriteLine("for exit press 0");
             Console.WriteLine("for tasks press 1");
             Console.WriteLine("for engineers press 2");
@@ -288,6 +314,7 @@ namespace BlTest
 
             int select = int.Parse(Console.ReadLine()!);
             char x;
+
             while (select != 0)
             {
                 switch (select)
@@ -300,7 +327,7 @@ namespace BlTest
                         Console.WriteLine("for update a task press e");
                         Console.WriteLine("for delete a task press f");
                         x = char.Parse(Console.ReadLine()!);
-                        InfoOfTask(x);//doing this function 
+                        InfoOfTask(x);
                         break;
                     case 2:
                         Console.WriteLine("for exit press a");
@@ -311,14 +338,11 @@ namespace BlTest
                         Console.WriteLine("for delete an engineer press f");
                         x = char.Parse(Console.ReadLine()!);
                         InfoOfEngineers(x);
-
                         break;
                     case 3:
-                        Console.WriteLine("Choose the method that you want to execute:\n 1 to exit\n 2 to Create Projects Schedule \n 3 to Read\n 4 Update\n ");
+                        Console.WriteLine("Choose the method that you want to execute:\n a to exit\n b to Create Projects Schedule \n c to Read\n d Update\n ");
                         x = char.Parse(Console.ReadLine()!);
-                        //InfoOfDependencies(x);
-
-
+                        InfoOfMilestone(x);
                         break;
                     default:
                         break;
@@ -333,4 +357,3 @@ namespace BlTest
         }
     }
 }
-
