@@ -199,7 +199,7 @@ namespace BlImplementation
             }
         }
 
-        public Milestone Update(Milestone item)
+        public int Update(Milestone item)
         {
             if (item.Alias == null)
                 throw new BO.BlInvalidPropertyException("invalid Alias");
@@ -232,8 +232,8 @@ namespace BlImplementation
                 throw new BO.BlDoesNotExistException($"Milestone with ID={item.Id} does Not exist, you can't update it", ex);
             }
 
-            return milestone;
+            return milestone.Id;
         }
-
+    }
 
     }

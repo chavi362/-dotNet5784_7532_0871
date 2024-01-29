@@ -12,8 +12,9 @@ namespace DalApi
         ITask Task { get; }
         IDependency Dependency { get; }
         public void Reset();
+        DateTime? ProjectStartDate { get; set; }
+        DateTime? ProjectEndDate { get; set; }
     }
-    public DateTime? ProjectStartDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    public DateTime? ProjectEndDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+   
 
 }

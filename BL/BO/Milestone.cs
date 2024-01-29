@@ -17,7 +17,7 @@ namespace BO
         public Double ProgressPercentage { get; set; }
         //public string? Deliverables { get; set; }
         public string? Remarks { get; set; }
-        //public EngineerExperience? ComplexityLevel { get; set; }
+        public EngineerExperience? ComplexityLevel { get; set; }
         List<BO.TaskInList>? DependenceTasks { get; set; }
 
     }
