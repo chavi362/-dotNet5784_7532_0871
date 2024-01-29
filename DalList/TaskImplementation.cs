@@ -74,7 +74,7 @@ internal class TaskImplementation : ITask
     }
     public bool CheckingDependency(Task t)//looking if the task depend on another tasks
     {
-        if (DataSource.Dependencies.FirstOrDefault(x => x.DependsOnTask == t.Id) == null)//finding dependency
+        if (DataSource.Dependencies.FirstOrDefault(x => x.DependensOnTask == t.Id) == null)//finding dependency
             return true;
         return false;
     }

@@ -11,6 +11,8 @@ namespace BlApi
         public int Update(BO.Milestone item);
         //public int Delete(int id);
         public BO.Milestone? Read(int id);
+        public void SetStartDate(DateTime? date);
+        public void SetEndDate(DateTime? date);
         //public IEnumerable<BO.Milestone> ReadAll(Func<Milestone, bool>? filter = null);
     }
 }

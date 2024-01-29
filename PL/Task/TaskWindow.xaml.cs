@@ -30,7 +30,7 @@ namespace PL.Task
             {
                 Status status;
                 Enum.TryParse<Status>(0.ToString(), out status);
-                Task = id != 0 ? s_bl.Task.Read(id) : new BO.Task { Id = 0, Description = "", Alias = "", Status = status,CreatedAtDateDate=DateTime.Now };
+                Task = id != 0 ? s_bl.Task.Read(id) : new BO.Task { Id = 0, Description = "", Alias = "", Status = status,CreatedAtDate=DateTime.Now };
             }
             catch (BO.BlDoesNotExistException ex)
             {

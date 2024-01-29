@@ -97,7 +97,7 @@ namespace BlImplementation
             List<BO.TaskInList>? dependenciesOfTask=null;
             try
             {
-                dependencies = _dal.Dependency.ReadAll((dependency) => dependency.DependsOnTask == id)!;
+                dependencies = _dal.Dependency.ReadAll((dependency) => dependency.DependensOnTask == id)!;
                 if(dependencies.Any())
                 {
                     dependenciesOfTask = dependencies
@@ -122,7 +122,7 @@ namespace BlImplementation
                 Console.WriteLine(ex);
             }
 
-            BO.EngineerExperience? level = null;
+          //  BO.EngineerExperience? level = null;
             //  if(doTask.ComplexityLevel!=null)
             //{
             //    level = (BO.EngineerExperience)doTask.ComplexityLevel!;
@@ -143,7 +143,7 @@ namespace BlImplementation
                   Id = doTask!.Id,
                  Alias = doTask.Alias!,
                  Description = doTask.Description,
-                CreatedAtDateDate = doTask.CreatedAtDate ?? DateTime.MinValue,
+                CreatedAtDate = doTask.CreatedAtDate ?? DateTime.MinValue,
                 Status = GetTaskStatus(doTask),
                 DependenceList = dependenciesOfTask,
                     //Milestone = doTask.Milestone

@@ -19,6 +19,9 @@ sealed internal class DalXml : IDal
     public ITask Task => new TaskImplementation();
     public IDependency Dependency => new DependencyImplementation();
 
+    public DateTime? ProjectStartDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public DateTime? ProjectEndDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
 
 
     // Step 4: Add a private static instance with lazy initialization

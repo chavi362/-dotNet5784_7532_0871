@@ -9,7 +9,7 @@ namespace BO
         public int Id { get; init; }
         public required string Description { get; set; }
         public required string Alias { get; set; }
-        public DateTime CreatedAtDateDate { get; set; }
+        public DateTime CreatedAtDate { get; set; }
         public Status? Status { get; set; }
         public List<BO.TaskInList>? DependenceList { get; set; }
         public Tuple< int,string>? Milestone { get; set; }

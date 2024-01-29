@@ -94,7 +94,7 @@ internal class TaskImplementation : ITask
     {
         XElement? tasks = XDocument.Load(@"..\xml\tasks.xml").Root;
         if (tasks?.Elements()
-                .FirstOrDefault(x => Convert.ToInt32(x?.Element("DependsOnTask")?.Value) == Convert.ToInt32(t?.Element("Id")?.Value)) != null)
+                .FirstOrDefault(x => Convert.ToInt32(x?.Element("DependensOnTask")?.Value) == Convert.ToInt32(t?.Element("Id")?.Value)) != null)
         {
             return false; // Another task depends on this task
         }
@@ -108,7 +108,7 @@ internal class TaskImplementation : ITask
         int taskId = Convert.ToInt32(t.Element("Id")?.Value);
 
         // Remove all dependencies where this task is the DependentTask
-        tasks?.Elements().Where(x => Convert.ToInt32(x?.Element("DependsOnTask")?.Value) == taskId).Remove();
+        tasks?.Elements().Where(x => Convert.ToInt32(x?.Element("DependensOnTask")?.Value) == taskId).Remove();
         tasks?.Save(@"..\xml\tasks.xml");
     }
 

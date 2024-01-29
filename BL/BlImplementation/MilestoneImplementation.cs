@@ -36,11 +36,11 @@ namespace BlImplementation
             });
             newDependencies.AddRange(tasksWithoutDependencies.Select(t => new DO.Dependency(0, t.Id, milestoneId)));
             var taskDependencies = (from dependency in dependenciesList
-                                    where dependency?.DependentTask != null && dependency?.DependsOnTask != null
+                                    where dependency?.DependentTask != null && dependency?.DependensOnTask != null
                                     group dependency by dependency.DependentTask
                         into dependencyListAfterGrouping
                                     let dependencyList = dependencyListAfterGrouping
-                                                          .Select(dependency => dependency.DependsOnTask)
+                                                          .Select(dependency => dependency.DependensOnTask)
                                                           .OrderBy(dependency => dependency)
                                                           .ToList()
                                     select new { _key = dependencyListAfterGrouping.Key, _value = dependencyList })
@@ -64,7 +64,7 @@ namespace BlImplementation
                 Milestone = true,
                 CreatedAtDate = DateTime.Now
             });
-            IEnumerable<DO.Task?> EndTasks = _dal.Task.ReadAll(t => t.Milestone == false && dependenciesList.All(d => d.DependsOnTask != t.Id));
+            IEnumerable<DO.Task?> EndTasks = _dal.Task.ReadAll(t => t.Milestone == false && dependenciesList.All(d => d.DependensOnTask != t.Id));
             newDependencies.AddRange(EndTasks.Select(t => new DO.Dependency(0, milestoneId, t!.Id)));
             //Replace the dependencies list
             foreach (DO.Dependency dependency in dependenciesList)
@@ -93,10 +93,9 @@ namespace BlImplementation
                     milestone.Description,
                     milestone.Alias,
                     milestone.Milestone,
-                    milestone.RequiredEffortTime,
+                   milestone.RequiredEffortTime, 
                     milestone.CreatedAtDate,
                     milestone.Start,
-                    ProjectDeadLine.Subtract(milestone.RequiredEffortTime ?? TimeSpan.Zero), // Check for null before accessing Value
                     milestone.Forecast,
                     ProjectDeadLine,
                     milestone.Complete,
@@ -112,28 +111,29 @@ namespace BlImplementation
                     int milestoneId;
                     DateTime milestoneDeadLineDate;
 
-                    foreach (DO.Task task in _dal.Task.ReadAll(t => _dal.Dependency.ReadAll().Any(d => d.DependentTask == milestone.Id && d.DependsOnTask == t.Id)))
+                    foreach (DO.Task task in _dal.Task.ReadAll(t => _dal.Dependency.ReadAll().Any(d => d?.DependentTask == milestone.Id && d.DependensOnTask == t.Id)))
                     {
-                        if (task.DeadLineDate == null || task.DeadLineDate > ProjectDeadLine)
+                        if (task!.DeadLineDate == null || task.DeadLineDate > ProjectDeadLine)
                         {
+
                             _dal.Task.Update(new DO.Task(
                                 task.Id,
-                                task.Description,
-                                task.Alias,
-                                task.Milestone,
-                                ProjectDeadLine.Subtract(task.RequiredEffortTime ?? TimeSpan.Zero), // Check for null before accessing Value
-                                task.CreatedAtDate,
-                                task.Start,
-                                task.Forecast,
-                                ProjectDeadLine,
-                                task.Complete,
-                                task.Deliverables,
-                                task.Remarks,
-                                task.EngineerId,
-                                task.ComplexityLevel
-                            ));
+                                 task.Description,
+                                  task.Alias, 
+                                  task.Milestone, 
+                                  task.RequiredEffortTime, 
+                                  task.CreatedAtDate, 
+                                  task.Start,
+                                    task.Forecast,
+                            ProjectDeadLine.Subtract(task.RequiredEffortTime!.Value),//עדכון תאריך התחלה
+                  //עדכון תאריך אחרון לסיום
+                            task.Complete, 
+                            task.Deliverables,
+                            task.Remarks, 
+                            task.EngineerId, 
+                            task.ComplexityLevel));
 
-                            milestoneId = _dal.Dependency.Read(d => d.DependentTask == task.Id).DependsOnTask;
+                            milestoneId = _dal.Dependency.Read(d => d.DependentTask == task.Id)!.DependensOnTask;
                             milestoneDeadLineDate = ProjectDeadLine.Subtract(task.RequiredEffortTime ?? TimeSpan.Zero);
                             if (milestones.ContainsKey(milestoneId))
                             {
@@ -155,7 +155,7 @@ namespace BlImplementation
             {
                 var doTask = _dal.Task.Read(id);
                 var dependencies = _dal.Dependency.ReadAll(d => d.DependentTask == id);
-                IEnumerable<TaskInList> tasks = doTask.Milestone && dependencies != null ? dependencies.Select(d => ReadTaskInList(d.DependsOnTask)) : null;
+                IEnumerable<TaskInList>? tasksInList = doTask!.Milestone && dependencies != null ? dependencies.Select(d => ReadTaskInList(d!.DependensOnTask)) : null;
 
                 return new BO.Milestone
                 {
@@ -166,10 +166,10 @@ namespace BlImplementation
                     ForecastAtDate = doTask.Forecast,
                     Complete = doTask.Complete,
                     Remarks = doTask.Remarks,
-                    DependenceTasks = tasks!.ToList(),
+                    DependenceTasks = tasksInList,
                     Status = GetStatus(doTask),
-                    ProgressPercentage = tasks != null && tasks.Any()
-                        ? tasks.Count(task => task.Status == Status.InJeopardy) / (double)tasks.Count() * 100
+                    ProgressPercentage = tasksInList != null && tasksInList.Any()
+                        ? tasksInList.Count(task => task.Status == Status.InJeopardy) / (double)tasksInList.Count() * 100
                         : 0
                 };
             }
@@ -188,7 +188,7 @@ namespace BlImplementation
                 return new TaskInList
                 {
                     Id = id,
-                    Alias = doTask.Alias,
+                    Alias = doTask!.Alias!,
                     Description = doTask.Description,
                     Status = GetStatus(doTask)
                 };
@@ -234,6 +234,8 @@ namespace BlImplementation
 
             return milestone.Id;
         }
+
+
     }
 
     }

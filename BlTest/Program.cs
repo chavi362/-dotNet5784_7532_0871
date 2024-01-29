@@ -223,7 +223,7 @@ namespace BlTest
                     int _id;
                     succesTryParse = int.TryParse(Console.ReadLine(), out _id);
                     if (!succesTryParse || _id < 0)
-                        throw new BlInvalidPropertyException("Invalid id number.\n");
+                        Console.WriteLine("Invalid id number");
                     try
                     {
                         Console.WriteLine(s_bl.Milestone.Read(_id)!.ToString());
@@ -234,27 +234,27 @@ namespace BlTest
                     }
                     break;
                 case 'c':
-                    bool succesTryParse = true;
+                    bool succesToTryParse = true;
                     Console.WriteLine("enter date of starting project");
                     DateTime _start;
                     succesTryParse = DateTime.TryParse(Console.ReadLine(), out _start);
-                    if (!succesTryParse)
-                        throw new BlInvalidInput("Invalid input.\n");
+                    if (!succesToTryParse)
+                        Console.WriteLine("Invalid input");
 
                     Console.WriteLine("enter date of ending project");
                     DateTime _end;
-                    succesTryParse = DateTime.TryParse(Console.ReadLine(), out _end);
+                    succesToTryParse = DateTime.TryParse(Console.ReadLine(), out _end);
                     if (!succesTryParse || _end < _start)
-                        throw new BlInvalidInput("Invalid input.\n");
-                    s_bl.Milestone.SetDates(_start, _end);
-                    s_bl.Milestone.CreateProjectsSchedule();
+                        Console.WriteLine("Invalid input");
+                    s_bl.Milestone.SetStartDate(_start);
+                    s_bl.Milestone.CreateProjectSchedule();
                     Console.WriteLine("Projects schedule created successfully");
                     break;
                 case 'd':
                     string? userInput;
                     Console.WriteLine("Enter id of milestone to update");
                     int id = Convert.ToInt32(Console.ReadLine());
-                    Milestone baseMil = s_bl.Milestone.Read(id) ?? throw new BlDoesNotExistException($"Milestone with id {id} does not exist");
+                    Milestone baseMil = s_bl.Milestone.Read(id) ?? throw new BO.BlDoesNotExistException($"Milestone with id {id} does not exist",null!);
                     Console.WriteLine(baseMil);
                     Console.WriteLine("Enter milestone's details to update. If you don't want to change, press enter.\n");
 
@@ -279,9 +279,9 @@ namespace BlTest
                         CreatedAtDate = baseMil.CreatedAtDate,
                         ForecastAtDate = baseMil.ForecastAtDate,
                         DeadlineDate = baseMil.DeadlineDate,
-                        CompleteDate = baseMil.CompleteDate,
-                        CompletionPercentage = baseMil.CompletionPercentage,
-                        Remarks = _remarks
+                        Complete = baseMil.Complete,
+                        ProgressPercentage = baseMil.ProgressPercentage,
+                        Remarks = _remarks,
                     };
 
                     s_bl.Milestone.Update(updateMil);

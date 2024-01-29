@@ -2,6 +2,7 @@
 {
     using DalApi;
     using System;
+    using System.Reflection.Metadata.Ecma335;
 
     internal sealed class DalList : IDal
     {
@@ -17,7 +18,8 @@
         public ITask Task => new TaskImplementation();
         public IDependency Dependency => new DependencyImplementation();
 
-        
+        public DateTime? ProjectStartDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public DateTime? ProjectEndDate { get => DataSource.Config.projectBegining; set => DataSource.Config.projectBegining = value; }
 
         // Step 4: Add a private static instance with lazy initialization
         private static readonly Lazy<IDal> LazyInstance = new Lazy<IDal>(() => new DalList());

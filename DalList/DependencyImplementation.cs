@@ -11,11 +11,11 @@ internal class DependencyImplementation : IDependency
     public int Create(Dependency d)
     {
         // Check if the dependency already exists
-        if (DataSource.Dependencies.Any(dep => dep.DependentTask == d.DependentTask && dep.DependsOnTask == d.DependsOnTask))
+        if (DataSource.Dependencies.Any(dep => dep.DependentTask == d.DependentTask && dep.DependensOnTask == d.DependensOnTask))
             throw new DalAlreadyExistsException($"Dependency is already exists");
 
         // Check if the dependency is realistic
-        if ((DataSource.Dependencies).FirstOrDefault(dep => dep.DependentTask == dep.DependsOnTask && dep.DependsOnTask == dep.DependentTask) != null)
+        if ((DataSource.Dependencies).FirstOrDefault(dep => dep.DependentTask == dep.DependensOnTask && dep.DependensOnTask == dep.DependentTask) != null)
             throw new LogicException($"This doesn't realistic!");
 
         // Generate a new ID for the dependency
@@ -90,11 +90,11 @@ internal class DependencyImplementation : IDependency
         else
         {
             // Check if the updated dependency already exists
-            if (DataSource.Dependencies.Any(dep => dep.DependentTask == d.DependentTask && dep.DependsOnTask == d.DependsOnTask))
+            if (DataSource.Dependencies.Any(dep => dep.DependentTask == d.DependentTask && dep.DependensOnTask == d.DependensOnTask))
                 throw new DalAlreadyExistsException("Dependency already exists");
 
             // Check if the updated dependency is realistic
-            if ((DataSource.Dependencies).FirstOrDefault(dep => dep.DependentTask == dep.DependsOnTask && dep.DependsOnTask == dep.DependentTask) != null)
+            if ((DataSource.Dependencies).FirstOrDefault(dep => dep.DependentTask == dep.DependensOnTask && dep.DependensOnTask == dep.DependentTask) != null)
                 throw new LogicException(" This dependency is not realistic");
 
             // Remove the old dependency from the data source

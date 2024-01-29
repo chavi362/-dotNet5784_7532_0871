@@ -13,12 +13,11 @@ namespace BO
         public Status? Status { get; set; }
         public DateTime? StartAtDate { get; set; }
         public DateTime? ForecastAtDate { get; set; }
+        public DateTime? DeadlineDate { get; set; }
         public DateTime? Complete { get; set; }
         public Double ProgressPercentage { get; set; }
-        //public string? Deliverables { get; set; }
         public string? Remarks { get; set; }
-        public EngineerExperience? ComplexityLevel { get; set; }
-        List<BO.TaskInList>? DependenceTasks { get; set; }
+        public IEnumerable<BO.TaskInList>? DependenceTasks { get; set; }
 
     }
 }

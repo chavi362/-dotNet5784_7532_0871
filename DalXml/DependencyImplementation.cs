@@ -13,11 +13,11 @@ internal class DependencyImplementation : IDependency
     {
         List<Dependency> dependenciesList = XMLTools.LoadListFromXMLSerializer<Dependency>("dependencies");
         // Check if the dependency already exists
-        if (dependenciesList.Any(dep => dep.DependentTask == d.DependentTask && dep.DependsOnTask == d.DependsOnTask))
+        if (dependenciesList.Any(dep => dep.DependentTask == d.DependentTask && dep.DependensOnTask == d.DependensOnTask))
             throw new DalAlreadyExistsException($"Dependency already exists");
 
         // Check if the dependency is realistic
-        if (dependenciesList.FirstOrDefault(dep => dep.DependentTask == d.DependsOnTask && dep.DependsOnTask == d.DependentTask) != null)
+        if (dependenciesList.FirstOrDefault(dep => dep.DependentTask == d.DependensOnTask && dep.DependensOnTask == d.DependentTask) != null)
             throw new LogicException($"This doesn't seem realistic!");
 
         // Generate a new ID for the dependency
@@ -97,11 +97,11 @@ internal class DependencyImplementation : IDependency
         else
         {
             // Check if the updated dependency already exists
-            if (dependenciesList.Any(dep => dep.DependentTask == d.DependentTask && dep.DependsOnTask == d.DependsOnTask))
+            if (dependenciesList.Any(dep => dep.DependentTask == d.DependentTask && dep.DependensOnTask == d.DependensOnTask))
                 throw new DalAlreadyExistsException("Dependency already exists");
 
             // Check if the updated dependency is realistic
-            if ((dependenciesList).FirstOrDefault(dep => dep.DependentTask == dep.DependsOnTask && dep.DependsOnTask == dep.DependentTask) != null)
+            if ((dependenciesList).FirstOrDefault(dep => dep.DependentTask == dep.DependensOnTask && dep.DependensOnTask == dep.DependentTask) != null)
                 throw new LogicException(" This dependency is not realistic");
 
             // Remove the old dependency from the data source
