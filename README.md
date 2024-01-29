@@ -4,18 +4,15 @@ Project Overview
 The project focuses on developing a task management system for a single project. It includes a user interface for project managers to manage tasks and a separate interface for engineers to update their details and report task progress. The system is developed in stages, each building on the previous one, following a layered architecture.
 System Functionality
 Project Manager
-
-    Manage Tasks:
+Manage Tasks:
         View the list of tasks.
         Add, update, and assign tasks.
         Define project schedules and milestones.
-
-    Manage Milestones:
+Manage Milestones:
         View the list of milestones.
         Set task dependencies for milestones.
         Update milestone details.
-
-    Manage Engineers:
+Manage Engineers:
         Add and remove engineers.
         View lists of engineers, tasks, and milestones associated with an engineer.
 
@@ -29,21 +26,21 @@ Engineer
 Getting Started
 Prerequisites
 
-    Visual Studio (version XYZ)
-    .NET Core SDK (version XYZ)
+Visual Studio 
+.NET 7 Core  SDK 
 
 Installation
 
-    Clone the repository:
+Clone the repository:
 
-    Open the project in Visual Studio.
+Open the project in Visual Studio.
 
-    Build the solution.
+Build the solution.
 
 Usage
 
-    Launch the application.
+Launch the application.
 
-    Log in as a Project Manager or Engineer.
+Log in as a Project Manager or Engineer.
 
-    Explore the functionalities based on your role.
+Explore the functionalities based on your role.
