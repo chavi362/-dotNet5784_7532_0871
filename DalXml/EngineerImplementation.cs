@@ -5,6 +5,7 @@ using DalApi;
 using DO;
 using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 
 internal class EngineerImplementation : IEngineer
 {
@@ -26,7 +27,13 @@ internal class EngineerImplementation : IEngineer
     public void Delete(int? id=null)
     {
         List<Engineer> engineersList = XMLTools.LoadListFromXMLSerializer<Engineer>("engineers");
-        List<Task> taskList = XMLTools.LoadListFromXMLSerializer<Task>("tasks");
+        XElement? tasksElement = XMLTools.LoadListFromXMLElement("tasks");
+        IEnumerable<XElement>? taskElementsEnumerable = null;
+        if (tasksElement != null)
+        {
+            taskElementsEnumerable = tasksElement.Elements("Task");
+        }
+       // List<Task> taskList = XMLTools.LoadListFromXMLSerializer<Task>("tasks");
         if (id == null)
         {
             List<Engineer> emptyList = new List<Engineer>();
@@ -34,9 +41,13 @@ internal class EngineerImplementation : IEngineer
             return;
         }
         Engineer? toDelete = Read((int)id);
-        if (toDelete != null)
+        if (toDelete != null&& taskElementsEnumerable != null)
         {
-            if (taskList.FirstOrDefault(x => x.EngineerId == id && x.Start < DateTime.Now) != null)//checking if we can delete it
+            if (taskElementsEnumerable!.FirstOrDefault(x =>
+    int.TryParse(x.Element("EngineerId")?.Value, out var engineerId) && // Parse EngineerId
+    engineerId == id &&
+    DateTime.TryParse(x.Element("Start")?.Value, out var startDate) && // Parse Start date
+    startDate < DateTime.Now) != null)  
                 throw new DalDeletionImpossible($"Engineer with ID={id} has some tasks");
             else
             {

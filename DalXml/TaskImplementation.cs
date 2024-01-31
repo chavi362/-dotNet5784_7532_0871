@@ -210,28 +210,31 @@ internal class TaskImplementation : ITask
         int? engineerId = null;
         if (taskElement.Element("EngineerId")?.Value !="")
             engineerId = Convert.ToInt32(taskElement.Element("EngineerId")?.Value);
+        //TimeSpan? requiredEffortTime = null;
+        //if (taskElement.Element("RequiredEffortTime")?.Value !="")
+        //    requiredEffortTime = Convert.ToInt32(taskElement.Element("EngineerId")?.Value);
         return new DO.Task
         {
             Id = Convert.ToInt32(taskElement.Element("Id")?.Value),
             Description = taskElement.Element("Description")!.Value,
             Alias = taskElement.Element("Alias")?.Value,
             Milestone = Convert.ToBoolean(taskElement.Element("Milestone")?.Value),
-            RequiredEffortTime = taskElement.Element("RequiredEffortTime")?.Value != null
+            RequiredEffortTime = taskElement.Element("RequiredEffortTime")?.Value != ""
                        ? (TimeSpan?)TimeSpan.Parse(taskElement.Element("RequiredEffortTime")!.Value)
                        : null,
-            CreatedAtDate = taskElement.Element("CreatedAtDate")?.Value != null
+            CreatedAtDate = taskElement.Element("CreatedAtDate")?.Value != ""
                        ? (DateTime?)DateTime.Parse(taskElement.Element("CreatedAtDate")!.Value)
                        : null,
-            Start = taskElement.Element("Start")?.Value != null
+            Start = taskElement.Element("Start")?.Value != ""
                        ? (DateTime?)DateTime.Parse(taskElement.Element("Start")!.Value)
                        : null,
-            Forecast = taskElement.Element("Forecast")?.Value != null
+            Forecast = taskElement.Element("Forecast")?.Value != ""
                        ? (DateTime?)DateTime.Parse(taskElement.Element("Forecast")!.Value)
                        : null,
-            DeadLineDate = taskElement.Element("DeadLineDate")?.Value != null
+            DeadLineDate = taskElement.Element("DeadLineDate")?.Value != ""
                        ? (DateTime?)DateTime.Parse(taskElement.Element("DeadLineDate")!.Value)
                        : null,
-            Complete = taskElement.Element("Complete")?.Value != null
+            Complete = taskElement.Element("Complete")?.Value != ""
                        ? (DateTime?)DateTime.Parse(taskElement.Element("Complete")!.Value)
                        : null,
             Deliverables = taskElement.Element("Deliverables")?.Value,

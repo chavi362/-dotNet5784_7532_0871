@@ -19,10 +19,11 @@ namespace BlImplementation
                 throw new ArgumentException("the item is not valid");
             try
             {
-                //item.DependenceList!.ForEach((dependency) =>
-                //{
-                //    _dal.Dependency.Create(new DO.Dependency(0, item.Id, dependency.Id));
-                //});
+                if(item.DependenceList!=null)
+                  item.DependenceList!.ForEach((dependency) =>
+                    {
+                        _dal.Dependency.Create(new DO.Dependency(0, item.Id, dependency.Id));
+                    });
                 int? idEngineer = null;
                 if (item.Engineer != null)
                 {
@@ -98,24 +99,32 @@ namespace BlImplementation
             try
             {
                 dependencies = _dal.Dependency.ReadAll((dependency) => dependency.DependensOnTask == id)!;
-                if(dependencies.Any())
+
+                if (dependencies.Any())
                 {
                     dependenciesOfTask = dependencies
-                     .Select(dependency =>
-                     {
-                         DO.Task dependTask = _dal.Task.Read(dependency!.DependentTask)!;
+                        .Select(dependency =>
+                        {
+                            DO.Task? dependTask = _dal.Task.Read(dependency!.DependentTask);
 
-                         return new BO.TaskInList
-                         {
-                             Id = dependTask.Id,
-                             Description = dependTask.Description,
-                             Alias = dependTask.Alias!,
-                             Status = GetTaskStatus(dependTask)
-                         };
-                     }).Where(dependTask => dependTask != null) // Filter out null values
+                            if (dependTask != null)
+                            {
+                                return new BO.TaskInList
+                                {
+                                    Id = dependTask.Id,
+                                    Description = dependTask.Description,
+                                    Alias = dependTask.Alias!,
+                                    Status = GetTaskStatus(dependTask)
+                                };
+                            }
+
+                            return null;
+                        })
+                        .OfType<BO.TaskInList>()
                         .ToList();
                 }
-               
+
+
             }
             catch (Exception ex)
             {
@@ -179,12 +188,18 @@ namespace BlImplementation
                 throw new ArgumentException("the item is not valid");
             try
             {
-                item.DependenceList!.ForEach((dependency) =>
+                if (item.DependenceList != null)
                 {
-                    _dal.Dependency.Create(new DO.Dependency(0, item.Id, dependency.Id));
-                });
+                    item.DependenceList!.ForEach((dependency) =>
+                    {
+                        _dal.Dependency.Create(new DO.Dependency(0, item.Id, dependency.Id));
+                    });
+                }
+                DO.EngineerExperience? experience = null;
+                if (item.ComplexityLevel!=null)
+                    experience = (DO.EngineerExperience)item.ComplexityLevel!;
                 _dal.Task.Update(new DO.Task(
-                    0,
+                    item.Id,
                     item.Description,
                     item.Alias,
                     false,  // Assuming the default value for Milestone is false
@@ -197,7 +212,7 @@ namespace BlImplementation
                     item.Deliverables,
                     item.Remarks,
                   idEngineer,
-                    (DO.EngineerExperience)item.ComplexityLevel!
+                   experience
                     ));
             }
             catch (DO.DalAlreadyExistsException)

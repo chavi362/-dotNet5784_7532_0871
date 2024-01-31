@@ -38,13 +38,8 @@ namespace PL.Engineer
         }
         private void Window_Activated(object sender, EventArgs e)
         {
-            QueryEngineerList();
-        }
-        private void QueryEngineerList()
-        {
             EngineerList = s_bl?.Engineer.ReadAll()!;
         }
-
         private void SearchByLevel(object sender, SelectionChangedEventArgs e)
         {
            
@@ -63,11 +58,4 @@ namespace PL.Engineer
             new EngineerWIndow(engineer!.Id).ShowDialog();
         }
     }
-    //private void EngineerListWindow_Activated(object sender, EventArgs e)
-    //{
-    //    var temp = s_bl?.Engineer.ReadAll();
-    //    EngineerList = (temp == null) ? new() : new(temp!);
-    //    var updatedEngineer = s_bl?.Engineer.ReadAll();
-    //    EngineerList = updatedEngineer == null ? new() : new(updatedEngineer!);
-    //}
 }

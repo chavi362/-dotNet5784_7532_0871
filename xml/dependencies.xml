@@ -1,58 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfDependency xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Dependency>
-    <Id>22</Id>
+    <Id>1</Id>
     <DependentTask>0</DependentTask>
+    <DependensOnTask>1</DependensOnTask>
+  </Dependency>
+  <Dependency>
+    <Id>2</Id>
+    <DependentTask>2</DependentTask>
     <DependensOnTask>9</DependensOnTask>
   </Dependency>
   <Dependency>
-    <Id>23</Id>
-    <DependentTask>1</DependentTask>
-    <DependensOnTask>4</DependensOnTask>
-  </Dependency>
-  <Dependency>
-    <Id>24</Id>
-    <DependentTask>2</DependentTask>
-    <DependensOnTask>10</DependensOnTask>
-  </Dependency>
-  <Dependency>
-    <Id>25</Id>
+    <Id>3</Id>
     <DependentTask>3</DependentTask>
-    <DependensOnTask>5</DependensOnTask>
+    <DependensOnTask>7</DependensOnTask>
   </Dependency>
   <Dependency>
-    <Id>26</Id>
+    <Id>4</Id>
     <DependentTask>4</DependentTask>
-    <DependensOnTask>10</DependensOnTask>
-  </Dependency>
-  <Dependency>
-    <Id>27</Id>
-    <DependentTask>5</DependentTask>
-    <DependensOnTask>4</DependensOnTask>
-  </Dependency>
-  <Dependency>
-    <Id>28</Id>
-    <DependentTask>6</DependentTask>
-    <DependensOnTask>0</DependensOnTask>
-  </Dependency>
-  <Dependency>
-    <Id>29</Id>
-    <DependentTask>7</DependentTask>
-    <DependensOnTask>4</DependensOnTask>
-  </Dependency>
-  <Dependency>
-    <Id>30</Id>
-    <DependentTask>8</DependentTask>
     <DependensOnTask>3</DependensOnTask>
   </Dependency>
   <Dependency>
-    <Id>31</Id>
-    <DependentTask>9</DependentTask>
-    <DependensOnTask>5</DependensOnTask>
+    <Id>5</Id>
+    <DependentTask>5</DependentTask>
+    <DependensOnTask>2</DependensOnTask>
   </Dependency>
   <Dependency>
-    <Id>32</Id>
-    <DependentTask>10</DependentTask>
+    <Id>6</Id>
+    <DependentTask>6</DependentTask>
+    <DependensOnTask>9</DependensOnTask>
+  </Dependency>
+  <Dependency>
+    <Id>7</Id>
+    <DependentTask>7</DependentTask>
+    <DependensOnTask>10</DependensOnTask>
+  </Dependency>
+  <Dependency>
+    <Id>8</Id>
+    <DependentTask>8</DependentTask>
+    <DependensOnTask>7</DependensOnTask>
+  </Dependency>
+  <Dependency>
+    <Id>9</Id>
+    <DependentTask>9</DependentTask>
     <DependensOnTask>8</DependensOnTask>
+  </Dependency>
+  <Dependency>
+    <Id>10</Id>
+    <DependentTask>10</DependentTask>
+    <DependensOnTask>6</DependensOnTask>
   </Dependency>
 </ArrayOfDependency>

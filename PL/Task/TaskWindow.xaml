@@ -11,7 +11,7 @@
         <Label Content="ID" HorizontalAlignment="Left" Margin="221,93,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.443,2.577"/>
         <Label Content="Description" HorizontalAlignment="Left" Margin="221,136,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.443,2.577"/>
         <Label Content="Alias" HorizontalAlignment="Left" Margin="221,186,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.443,2.577"/>
-        <Label Content="Status" HorizontalAlignment="Left" Margin="221,231,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.443,2.577"/>
+        <Label Content="Status" HorizontalAlignment="Left" Margin="221,242,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.443,2.577"/>
         <Label Content="CreatedAtDateDate" HorizontalAlignment="Left" Margin="221,290,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.443,2.577"/>
         <Label Content="BaselineStartDate" HorizontalAlignment="Left" Margin="221,337,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="0.443,2.577"/>
         <Label Content="StartDate" HorizontalAlignment="Left" Margin="221,374,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.443,2.577"/>
@@ -25,10 +25,12 @@
         <TextBox Text="{Binding Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="30" Margin="339,187,0,0"  VerticalAlignment="Top" Width="186"/>
         <TextBox Text="{Binding Deliverables, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="30" Margin="339,544,0,0"  VerticalAlignment="Top" Width="186"/>
         <TextBox Text="{Binding Remarks, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="30" Margin="339,583,0,0"  VerticalAlignment="Top" Width="186"/>
-        <ComboBox 
+        <TextBox Text="{Binding Status, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="30" Margin="339,239,0,0"  VerticalAlignment="Top" Width="186" IsReadOnly="True"/>
+        <!--<ComboBox 
             SelectedValue="{Binding Status, Mode=TwoWay}"
-         ItemsSource="{Binding Source={StaticResource TaskStatusCollectionKey}}" HorizontalAlignment="Left" Margin="339,233,0,0" VerticalAlignment="Top" Width="186" Height="30"/>
-        <DatePicker SelectedDate="{Binding CreatedAtDateDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Margin="339,290,0,0" VerticalAlignment="Top" Height="26" Width="186"/>
+         ItemsSource="{Binding Source={StaticResource TaskStatusCollectionKey}}" HorizontalAlignment="Left" Margin="339,233,0,0" VerticalAlignment="Top" Width="186" Height="30" />-->
+        
+        <DatePicker SelectedDate="{Binding CreatedAtDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Margin="339,290,0,0" VerticalAlignment="Top" Height="26" Width="186"/>
         <DatePicker SelectedDate="{Binding BaselineStartDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Left" Margin="339,337,0,0" VerticalAlignment="Top" Height="26" Width="186"/>
         <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Left" Margin="339,0,0,0" VerticalAlignment="Center" Height="26" Width="186"/>
         <DatePicker SelectedDate="{Binding ForecastDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Left" Margin="339,418,0,0" VerticalAlignment="Top" Height="26" Width="186"/>
