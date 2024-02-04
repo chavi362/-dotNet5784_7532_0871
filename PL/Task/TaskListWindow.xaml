@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL.Task"
         mc:Ignorable="d"
         Title="TaskListWindow" Height="640" Width="800"
-        DataContext="{Binding  RelativeSource={RelativeSource Mode=Self}}" Activated="Window_Activated">
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}" Activated="Window_Activated">
     <Grid Background="#ECECEC">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -32,6 +32,20 @@
         <ListView Grid.Row="1" Margin="5" ItemsSource="{Binding Path=TaskList}" MouseDoubleClick="DubbleClickTask"
                   Background="White" BorderBrush="#CCC" BorderThickness="1"/>
         <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="AddTaskClick"
-                Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" BorderThickness="1"/>
+                Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" BorderThickness="1">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
     </Grid>
 </Window>
