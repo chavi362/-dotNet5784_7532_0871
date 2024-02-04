@@ -54,7 +54,10 @@ namespace BlImplementation
                     Milestone = true,
                     CreatedAtDate = DateTime.Now
                 });
-
+                //newDependencies.AddRange(item.Select(d => new DO.Dependency(0, milestoneId, d)));
+                ////הוספת תלויות של כל המשימות שתלויות באבן הדרך החדשה
+                //newDependencies.AddRange(dependenciesGroups.Where(g => g.DependsOn.SequenceEqual(item))
+                //    .Select(g => new DO.Dependency(0, g.Key, milestoneId)));
             }
             // Adding Milestone for project completing
             milestoneId = _dal.Task.Create(new DO.Task()
