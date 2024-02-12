@@ -135,7 +135,7 @@ namespace BlImplementation
                     DateTime milestoneDeadLineDate;
 
                     // Update dependent tasks' deadlines
-                    foreach (DO.Task task in _dal.Task.ReadAll(t => _dal.Dependency.ReadAll().Any(d => d?.DependentTask == milestone.Id && d.DependensOnTask == t.Id)))
+                    foreach (DO.Task? task in _dal.Task.ReadAll(t => _dal.Dependency.ReadAll().Any(d => d?.DependentTask == milestone.Id && d.DependensOnTask == t.Id)))
                     {
                         if (task!.DeadLineDate == null || task.DeadLineDate > ProjectDeadLine)
                         {
