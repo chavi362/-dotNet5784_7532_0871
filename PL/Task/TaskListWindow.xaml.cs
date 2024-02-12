@@ -16,14 +16,14 @@ namespace PL.Task
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
-        public IEnumerable<BO.Task> TaskList
+        public IEnumerable<BO.TaskInList> TaskList
         {
-            get { return (IEnumerable<BO.Task>)GetValue(TaskListProperty); }
+            get { return (IEnumerable<BO.TaskInList>)GetValue(TaskListProperty); }
             set { SetValue(TaskListProperty, value); }
         }
 
         public static readonly DependencyProperty TaskListProperty =
-            DependencyProperty.Register("TaskList", typeof(IEnumerable<BO.Task>), typeof(TaskListWindow), new PropertyMetadata(null));
+            DependencyProperty.Register("TaskList", typeof(IEnumerable<BO.TaskInList>), typeof(TaskListWindow), new PropertyMetadata(null));
         public BO.Status TStatus { get; set; } = BO.Status.None;
         public TaskListWindow()
         {
@@ -35,7 +35,7 @@ namespace PL.Task
         }
         private void QueryTaskList()
         {
-            TaskList = s_bl?.Task.ReadAll()!;
+            TaskList = s_bl?.TaskInList.ReadAll()!;
         }
 
         private void AddTaskClick(object sender, RoutedEventArgs e)
@@ -45,14 +45,14 @@ namespace PL.Task
 
         private void DubbleClickTask(object sender, MouseButtonEventArgs e)
         {
-            BO.Task? task = (sender as ListView)?.SelectedItem as BO.Task;
+            BO.TaskInList? task = (sender as ListView)?.SelectedItem as BO.TaskInList;
             new TaskWindow(task!.Id).ShowDialog();
         }
 
         private void SearchByStatus(object sender, SelectionChangedEventArgs e)
         {
             TaskList = (TStatus == BO.Status.None) ?
-          s_bl?.Task.ReadAll()! : s_bl?.Task.ReadAll(item => item.Status == TStatus)!;
+          s_bl?.TaskInList.ReadAll()! : s_bl?.TaskInList.ReadAll(item => item.Status == TStatus)!;
         }
     }
 }

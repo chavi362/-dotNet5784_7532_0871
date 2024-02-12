@@ -77,4 +77,11 @@
     <Level>AdvancedBeginner</Level>
     <Cost>5000</Cost>
   </Engineer>
+  <Engineer>
+    <Id>123456789</Id>
+    <Name>dvsv</Name>
+    <Email>vds@gmail.com</Email>
+    <Level xsi:nil="true" />
+    <Cost>150</Cost>
+  </Engineer>
 </ArrayOfEngineer>

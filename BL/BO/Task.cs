@@ -15,7 +15,6 @@ namespace BO
         public Tuple< int,string>? Milestone { get; set; }
         public DateTime? BaselineStartDate { get; set; }
         public DateTime? StartDate { get; set; }
-        //public DateTime? ScheduledStartDate { get; set; }
         public DateTime? ForecastDate { get; set; }
         public DateTime? DeadlineDate { get; set; }
         public DateTime? CompleteDate { get; set; }

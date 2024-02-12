@@ -14,7 +14,8 @@ namespace PL.Task
     public partial class TaskWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        // public BO.EngineerExperience Experience { get; set; } = BO.EngineerExperience.None;
+         public BO.EngineerExperience ComplexityLevel { get; set; } = BO.EngineerExperience.None;
+
         public BO.Task? Task
         {
             get { return (BO.Task)GetValue(TaskProperty); }

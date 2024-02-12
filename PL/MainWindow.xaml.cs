@@ -32,7 +32,7 @@ namespace PL
             new EngineerListWindow().Show();
         }
 
-        private void Intilazation(object sender, RoutedEventArgs e)
+        private void Initialization(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Are you sure you want to perform the initialization?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 

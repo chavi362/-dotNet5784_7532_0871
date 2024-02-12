@@ -51,10 +51,10 @@ namespace BlImplementation
     private DalApi.IDal _dal = DalApi.Factory.Get;
         public int Create(Engineer boEngineer)
         {
-            if (boEngineer.Id <= 0 || boEngineer.Name == "" || boEngineer.Cost < 0|| !ValidateEmail(boEngineer.Email))
+            if (boEngineer.Id <= 99999999 || boEngineer.Name == "" || boEngineer.Cost < 0|| !ValidateEmail(boEngineer.Email))
                 throw new BO.BlInvalidPropertyException("one or more of the details is not valid");
             DO.EngineerExperience? level = null;
-            if (boEngineer.Level != null)
+            if (boEngineer.Level != null&&boEngineer.Level!=EngineerExperience.None)
                 level = (DO.EngineerExperience)boEngineer.Level!;
             DO.Engineer doEngineer = new DO.Engineer(boEngineer.Id, boEngineer.Name, boEngineer.Email, level, boEngineer.Cost);
             try
@@ -99,13 +99,15 @@ namespace BlImplementation
             DO.Engineer? doEngineer = _dal.Engineer.Read(id);
             if (doEngineer == null)
                 throw new BO.BlDoesNotExistException($"Engineer with ID={id} does Not exist", null!);
-
+            BO.EngineerExperience? level = null; // Moved inside the Select lambda
+            if (doEngineer!.Level != null)
+                level = (BO.EngineerExperience)doEngineer.Level!;
             return new BO.Engineer()
             {
                 Id = id,
                 Name = doEngineer.Name,
                 Email = doEngineer.Email,
-                Level = (EngineerExperience)doEngineer.Level!,
+                Level = level,
                 Cost = (double)doEngineer.Cost!,
                 CurrentTask = FindCurrentTask(doEngineer.Id)
 
@@ -115,7 +117,6 @@ namespace BlImplementation
         {
             DateTime today = DateTime.Now;
 
-            // Use ToList() to materialize the result into a List
             List<DO.Task> tasks = _dal.Task.ReadAll(task => task.EngineerId == id && task.Complete > today && task.Start < today).ToList()!;
 
             if (tasks.Any())
@@ -131,20 +132,28 @@ namespace BlImplementation
 
         public IEnumerable<Engineer> ReadAll(Func<BO.Engineer, bool>? filter = null)
         {
-            IEnumerable<Engineer> engineers=_dal.Engineer.ReadAll().Select(doEngineer =>
-                     new Engineer
-                    {
-                        Id = doEngineer!.Id,
-                        Name = doEngineer.Name,
-                        Email = doEngineer.Email,
-                        Level = (EngineerExperience)doEngineer.Level!,
-                        Cost = (double)doEngineer.Cost!,
-                        CurrentTask = FindCurrentTask(doEngineer.Id)
-                    });
+            IEnumerable<Engineer> engineers = _dal.Engineer.ReadAll().Select(doEngineer =>
+            {
+                BO.EngineerExperience? level = null; // Moved inside the Select lambda
+                if (doEngineer!.Level != null)
+                    level = (BO.EngineerExperience)doEngineer.Level!;
+
+                return new Engineer
+                {
+                    Id = doEngineer.Id,
+                    Name = doEngineer.Name,
+                    Email = doEngineer.Email,
+                    Level = level, 
+                    Cost = (double)doEngineer.Cost!,
+                    CurrentTask = FindCurrentTask(doEngineer.Id)
+                };
+            });
+
             if (filter == null)
                 return engineers;
             return engineers.Where(filter);
         }
+
 
 
         public int Update(BO.Engineer boEngineer)
