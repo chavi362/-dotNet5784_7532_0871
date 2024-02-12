@@ -3,55 +3,50 @@
   <Dependency>
     <Id>11</Id>
     <DependentTask>0</DependentTask>
-    <DependensOnTask>4</DependensOnTask>
+    <DependensOnTask>7</DependensOnTask>
   </Dependency>
   <Dependency>
     <Id>12</Id>
     <DependentTask>1</DependentTask>
-    <DependensOnTask>4</DependensOnTask>
+    <DependensOnTask>7</DependensOnTask>
   </Dependency>
   <Dependency>
     <Id>13</Id>
     <DependentTask>2</DependentTask>
-    <DependensOnTask>5</DependensOnTask>
+    <DependensOnTask>10</DependensOnTask>
   </Dependency>
   <Dependency>
     <Id>14</Id>
     <DependentTask>3</DependentTask>
-    <DependensOnTask>4</DependensOnTask>
+    <DependensOnTask>2</DependensOnTask>
   </Dependency>
   <Dependency>
     <Id>15</Id>
     <DependentTask>4</DependentTask>
-    <DependensOnTask>10</DependensOnTask>
+    <DependensOnTask>5</DependensOnTask>
   </Dependency>
   <Dependency>
     <Id>16</Id>
     <DependentTask>5</DependentTask>
-    <DependensOnTask>0</DependensOnTask>
+    <DependensOnTask>2</DependensOnTask>
   </Dependency>
   <Dependency>
     <Id>17</Id>
     <DependentTask>6</DependentTask>
-    <DependensOnTask>7</DependensOnTask>
+    <DependensOnTask>8</DependensOnTask>
   </Dependency>
   <Dependency>
     <Id>18</Id>
-    <DependentTask>7</DependentTask>
+    <DependentTask>8</DependentTask>
     <DependensOnTask>4</DependensOnTask>
   </Dependency>
   <Dependency>
     <Id>19</Id>
-    <DependentTask>8</DependentTask>
-    <DependensOnTask>5</DependensOnTask>
+    <DependentTask>9</DependentTask>
+    <DependensOnTask>1</DependensOnTask>
   </Dependency>
   <Dependency>
     <Id>20</Id>
-    <DependentTask>9</DependentTask>
-    <DependensOnTask>5</DependensOnTask>
-  </Dependency>
-  <Dependency>
-    <Id>21</Id>
     <DependentTask>10</DependentTask>
     <DependensOnTask>5</DependensOnTask>
   </Dependency>
