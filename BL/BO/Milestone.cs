@@ -18,6 +18,9 @@ namespace BO
         public Double ProgressPercentage { get; set; }
         public string? Remarks { get; set; }
         public IEnumerable<BO.TaskInList>? DependenceTasks { get; set; }
-
+        public override string ToString()
+        {
+            return this.ToStringProperty();
+        }
     }
 }

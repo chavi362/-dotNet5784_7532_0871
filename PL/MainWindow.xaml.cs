@@ -1,4 +1,5 @@
 ﻿using PL.Engineer;
+using PL.Milestone;
 using PL.Task;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,11 @@ namespace PL
         private void GoToTasks(object sender, RoutedEventArgs e)
         {
             new TaskListWindow().Show();
+        }
+
+        private void GoToMilestone(object sender, RoutedEventArgs e)
+        {
+            new MilestoneListWindow().Show();
         }
     }
 }
