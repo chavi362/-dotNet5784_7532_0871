@@ -1,4 +1,5 @@
 ﻿using PL.Engineer;
+using PL.milestone;
 using PL.Milestone;
 using PL.Task;
 using System;
@@ -52,6 +53,12 @@ namespace PL
         private void GoToMilestone(object sender, RoutedEventArgs e)
         {
             new MilestoneListWindow().Show();
+        }
+
+        private void CreateProjectSchedule_Click(object sender, RoutedEventArgs e)
+        {
+            // Open the CreateProjectScheduleWindow
+            new CreateProjectScheduleWindow().Show();
         }
 
     }

@@ -1,0 +1,24 @@
+﻿<Window x:Class="PL.milestone.CreateProjectScheduleWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Create Project Schedule" Height="300" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Label Content="Project Start Date:" />
+        <DatePicker Grid.Row="0" Name="StartDatePicker" Margin="5" SelectedDate="{Binding StartDate, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Label Content="Project End Date:" Grid.Row="1"/>
+        <DatePicker Grid.Row="1" Name="EndDatePicker" Margin="5" SelectedDate="{Binding EndDate, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Button Content="Create Project Schedule" Grid.Row="2" Click="CreateProjectSchedule_Click" Margin="5"/>
+
+        <!-- Add visual feedback for invalid input -->
+        <TextBlock Name="ValidationMessage" Grid.Row="3" Foreground="Red" Visibility="Hidden"/>
+    </Grid>
+</Window>
