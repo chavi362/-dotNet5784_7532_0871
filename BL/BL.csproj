@@ -9,13 +9,12 @@
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 		<UseCommonOutputDirectory>true</UseCommonOutputDirectory>
 		<RootNamespace />
-
 	</PropertyGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\DalFacade\DalFacade.csproj" />
 	  <ProjectReference Include="..\DalList\DalList.csproj" />
 	  <ProjectReference Include="..\DalXml\DalXml.csproj" />
-		<!--<PackageReference Include="AutoMapper" Version="13.0.1" />-->
+		<PackageReference Include="AutoMapper" Version="13.0.1" />
 	</ItemGroup>
 
 </Project>
