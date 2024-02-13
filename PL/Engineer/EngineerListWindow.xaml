@@ -31,7 +31,17 @@
                       Background="#FFF" Foreground="#333" BorderBrush="#666" BorderThickness="1"/>
         </Grid>
         <ListView Grid.Row="1" Margin="5" ItemsSource="{Binding Path=EngineerList}" MouseDoubleClick="DubbleClickEngineer"
-                  Background="White" BorderBrush="#CCC" BorderThickness="1"/>
+                  Background="White" BorderBrush="#CCC" BorderThickness="1">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" Width="150" DisplayMemberBinding="{Binding Id}" />
+                    <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Email" Width="150" DisplayMemberBinding="{Binding Email}" />
+                    <GridViewColumn Header="Level" Width="150" DisplayMemberBinding="{Binding Level}" />
+                    <GridViewColumn Header="Cost" Width="100" DisplayMemberBinding="{Binding Cost}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
         <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="AddEngineerClick"
                 Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" BorderThickness="1"/>
     </Grid>

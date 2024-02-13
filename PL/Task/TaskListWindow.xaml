@@ -30,7 +30,16 @@
                       Background="#FFF" Foreground="#333" BorderBrush="#666" BorderThickness="1" SelectionChanged="SearchByStatus" Grid.ColumnSpan="2"/>
         </Grid>
         <ListView Grid.Row="1" Margin="5" ItemsSource="{Binding Path=TaskList}" MouseDoubleClick="DubbleClickTask"
-                  Background="White" BorderBrush="#CCC" BorderThickness="1"/>
+                  Background="White" BorderBrush="#CCC" BorderThickness="1">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" Width="150" DisplayMemberBinding="{Binding Id}" />
+                    <GridViewColumn Header="Alias" Width="150" DisplayMemberBinding="{Binding Alias}" />
+                    <GridViewColumn Header="Description" Width="300" DisplayMemberBinding="{Binding Description}" />
+                    <GridViewColumn Header="Status" Width="150" DisplayMemberBinding="{Binding Status}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
         <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="AddTaskClick"
                 Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" BorderThickness="1">
             <Button.Style>
