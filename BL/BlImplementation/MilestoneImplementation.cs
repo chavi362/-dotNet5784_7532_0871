@@ -139,6 +139,7 @@ namespace BlImplementation
                     milestone.RequiredEffortTime,
                     milestone.CreatedAtDate,
                     milestone.Start,
+                    milestone.ScheduledDate,
                     milestone.Forecast,
                     ProjectDeadLine,
                     milestone.Complete,
@@ -167,6 +168,7 @@ namespace BlImplementation
                                 task.RequiredEffortTime,
                                 task.CreatedAtDate,
                                 task.Start,
+                                task.ScheduledDate,
                                 task.Forecast,
                                 ProjectDeadLine.Subtract(task.RequiredEffortTime!.Value), // Update start date
                                 task.Complete, // Update completion date

@@ -21,7 +21,6 @@ namespace BlApi
                 cfg.CreateMap<DO.Engineer, BO.Engineer>()
                   .ForMember(dest => dest.Level, opt => opt.MapFrom(src => (BO.EngineerExperience?)src.Level))
                   .ForMember(dest => dest.CurrentTask, opt => opt.MapFrom(src => FindCurrentTask(src.Id)));
-
                 // Map DO.Task to BO.Task
                 _ = cfg.CreateMap<DO.Task, BO.Task>()
                     .ForMember(dest => dest.ComplexityLevel, opt => opt.MapFrom(src => (BO.EngineerExperience?)src.ComplexityLevel))
@@ -41,11 +40,21 @@ namespace BlApi
         }
 
         // Find and map the current task for the engineer
-        private static BO.EngineerInTask? FindCurrentTask(int engineerId)
+        private static Tuple<int, string>? FindCurrentTask(int engineerId)
         {
-            // Implement the logic to find and map the current task for the engineer
-            // Return the mapped BO.EngineerInTask or null if no current task
-            return null;
+            DateTime today = DateTime.Now;
+
+            List<DO.Task> tasks = _dal!.Task.ReadAll(task => task.EngineerId == engineerId && task.Complete > today && task.Start < today).ToList()!;
+
+            if (tasks.Any())
+            {
+                return new Tuple<int, string>(tasks.First().Id, tasks.First().Alias!);
+            }
+            else
+            {
+                // Handle the case where no tasks are found
+                return new Tuple<int, string>(-1, "NoTaskFound");
+            }
         }
 
         // Get the status of a task based on its completion and start dates

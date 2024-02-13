@@ -11,6 +11,7 @@ public record Task
     TimeSpan? RequiredEffortTime = null,
     DateTime? CreatedAtDate=null,
     DateTime? Start = null,
+    DateTime? ScheduledDate=null,
     DateTime? Forecast = null,
     DateTime? DeadLineDate = null,
     DateTime? Complete = null,
