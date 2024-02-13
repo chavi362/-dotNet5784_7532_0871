@@ -16,6 +16,10 @@ namespace BlApi
 
             var config = new MapperConfiguration(cfg =>
             {
+                cfg.CreateMap<DO.Engineer, BO.Engineer>()
+              .ForMember(dest => dest.Level, opt => opt.MapFrom(src => (BO.EngineerExperience?)src.Level))
+              .ForMember(dest => dest.CurrentTask, opt => opt.MapFrom(src => FindCurrentTask(src.Id)));
+
                 _ = cfg.CreateMap<DO.Task, BO.Task>()
                     .ForMember(dest => dest.ComplexityLevel, opt => opt.MapFrom(src => (BO.EngineerExperience?)src.ComplexityLevel))
                     .ForMember(dest => dest.CreatedAtDate, opt => opt.MapFrom(src => src.CreatedAtDate ?? DateTime.MinValue))
@@ -32,7 +36,12 @@ namespace BlApi
 
             return config.CreateMapper();
         }
-
+        private static BO.EngineerInTask? FindCurrentTask(int engineerId)
+        {
+            // Implement the logic to find and map the current task for the engineer
+            // Return the mapped BO.EngineerInTask or null if no current task
+            return null;
+        }
         private static BO.Status GetTaskStatus(DO.Task doTask)
         {
             if (doTask.Complete != null && doTask.Complete <= DateTime.Now)
