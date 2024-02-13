@@ -32,7 +32,6 @@ namespace BlImplementation
 
             // Find tasks that do not have dependencies; they will depend on the project's start
             var tasksWithoutDependencies = tasks.Where(task => !dependenciesList.Any(dependency => dependency.DependentTask == task.Id));
-
             int milestoneId = _dal.Task.Create(new DO.Task()
             {
                 Description = $"milestone{milestoneIndex++}",
@@ -40,9 +39,7 @@ namespace BlImplementation
                 Milestone = true,
                 CreatedAtDate = DateTime.Now
             });
-
             newDependencies.AddRange(tasksWithoutDependencies.Select(t => new DO.Dependency(0, t.Id, milestoneId)));
-
             // Group tasks based on their dependencies
             var taskDependencies = (from dependency in dependenciesList
                                     where dependency?.DependentTask != null && dependency?.DependsOnTask != null
@@ -66,10 +63,13 @@ namespace BlImplementation
                     CreatedAtDate = DateTime.Now
                 });
 
-                //newDependencies.AddRange(item.Select(d => new DO.Dependency(0, milestoneId, d)));
-                //// Adding dependencies of all tasks dependent on the new milestone
-                //newDependencies.AddRange(dependenciesGroups.Where(g => g.DependsOn.SequenceEqual(item))
-                //    .Select(g => new DO.Dependency(0, g.Key, milestoneId)));
+                // Find the task that this milestone depends on
+                var dependentTask = tasks.FirstOrDefault(t => t.Id == dependency._key);
+                // If the dependent task is found, create a dependency from it to the milestone
+                if (dependentTask != null)
+                {
+                    newDependencies.Add(new DO.Dependency(0, dependentTask.Id, milestoneId));
+                }
             }
 
             // Adding Milestone for project completion
@@ -106,7 +106,7 @@ namespace BlImplementation
                     scheduledDate = _dal.ProjectStartDate ?? throw new BO.BlNullPropertyException("Start date of the project is null",null!);
                 else
                     scheduledDate = _dal.Task.ReadAll(t => _dal.Dependency.ReadAll().Any(d => d.DependentTask == milestone.Id && d.DependsOnTask == t.Id))
-                        .Min(t => t.ScheduledDate!.Value);
+                        .Min(t => t!.ScheduledDate!.Value);
 
                 _dal.Task.Update(new DO.Task(milestone.Id,
                        milestone.Description,

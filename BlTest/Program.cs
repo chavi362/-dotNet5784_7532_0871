@@ -302,7 +302,6 @@ namespace BlTest
                     successTryParse = DateTime.TryParse(Console.ReadLine(), out _start);
                     if (!successToTryParse)
                         Console.WriteLine("Invalid input");
-
                     Console.WriteLine("Enter date of ending project");
                     DateTime _end;
                     successToTryParse = DateTime.TryParse(Console.ReadLine(), out _end);
@@ -388,6 +387,18 @@ namespace BlTest
                 result = (T)(object)userInput!;
                 return true;
             }
+            else if (typeof(T) == typeof(char))
+            {
+                if (char.TryParse(userInput, out char charValue))
+                {
+                    result = (T)(object)charValue;
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine($"Invalid input for {inputName}. Please enter a valid character.");
+                }
+            }
             result = default(T)!;
             return false;
         }
@@ -417,7 +428,6 @@ namespace BlTest
                 Console.WriteLine("Invalid input. Please enter a number between 0 and 3.");
 
             char x;
-
             while (select != 0)
             {
                 switch (select)

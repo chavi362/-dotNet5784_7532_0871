@@ -1,13 +1,15 @@
-﻿
+﻿using BlApi;
 
-namespace BlImplementation;
-using BlApi;
-internal class Bl : IBl
+namespace BlImplementation
 {
-    public ITask Task => new TaskImplementation();
+    internal class Bl : IBl
+    {
+        public ITask Task => new TaskImplementation();
 
-    public IEngineer Engineer => new EngineerImplementation();
+        public IEngineer Engineer => new EngineerImplementation();
 
-    public IMilestone Milestone => new MilestoneImplementation();
-     public ITaskInList TaskInList => new TaskInListImplementation();
+        public IMilestone Milestone => new MilestoneImplementation();
+
+        public ITaskInList TaskInList => new TaskInListImplementation();
+    }
 }
