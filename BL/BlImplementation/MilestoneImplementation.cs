@@ -102,7 +102,7 @@ namespace BlImplementation
             foreach (DO.Task? milestone in _dal.Task.ReadAll(t => t.Milestone))
             {
 
-                if (milestone!.Alias == "Start")
+                if (milestone!.Alias == "M0")
                     scheduledDate = _dal.ProjectStartDate ?? throw new BO.BlNullPropertyException("Start date of the project is null",null!);
                 else
                     scheduledDate = _dal.Task.ReadAll(t => _dal.Dependency.ReadAll().Any(d => d.DependentTask == milestone.Id && d.DependsOnTask == t.Id))
