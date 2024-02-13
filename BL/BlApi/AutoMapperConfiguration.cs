@@ -1,103 +1,106 @@
-﻿//using AutoMapper;
-//using DalApi;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
+﻿using AutoMapper;
+using DalApi;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
-//namespace BlApi
-//{
-//    internal class AutoMapperConfiguration
-//    {
-//        private static IDal? _dal; // Ensure that _dal is declared at the class level
-//        public BO.Status GetTaskStatus(DO.Task doTask)
-//        {
-//            if (doTask.Complete != null && doTask.Complete <= DateTime.Now)
-//            {
-//                return BO.Status.Complete;
-//            }
+namespace BlApi
+{
+    internal class AutoMapperConfiguration
+    {
+        private static IDal? _dal; // Ensure that _dal is declared at the class level
 
-//            if (doTask.Start == null || doTask.Forecast == null || doTask.DeadLineDate == null)
-//            {
-//                return BO.Status.Unscheduled;
-//            }
+        public static IMapper Configure(IDal dal)
+        {
+            _dal = dal; // Initialize _dal with the provided dal instance
 
-//            if (doTask.Start > DateTime.Now)
-//            {
-//                return BO.Status.Scheduled;
-//            }
+            var config = new MapperConfiguration(cfg =>
+            {
+                _ = cfg.CreateMap<DO.Task, BO.Task>()
+                    .ForMember(dest => dest.ComplexityLevel, opt => opt.MapFrom(src => (BO.EngineerExperience?)src.ComplexityLevel))
+                    .ForMember(dest => dest.CreatedAtDate, opt => opt.MapFrom(src => src.CreatedAtDate ?? DateTime.MinValue))
+                    .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.Start ?? DateTime.MinValue))
+                    .ForMember(dest => dest.ForecastDate, opt => opt.MapFrom(src => src.Forecast ?? DateTime.MinValue))
+                    .ForMember(dest => dest.DeadlineDate, opt => opt.MapFrom(src => src.DeadLineDate ?? DateTime.MinValue))
+                    .ForMember(dest => dest.CompleteDate, opt => opt.MapFrom(src => src.Complete ?? DateTime.MinValue))
+                    .ForMember(dest => dest.Status, opt => opt.MapFrom(src => GetTaskStatus(src)))
+                    .ForMember(dest => dest.Milestone, opt => opt.MapFrom(src => GetMilestone(src)))
+                    .ForMember(dest => dest.DependenceList, opt => opt.MapFrom(src => ReadTaskInList(src.Id)));
 
-//            if (DateTime.Now <= doTask.DeadLineDate)
-//            {
-//                return BO.Status.OnTrack;
-//            }
+                // Add other mappings as needed...
+            });
 
-//            return BO.Status.InJeopardy;
-//        }
-//        public static IMapper Configure(IDal dal)
-//        {
-//            _dal = dal; // Initialize _dal with the provided dal instance
+            return config.CreateMapper();
+        }
 
-//            var config = new MapperConfiguration(cfg =>
-//            {
-//                cfg.CreateMap<DO.Task, BO.Task>()
-//                    .ForMember(dest => dest.ComplexityLevel, opt => opt.MapFrom(src => (BO.EngineerExperience?)src.ComplexityLevel))
-//                    .ForMember(dest => dest.CreatedAtDate, opt => opt.MapFrom(src => src.CreatedAtDate ?? DateTime.MinValue))
-//                    .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.Start ?? DateTime.MinValue))
-//                    .ForMember(dest => dest.ForecastDate, opt => opt.MapFrom(src => src.Forecast ?? DateTime.MinValue))
-//                    .ForMember(dest => dest.DeadlineDate, opt => opt.MapFrom(src => src.DeadLineDate ?? DateTime.MinValue))
-//                    .ForMember(dest => dest.CompleteDate, opt => opt.MapFrom(src => src.Complete ?? DateTime.MinValue))
-//                    .ForMember(dest => dest.Status, opt => opt.MapFrom(src => GetTaskStatus(src)))
-//                    .ForMember(dest => dest.Milestone, opt => opt.MapFrom(src => GetMilestone(src)))
-//                    .ForMember(dest => dest.DependenceList, opt => opt.MapFrom(src => ReadTaskInList(src.Id)));
+        private static BO.Status GetTaskStatus(DO.Task doTask)
+        {
+            if (doTask.Complete != null && doTask.Complete <= DateTime.Now)
+            {
+                return BO.Status.Complete;
+            }
 
-//                // Add other mappings as needed...
-//            });
+            if (doTask.Start == null || doTask.Forecast == null || doTask.DeadLineDate == null)
+            {
+                return BO.Status.Unscheduled;
+            }
 
-//            return config.CreateMapper();
-//        }
+            if (doTask.Start > DateTime.Now)
+            {
+                return BO.Status.Scheduled;
+            }
 
-       
+            if (DateTime.Now <= doTask.DeadLineDate)
+            {
+                return BO.Status.OnTrack;
+            }
 
-       
+            return BO.Status.InJeopardy;
+        }
 
-//        private static IEnumerable<BO.TaskInList?> ReadTaskInList(int taskId)
-//        {
-//            IEnumerable<DO.Dependency> dependencies;
-//            List<BO.TaskInList>? dependenciesOfTask = null;
+        private static object GetMilestone(DO.Task src)
+        {
+            throw new NotImplementedException();
+        }
 
-//            try
-//            {
-//                dependencies = _dal!.Dependency.ReadAll((dependency) => dependency.DependensOnTask == id)!;
+        private static IEnumerable<BO.TaskInList?> ReadTaskInList(int taskId)
+        {
+            IEnumerable<DO.Dependency> dependencies;
+            List<BO.TaskInList>? dependenciesOfTask = null;
 
-//                if (dependencies.Any())
-//                {
-//                    dependenciesOfTask = dependencies
-//                        .Select(dependency =>
-//                        {
-//                            DO.Task? dependTask = _dal.Task.Read(dependency!.DependentTask);
+            try
+            {
+                dependencies = _dal!.Dependency.ReadAll((dependency) => dependency.DependensOnTask == taskId)!;
 
-//                            if (dependTask != null)
-//                            {
-//                                return new BO.TaskInList
-//                                {
-//                                    Id = dependTask.Id,
-//                                    Description = dependTask.Description,
-//                                    Alias = dependTask.Alias!,
-//                                    Status = GetTaskStatus(dependTask)
-//                                };
-//                            }
+                if (dependencies.Any())
+                {
+                    dependenciesOfTask = dependencies
+                        .Select(dependency =>
+                        {
+                            DO.Task? dependTask = _dal.Task.Read(dependency!.DependentTask);
 
-//                            return null;
-//                        })
-//                        .OfType<BO.TaskInList>()
-//                        .ToList();
-//                }
-//            }
-//            catch (Exception ex)
-//            {
-//                Console.WriteLine(ex);
-//            }
-//            return dependenciesOfTask;
-//        }
-//    }
-//}
+                            if (dependTask != null)
+                            {
+                                return new BO.TaskInList
+                                {
+                                    Id = dependTask.Id,
+                                    Description = dependTask.Description,
+                                    Alias = dependTask.Alias!,
+                                    Status = GetTaskStatus(dependTask)
+                                };
+                            }
+
+                            return null;
+                        })
+                        .OfType<BO.TaskInList>()
+                        .ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            return dependenciesOfTask!;
+        }
+    }
+}
