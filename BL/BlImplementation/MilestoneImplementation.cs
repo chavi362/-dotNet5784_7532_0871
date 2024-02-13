@@ -95,6 +95,26 @@ namespace BlImplementation
             {
                 _dal.Dependency.Create(dependency);
             }
+            updateDeadLines(_dal.Task.Read(milestoneId), _dal.ProjectEndDate ?? throw new BO.BlNullPropertyException("End date of the project is null"));
+
+            DateTime scheduledDate;
+            //עדכון תאריכי התחלה לאבני דרך
+            foreach (DO.Task? milestone in _dal.Task.ReadAll(t => t.Milestone))
+            {
+
+                if (milestone!.Alias == "Start")
+                    scheduledDate = _dal.ProjectStartDate ?? throw new BO.BlNullPropertyException("Start date of the project is null");
+                else
+                    scheduledDate = _dal.Task.ReadAll(t => _dal.Dependency.ReadAll().Any(d => d.DependentTask == milestone.Id && d.DependsOnTask == t.Id))
+                        .Min(t => t.ScheduledDate!.Value);
+
+                _dal.Task.Update(new DO.Task(milestone.Id,
+                       milestone.Description,
+                       milestone.Alias, milestone.Milestone, milestone.RequiredEffortTime, milestone.CreatedAtDate, milestone.StartedDate,
+                       scheduledDate, //עדכון תאריך התחלה
+                       milestone.Forecast, milestone.DeadLineDate, milestone.co, milestone.Deliverables,
+                       milestone.Remarks, milestone.EngineerId, milestone.ComplexityLevel));
+            }
         }
 
         // Get the status of a task based on its completion and start dates
@@ -165,6 +185,11 @@ namespace BlImplementation
                             }
                             else
                                 milestones.Add(milestoneId, milestoneDeadLineDate);
+                        }
+
+                        foreach (var item in milestones)
+                        {
+                            UpdateDedLineDate(_dal.Task.Read(item.Key), item.Value);
                         }
                     }
                 }
@@ -255,8 +280,6 @@ namespace BlImplementation
 
             return milestone.Id;
         }
-
-
     }
 
     }
