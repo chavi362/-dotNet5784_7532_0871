@@ -71,6 +71,7 @@ namespace Dal
         /// </summary>
         public IDependency Dependency => new DependencyImplementation();
 
+
         /// <summary>
         /// Resets the data in the data access layer, deleting all engineers, tasks, and dependencies.
         /// </summary>

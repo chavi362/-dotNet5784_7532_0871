@@ -278,24 +278,7 @@ namespace BlTest
                 case 'a':
                     break;
                 case 'b':
-                    // Create Projects Schedule
-                    Console.WriteLine("Enter milestone's id for reading:\n");
                     bool successTryParse;
-                    int _id;
-                    successTryParse = int.TryParse(Console.ReadLine(), out _id);
-                    if (!successTryParse || _id < 0)
-                        Console.WriteLine("Invalid id number");
-                    try
-                    {
-                        Console.WriteLine(s_bl.Milestone.Read(_id)!.ToString());
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                    break;
-                case 'c':
-                    // Read milestone
                     bool successToTryParse = true;
                     Console.WriteLine("Enter date of starting project");
                     DateTime _start;
@@ -310,6 +293,23 @@ namespace BlTest
                     s_bl.Milestone.SetStartDate(_start);
                     s_bl.Milestone.CreateProjectSchedule();
                     Console.WriteLine("Projects schedule created successfully");
+                    break;
+                case 'c':
+                    // Read milestone
+                    // Create Projects Schedule
+                    Console.WriteLine("Enter milestone's id for reading:\n");
+                    int _id;
+                    successTryParse = int.TryParse(Console.ReadLine(), out _id);
+                    if (!successTryParse || _id < 0)
+                        Console.WriteLine("Invalid id number");
+                    try
+                    {
+                        Console.WriteLine(s_bl.Milestone.Read(_id)!.ToString());
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
                 case 'd':
                     // Update milestone

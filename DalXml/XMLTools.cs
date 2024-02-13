@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 static class XMLTools
 {
     const string s_xml_dir = @"..\xml\";
+
     static XMLTools()
     {
         if (!Directory.Exists(s_xml_dir))
@@ -32,14 +33,13 @@ static class XMLTools
     #region XmlConfig
     public static int GetAndIncreaseNextId(string data_config_xml, string elemName)
     {
-        XElement root = XMLTools.LoadListFromXMLElement(data_config_xml);
+        XElement? root = XMLTools.LoadListFromXMLElement(data_config_xml);
         int nextId = root.ToIntNullable(elemName) ?? throw new FormatException($"can't convert id.  {data_config_xml}, {elemName}");
         root.Element(elemName)?.SetValue((nextId + 1).ToString());
         XMLTools.SaveListToXMLElement(root, data_config_xml);
         return nextId;
     }
     #endregion
-
     #region SaveLoadWithXElement
     public static void SaveListToXMLElement(XElement rootElem, string entity)
     {
@@ -56,7 +56,10 @@ static class XMLTools
 
     public static XElement LoadListFromXMLElement(string entity)
     {
-        string filePath = $"{s_xml_dir + entity}.xml";
+        string filePath = entity;
+        if (entity[entity.Length-1]!='l')
+
+        filePath = $"{s_xml_dir + entity}.xml";
         try
         {
             if (File.Exists(filePath))

@@ -9,7 +9,9 @@
         static string s_data_config_xml = "data-config";
 
         // Property to get and increase the next task ID
-        internal static int NextTaskId { get => XMLTools.GetAndIncreaseNextId(s_data_config_xml, "NextTaskId"); }
+        internal static int NextTaskId { 
+            get => 
+                XMLTools.GetAndIncreaseNextId(s_data_config_xml, "NextTaskId"); }
 
         // Property to get and increase the next dependency ID
         internal static int NextDependencyId { get => XMLTools.GetAndIncreaseNextId(s_data_config_xml, "NextDependencyId"); }

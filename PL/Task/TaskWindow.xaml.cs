@@ -55,7 +55,7 @@ namespace PL.Task
                     //...
 
                     int? id = s_bl.Task.Create(Task!);
-                    MessageBox.Show($"Task {id} was successfully added!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show($"Task was successfully added!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                     this.Close();
                 }
                 catch (BO.BlAlreadyExistsException ex)

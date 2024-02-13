@@ -11,6 +11,8 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <!-- Button for engineers screen -->
@@ -21,5 +23,7 @@
 
         <!-- Button for tasks -->
         <Button Grid.Column="2" Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" Content="Tasks" HorizontalAlignment="Center" VerticalAlignment="Center" Height="69" Width="155" Click="GoToTasks"/>
+        <Button Grid.Column="3" Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" Content="Milestone" HorizontalAlignment="Center" VerticalAlignment="Center" Height="69" Width="155" Click="GoToMilestone" />
+        <Button Grid.Column="4" Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" Content="Create Project Schedual" HorizontalAlignment="Center" VerticalAlignment="Center" Height="69" Width="155" />
     </Grid>
 </Window>
