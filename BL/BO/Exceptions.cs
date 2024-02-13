@@ -24,6 +24,11 @@ public class BlDeletionImpossible : Exception
     public BlDeletionImpossible(string? message,Exception inner) : base(message, inner) { }
 }
 [Serializable]
+public class BlNullPropertyException : Exception
+{
+    public BlNullPropertyException(string? message, Exception inner) : base(message, inner) { }
+}
+[Serializable]
 public class BlInvalidPropertyException : Exception
 {
     public BlInvalidPropertyException(string? message) : base(message) { }

@@ -45,11 +45,11 @@ namespace BlImplementation
 
             // Group tasks based on their dependencies
             var taskDependencies = (from dependency in dependenciesList
-                                    where dependency?.DependentTask != null && dependency?.DependensOnTask != null
+                                    where dependency?.DependentTask != null && dependency?.DependsOnTask != null
                                     group dependency by dependency.DependentTask
                                     into dependencyListAfterGrouping
                                     let dependencyList = dependencyListAfterGrouping
-                                                          .Select(dependency => dependency.DependensOnTask)
+                                                          .Select(dependency => dependency.DependsOnTask)
                                                           .OrderBy(dependency => dependency)
                                                           .ToList()
                                     select new { _key = dependencyListAfterGrouping.Key, _value = dependencyList })
@@ -82,7 +82,7 @@ namespace BlImplementation
             });
 
             // Find tasks that do not have dependencies; they will depend on the project's end
-            IEnumerable<DO.Task?> EndTasks = _dal.Task.ReadAll(t => t.Milestone == false && dependenciesList.All(d => d.DependensOnTask != t.Id));
+            IEnumerable<DO.Task?> EndTasks = _dal.Task.ReadAll(t => t.Milestone == false && dependenciesList.All(d => d.DependsOnTask != t.Id));
             newDependencies.AddRange(EndTasks.Select(t => new DO.Dependency(0, milestoneId, t!.Id)));
 
             // Replace the existing dependencies list
@@ -95,7 +95,7 @@ namespace BlImplementation
             {
                 _dal.Dependency.Create(dependency);
             }
-            updateDeadLines(_dal.Task.Read(milestoneId), _dal.ProjectEndDate ?? throw new BO.BlNullPropertyException("End date of the project is null"));
+            updateDeadLines(_dal.Task.Read(milestoneId), _dal.ProjectEndDate ?? throw new BO.BlNullPropertyException("End date of the project is null",null!));
 
             DateTime scheduledDate;
             //עדכון תאריכי התחלה לאבני דרך
@@ -103,7 +103,7 @@ namespace BlImplementation
             {
 
                 if (milestone!.Alias == "Start")
-                    scheduledDate = _dal.ProjectStartDate ?? throw new BO.BlNullPropertyException("Start date of the project is null");
+                    scheduledDate = _dal.ProjectStartDate ?? throw new BO.BlNullPropertyException("Start date of the project is null",null!);
                 else
                     scheduledDate = _dal.Task.ReadAll(t => _dal.Dependency.ReadAll().Any(d => d.DependentTask == milestone.Id && d.DependsOnTask == t.Id))
                         .Min(t => t.ScheduledDate!.Value);
@@ -155,7 +155,7 @@ namespace BlImplementation
                     DateTime milestoneDeadLineDate;
 
                     // Update dependent tasks' deadlines
-                    foreach (DO.Task? task in _dal.Task.ReadAll(t => _dal.Dependency.ReadAll().Any(d => d?.DependentTask == milestone.Id && d.DependensOnTask == t.Id)))
+                    foreach (DO.Task? task in _dal.Task.ReadAll(t => _dal.Dependency.ReadAll().Any(d => d?.DependentTask == milestone.Id && d.DependsOnTask == t.Id)))
                     {
                         if (task!.DeadLineDate == null || task.DeadLineDate > ProjectDeadLine)
                         {
@@ -175,7 +175,7 @@ namespace BlImplementation
                                 task.EngineerId,
                                 task.ComplexityLevel));
 
-                            milestoneId = _dal.Dependency.Read(d => d.DependentTask == task.Id)!.DependensOnTask;
+                            milestoneId = _dal.Dependency.Read(d => d.DependentTask == task.Id)!.DependsOnTask;
                             milestoneDeadLineDate = ProjectDeadLine.Subtract(task.RequiredEffortTime ?? TimeSpan.Zero);
 
                             if (milestones.ContainsKey(milestoneId))
@@ -201,7 +201,7 @@ namespace BlImplementation
             {
                 var doTask = _dal.Task.Read(id);
                 var dependencies = _dal.Dependency.ReadAll(d => d.DependentTask == id);
-                IEnumerable<TaskInList>? tasksInList = doTask!.Milestone && dependencies != null ? dependencies.Select(d => ReadTaskInList(d!.DependensOnTask)) : null;
+                IEnumerable<TaskInList>? tasksInList = doTask!.Milestone && dependencies != null ? dependencies.Select(d => ReadTaskInList(d!.DependsOnTask)) : null;
 
                 return new BO.Milestone
                 {

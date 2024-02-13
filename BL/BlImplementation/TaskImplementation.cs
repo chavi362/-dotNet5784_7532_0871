@@ -124,7 +124,7 @@ namespace BlImplementation
 
             try
             {
-                dependencies = _dal.Dependency.ReadAll((dependency) => dependency.DependensOnTask == id)!;
+                dependencies = _dal.Dependency.ReadAll((dependency) => dependency.DependsOnTask == id)!;
 
                 if (dependencies.Any())
                 {

@@ -79,7 +79,7 @@ namespace BlApi
 
             try
             {
-                dependencies = _dal!.Dependency.ReadAll((dependency) => dependency.DependensOnTask == taskId)!;
+                dependencies = _dal!.Dependency.ReadAll((dependency) => dependency.DependsOnTask == taskId)!;
 
                 if (dependencies.Any())
                 {
