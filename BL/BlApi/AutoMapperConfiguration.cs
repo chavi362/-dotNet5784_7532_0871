@@ -10,16 +10,19 @@ namespace BlApi
     {
         private static IDal? _dal; // Ensure that _dal is declared at the class level
 
+        // Configure AutoMapper mappings
         public static IMapper Configure(IDal dal)
         {
             _dal = dal; // Initialize _dal with the provided dal instance
 
             var config = new MapperConfiguration(cfg =>
             {
+                // Map DO.Engineer to BO.Engineer
                 cfg.CreateMap<DO.Engineer, BO.Engineer>()
-              .ForMember(dest => dest.Level, opt => opt.MapFrom(src => (BO.EngineerExperience?)src.Level))
-              .ForMember(dest => dest.CurrentTask, opt => opt.MapFrom(src => FindCurrentTask(src.Id)));
+                  .ForMember(dest => dest.Level, opt => opt.MapFrom(src => (BO.EngineerExperience?)src.Level))
+                  .ForMember(dest => dest.CurrentTask, opt => opt.MapFrom(src => FindCurrentTask(src.Id)));
 
+                // Map DO.Task to BO.Task
                 _ = cfg.CreateMap<DO.Task, BO.Task>()
                     .ForMember(dest => dest.ComplexityLevel, opt => opt.MapFrom(src => (BO.EngineerExperience?)src.ComplexityLevel))
                     .ForMember(dest => dest.CreatedAtDate, opt => opt.MapFrom(src => src.CreatedAtDate ?? DateTime.MinValue))
@@ -36,12 +39,16 @@ namespace BlApi
 
             return config.CreateMapper();
         }
+
+        // Find and map the current task for the engineer
         private static BO.EngineerInTask? FindCurrentTask(int engineerId)
         {
             // Implement the logic to find and map the current task for the engineer
             // Return the mapped BO.EngineerInTask or null if no current task
             return null;
         }
+
+        // Get the status of a task based on its completion and start dates
         private static BO.Status GetTaskStatus(DO.Task doTask)
         {
             if (doTask.Complete != null && doTask.Complete <= DateTime.Now)
@@ -67,11 +74,13 @@ namespace BlApi
             return BO.Status.InJeopardy;
         }
 
+        // Placeholder for GetMilestone logic, needs implementation
         private static object GetMilestone(DO.Task src)
         {
             throw new NotImplementedException();
         }
 
+        // Read and map Task dependencies for a given task ID
         private static IEnumerable<BO.TaskInList?> ReadTaskInList(int taskId)
         {
             IEnumerable<DO.Dependency> dependencies;

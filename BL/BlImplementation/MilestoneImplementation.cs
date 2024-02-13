@@ -110,9 +110,9 @@ namespace BlImplementation
 
                 _dal.Task.Update(new DO.Task(milestone.Id,
                        milestone.Description,
-                       milestone.Alias, milestone.Milestone, milestone.RequiredEffortTime, milestone.CreatedAtDate, milestone.StartedDate,
+                       milestone.Alias, milestone.Milestone, milestone.RequiredEffortTime, milestone.CreatedAtDate, milestone.Start,
                        scheduledDate, //עדכון תאריך התחלה
-                       milestone.Forecast, milestone.DeadLineDate, milestone.co, milestone.Deliverables,
+                       milestone.Forecast, milestone.DeadLineDate, milestone.Complete, milestone.Deliverables,
                        milestone.Remarks, milestone.EngineerId, milestone.ComplexityLevel));
             }
         }
@@ -189,7 +189,7 @@ namespace BlImplementation
 
                         foreach (var item in milestones)
                         {
-                            UpdateDedLineDate(_dal.Task.Read(item.Key), item.Value);
+                            updateDeadLines(_dal.Task.Read(item.Key), item.Value);
                         }
                     }
                 }
