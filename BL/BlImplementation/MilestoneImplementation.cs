@@ -37,31 +37,38 @@ namespace BlImplementation
                 Description = $"milestone{milestoneIndex++}",
                 Alias = $"M{milestoneIndex}",
                 Milestone = true,
+                RequiredEffortTime = TimeSpan.Zero,
                 CreatedAtDate = DateTime.Now
             });
             newDependencies.AddRange(tasksWithoutDependencies.Select(t => new DO.Dependency(0, t.Id, milestoneId)));
             // Group tasks based on their dependencies
-            var taskDependencies = (from dependency in dependenciesList
-                                    where dependency?.DependentTask != null && dependency?.DependsOnTask != null
-                                    group dependency by dependency.DependentTask
-                                    into dependencyListAfterGrouping
-                                    let dependencyList = dependencyListAfterGrouping
-                                                          .Select(dependency => dependency.DependsOnTask)
-                                                          .OrderBy(dependency => dependency)
-                                                          .ToList()
-                                    select new { _key = dependencyListAfterGrouping.Key, _value = dependencyList })
-                        .ToList();
+            var taskDependencies = dependenciesList.OrderBy(dep => dep?.DependsOnTask)
+            .GroupBy(dep => dep?.DependentTask, dep => dep?.DependsOnTask,
+            (id, dependency) => new { _key = id, _value = dependency })
+            .ToList();
+            var distinctDependencies = taskDependencies;
+            for (var j = 0; j < taskDependencies.Count(); j++)
+            {
+                var dep = from d in taskDependencies
+                               where d._key != taskDependencies[j]._key && d._value.SequenceEqual(taskDependencies[j]._value)
+                               select d._key;
+                if (dep.Count() >= 1)
+                {
+                    distinctDependencies.Remove(distinctDependencies[j]);
+                }
+            }
 
             // Create milestones for tasks with dependencies
-            foreach (var dependency in taskDependencies)
+            foreach (var dependency in distinctDependencies)
             {
                 milestoneId = _dal.Task.Create(new DO.Task()
                 {
                     Description = $"milestone{milestoneIndex++}",
                     Alias = $"M{milestoneIndex++}",  // Use the same milestone index for the alias
                     Milestone = true,
+                    RequiredEffortTime = TimeSpan.Zero,
                     CreatedAtDate = DateTime.Now
-                });
+                }) ;
 
                 // Find the task that this milestone depends on
                 var dependentTask = tasks.FirstOrDefault(t => t.Id == dependency._key);
@@ -78,6 +85,7 @@ namespace BlImplementation
                 Description = $"milestone{milestoneIndex++}",
                 Alias = "End",
                 Milestone = true,
+                RequiredEffortTime = TimeSpan.Zero,
                 CreatedAtDate = DateTime.Now
             });
 
@@ -204,7 +212,6 @@ namespace BlImplementation
                 var doTask = _dal.Task.Read(id);
                 var dependencies = _dal.Dependency.ReadAll(d => d.DependentTask == id);
                 IEnumerable<TaskInList>? tasksInList = doTask!.Milestone && dependencies != null ? dependencies.Select(d => ReadTaskInList(d!.DependsOnTask)) : null;
-
                 return new BO.Milestone
                 {
                     Id = doTask.Id,
@@ -268,7 +275,7 @@ namespace BlImplementation
                     null,
                     null,
                     milestone.ForecastAtDate,
-                    milestone.Complete, // Use Complete instead of CompleteDate
+                    milestone.Complete, 
                     null,
                     milestone.Remarks,
                     null,

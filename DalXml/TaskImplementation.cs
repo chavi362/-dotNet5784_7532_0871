@@ -81,8 +81,6 @@ namespace Dal
 
                 if (taskToRemove != null)
                 {
-                    if (Config.projectBegining >= DateTime.Now)
-                        throw new DO.DalDeletionImpossible("the project alredy began");
                     if (!CheckingDependency(taskToRemove))
                         throw new DO.DalDeletionImpossible($"Another task depends on this task with ID={id}");
 
