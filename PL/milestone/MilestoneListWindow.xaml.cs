@@ -19,7 +19,7 @@ namespace PL.Milestone
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
-        public IEnumerable<BO.Milestone> MilestoneList
+        public IEnumerable<BO.Milestone>? MilestoneList
         {
             get { return (IEnumerable<BO.Milestone>)GetValue(MilestoneListProperty); }
             set { SetValue(MilestoneListProperty, value); }
@@ -50,8 +50,8 @@ namespace PL.Milestone
 
         private void SearchByStatus(object sender, SelectionChangedEventArgs e)
         {
-            MilestoneList = (TStatus == BO.Status.None) ?
-          s_bl?.Task!.ReadAll((task) => task.Milestone == null).Select(task => s_bl?.Milestone.Read(task.Id))! : s_bl?.Task.ReadAll((task) => task.Milestone == null && task.Status==TStatus).Select(task => s_bl?.Milestone!.Read(task.Id))!;
+            MilestoneList = (TStatus == BO.Status.None)?
+          s_bl?.Task!.ReadAll((task) => task.Milestone == null).Select(task => s_bl?.Milestone.Read(task.Id))! : s_bl?.Task.ReadAll((task) => task.Milestone == null && task.Status == TStatus).Select(task => s_bl?.Milestone!.Read(task.Id))!;
         }
     }
 }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL.Engineer"
         mc:Ignorable="d"
         Title="EngineersListWindow" Height="640" Width="800"
-        DataContext="{Binding  RelativeSource={RelativeSource Mode=Self}}" Activated="Window_Activated">
+        DataContext="{Binding  RelativeSource={RelativeSource Mode=Self}}" Activated="Window_Activated"  Icon="../Icon1.ico">
     <!-- External Grid -->
     <Grid Background="#ECECEC">
         <Grid.RowDefinitions>
@@ -43,6 +43,21 @@
             </ListView.View>
         </ListView>
         <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="AddEngineerClick"
-                Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" BorderThickness="1"/>
+        Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" BorderThickness="1">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="1.2" ScaleY="1.7"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
     </Grid>
 </Window>

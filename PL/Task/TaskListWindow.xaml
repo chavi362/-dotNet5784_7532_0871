@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL.Task"
         mc:Ignorable="d"
         Title="TaskListWindow" Height="640" Width="805"
-        DataContext="{Binding  RelativeSource={RelativeSource Mode=Self}}" Activated="Window_Activated">
+        DataContext="{Binding  RelativeSource={RelativeSource Mode=Self}}" Activated="Window_Activated"  Icon="../Icon1.ico">
     <Grid Background="#ECECEC">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -48,7 +48,7 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="RenderTransform">
                                 <Setter.Value>
-                                    <ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
+                                    <ScaleTransform ScaleX="1.2" ScaleY="1.7"/>
                                 </Setter.Value>
                             </Setter>
                         </Trigger>

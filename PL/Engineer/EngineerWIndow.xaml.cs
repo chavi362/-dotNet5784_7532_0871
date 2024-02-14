@@ -43,8 +43,7 @@ namespace PL.Engineer
             {
                 try
                 {
-                    //tbd: test all fields are ok
-                    //...
+ 
 
                     int? id = s_bl.Engineer.Create(Engineer!);
                     MessageBox.Show($"Engineer {id} was successfully added!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -63,8 +62,7 @@ namespace PL.Engineer
             {
                 try
                 {
-                    //tbd: test all fields are ok
-                    //...
+                  
 
                     s_bl.Engineer.Update(Engineer!);
                     MessageBox.Show($"Engineer {Engineer?.Id} was successfully updated!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);

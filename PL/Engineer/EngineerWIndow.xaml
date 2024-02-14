@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL.Engineer"
         mc:Ignorable="d"
         Title="EngineerWindow" Height="450" Width="800"
-        DataContext="{Binding Engineer, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
+        DataContext="{Binding Engineer, RelativeSource={RelativeSource Self}, Mode=TwoWay}"  Icon="../Icon1.ico">
     <Grid>
         <Label Content="ID" HorizontalAlignment="Left" Margin="221,93,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.443,2.577"/>
         <Label Content="Name" HorizontalAlignment="Left" Margin="221,136,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.443,2.577"/>
@@ -21,7 +21,21 @@
             SelectedValue="{Binding Level, Mode=TwoWay}"
          ItemsSource="{Binding Source={StaticResource EngineerExperienceCollectionKey}}" HorizontalAlignment="Left" Margin="339,189,0,0" VerticalAlignment="Top" Width="186" Height="30"/>
         <Button Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
-        HorizontalAlignment="Left" Margin="297,358,0,0" VerticalAlignment="Top" Height="35" Width="103" Click="AddOrUpdate_Click" />
+        HorizontalAlignment="Left" Margin="297,358,0,0" VerticalAlignment="Top" Height="35" Width="103" Click="AddOrUpdate_Click">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="1.2" ScaleY="1.7"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
 
     </Grid>
 </Window>

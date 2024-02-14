@@ -1,73 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfEngineer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Engineer>
-    <Id>334755350</Id>
+    <Id>225157254</Id>
     <Name>Dani Levi</Name>
     <Email>DaniLevi@gmail.com</Email>
-    <Level>AdvancedBeginner</Level>
-    <Cost>1389233</Cost>
+    <Level>Competent</Level>
+    <Cost>1087419</Cost>
   </Engineer>
   <Engineer>
-    <Id>296040436</Id>
+    <Id>367098716</Id>
     <Name>Eli Amar</Name>
     <Email>EliAmar@gmail.com</Email>
-    <Level>Novice</Level>
-    <Cost>708886</Cost>
+    <Level>Competent</Level>
+    <Cost>1489179</Cost>
   </Engineer>
   <Engineer>
-    <Id>290991534</Id>
+    <Id>248826082</Id>
     <Name>Yair Cohen</Name>
     <Email>YairCohen@gmail.com</Email>
     <Level>AdvancedBeginner</Level>
-    <Cost>992762</Cost>
+    <Cost>849441</Cost>
   </Engineer>
   <Engineer>
-    <Id>252874490</Id>
+    <Id>322128835</Id>
     <Name>Ariela Levin</Name>
     <Email>ArielaLevin@gmail.com</Email>
-    <Level>Competent</Level>
-    <Cost>753286</Cost>
+    <Level>Novice</Level>
+    <Cost>1915257</Cost>
   </Engineer>
   <Engineer>
-    <Id>256538347</Id>
+    <Id>357694360</Id>
     <Name>Dina Klein</Name>
     <Email>DinaKlein@gmail.com</Email>
-    <Level>Novice</Level>
-    <Cost>928136</Cost>
+    <Level>Competent</Level>
+    <Cost>342255</Cost>
   </Engineer>
   <Engineer>
-    <Id>261699026</Id>
+    <Id>365852138</Id>
     <Name>Shira Israelof</Name>
     <Email>ShiraIsraelof@gmail.com</Email>
-    <Level>Novice</Level>
-    <Cost>216448</Cost>
+    <Level>AdvancedBeginner</Level>
+    <Cost>1817803</Cost>
   </Engineer>
   <Engineer>
-    <Id>353052989</Id>
+    <Id>251851546</Id>
     <Name>Chavi Chaimson</Name>
     <Email>ChaviChaimson@gmail.com</Email>
-    <Level>AdvancedBeginner</Level>
-    <Cost>325244</Cost>
+    <Level>Competent</Level>
+    <Cost>339272</Cost>
   </Engineer>
   <Engineer>
-    <Id>275043458</Id>
+    <Id>394249407</Id>
     <Name>Avigail Catz</Name>
     <Email>AvigailCatz@gmail.com</Email>
-    <Level>Competent</Level>
-    <Cost>490448</Cost>
+    <Level>Novice</Level>
+    <Cost>404206</Cost>
   </Engineer>
   <Engineer>
-    <Id>301447082</Id>
+    <Id>323492230</Id>
     <Name>Chani Levi</Name>
     <Email>ChaniLevi@gmail.com</Email>
-    <Level>Novice</Level>
-    <Cost>1975274</Cost>
+    <Level>AdvancedBeginner</Level>
+    <Cost>642483</Cost>
   </Engineer>
   <Engineer>
-    <Id>264178846</Id>
+    <Id>350199467</Id>
     <Name>Chani Lev</Name>
     <Email>ChaniLev@gmail.com</Email>
-    <Level>AdvancedBeginner</Level>
-    <Cost>276036</Cost>
+    <Level>Competent</Level>
+    <Cost>194311</Cost>
   </Engineer>
 </ArrayOfEngineer>

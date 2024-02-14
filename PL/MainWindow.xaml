@@ -17,14 +17,89 @@
         </Grid.ColumnDefinitions>
 
         <!-- Button for engineers screen -->
-        <Button Grid.Column="1" Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" Content="Engineers" HorizontalAlignment="Center" VerticalAlignment="Center" Height="69" Width="155" Click="HandleToEngineersScreen"/>
+        <Button Grid.Column="1" Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" Content="Engineers" HorizontalAlignment="Center" VerticalAlignment="Center" Height="69" Width="155" Click="HandleToEngineersScreen">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="1.2" ScaleY="1.7"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
 
         <!-- Button for initialization -->
-        <Button Grid.Column="0" Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" Content="Initialization" HorizontalAlignment="Center" VerticalAlignment="Center" Height="69" Width="155" Click="Initialization"/>
+        <Button Grid.Column="0" Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" Content="Initialization" HorizontalAlignment="Center" VerticalAlignment="Center" Height="69" Width="155" Click="Initialization">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="1.2" ScaleY="1.7"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
 
         <!-- Button for tasks -->
-        <Button Grid.Column="2" Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" Content="Tasks" HorizontalAlignment="Center" VerticalAlignment="Center" Height="69" Width="155" Click="GoToTasks"/>
-        <Button Grid.Column="3" Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" Content="Milestone" HorizontalAlignment="Center" VerticalAlignment="Center" Height="69" Width="155" Click="GoToMilestone" />
-        <Button Grid.Column="4" Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" Content="Create Project Schedual" HorizontalAlignment="Center" VerticalAlignment="Center" Height="69" Width="155" Click="CreateProjectSchedule_Click" />
+        <Button Grid.Column="2" Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" Content="Tasks" HorizontalAlignment="Center" VerticalAlignment="Center" Height="69" Width="155" Click="GoToTasks">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="1.2" ScaleY="1.7"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
+        <!-- Button for milestone -->
+        <Button Grid.Column="3" Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" Content="Milestone" HorizontalAlignment="Center" VerticalAlignment="Center" Height="69" Width="155" Click="GoToMilestone">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="1.2" ScaleY="1.7"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
+        <!-- Button for Create Project Schedule -->
+        <Button Grid.Column="4" Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" Content="Create Project Schedule" HorizontalAlignment="Center" VerticalAlignment="Center" Height="69" Width="155" Click="CreateProjectSchedule_Click">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="1.2" ScaleY="1.7"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
     </Grid>
 </Window>
