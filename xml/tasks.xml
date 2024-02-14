@@ -1,31 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfTask xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Task>
-    <Id>27</Id>
+    <Id>50</Id>
     <Description>Design the project architecture</Description>
     <Alias>design architecture</Alias>
     <Milestone>true</Milestone>
     <RequiredEffortTime>1.00:00:00</RequiredEffortTime>
-    <CreatedAtDate>2024-02-13T23:14:37.8728712+02:00</CreatedAtDate>
-    <Start>14/02/2024 23:14:37</Start>
-    <Forecast>22/02/2024 23:14:37</Forecast>
-    <DeadLineDate>20/02/2024 23:14:37</DeadLineDate>
-    <Complete xsi:nil="true" />
-    <Deliverables xsi:nil="true" />
-    <Remarks xsi:nil="true" />
-    <EngineerId xsi:nil="true" />
-    <ComplexityLevel xsi:nil="true" />-
-  </Task>
-  <Task>
-    <Id>29</Id>
-    <Description>Implement the user interface</Description>
-    <Alias>UI</Alias>
-    <Milestone>true</Milestone>
-    <RequiredEffortTime>1.00:00:00</RequiredEffortTime>
-    <CreatedAtDate>2024-02-13T23:14:37.9243204+02:00</CreatedAtDate>
-    <Start>15/02/2024 23:14:37</Start>
-    <Forecast>22/02/2024 23:14:37</Forecast>
-    <DeadLineDate>26/02/2024 23:14:37</DeadLineDate>
+    <CreatedAtDate>2024-02-14T12:06:07.3885938+02:00</CreatedAtDate>
+    <Start>16/02/2024 12:06:07</Start>
+    <Forecast>22/02/2024 12:06:07</Forecast>
+    <DeadLineDate>13/03/2024 12:06:07</DeadLineDate>
     <Complete xsi:nil="true" />
     <Deliverables xsi:nil="true" />
     <Remarks xsi:nil="true" />
@@ -33,15 +17,47 @@
     <ComplexityLevel xsi:nil="true" />
   </Task>
   <Task>
-    <Id>30</Id>
+    <Id>51</Id>
+    <Description>Develop the backend logic</Description>
+    <Alias>Develop</Alias>
+    <Milestone>false</Milestone>
+    <RequiredEffortTime>1.00:00:00</RequiredEffortTime>
+    <CreatedAtDate>2024-02-14T12:06:07.4212781+02:00</CreatedAtDate>
+    <Start>15/02/2024 12:06:07</Start>
+    <Forecast>21/02/2024 12:06:07</Forecast>
+    <DeadLineDate>17/03/2024 12:06:07</DeadLineDate>
+    <Complete xsi:nil="true" />
+    <Deliverables xsi:nil="true" />
+    <Remarks xsi:nil="true" />
+    <EngineerId xsi:nil="true" />
+    <ComplexityLevel xsi:nil="true" />
+  </Task>
+  <Task>
+    <Id>52</Id>
+    <Description>Implement the user interface</Description>
+    <Alias>UI</Alias>
+    <Milestone>false</Milestone>
+    <RequiredEffortTime>1.00:00:00</RequiredEffortTime>
+    <CreatedAtDate>2024-02-14T12:06:07.4423085+02:00</CreatedAtDate>
+    <Start>15/02/2024 12:06:07</Start>
+    <Forecast>20/02/2024 12:06:07</Forecast>
+    <DeadLineDate>28/02/2024 12:06:07</DeadLineDate>
+    <Complete xsi:nil="true" />
+    <Deliverables xsi:nil="true" />
+    <Remarks xsi:nil="true" />
+    <EngineerId xsi:nil="true" />
+    <ComplexityLevel xsi:nil="true" />
+  </Task>
+  <Task>
+    <Id>53</Id>
     <Description>Perform testing and debugging</Description>
     <Alias>debug</Alias>
     <Milestone>true</Milestone>
     <RequiredEffortTime>1.00:00:00</RequiredEffortTime>
-    <CreatedAtDate>2024-02-13T23:14:37.9477047+02:00</CreatedAtDate>
-    <Start>15/02/2024 23:14:37</Start>
-    <Forecast>21/02/2024 23:14:37</Forecast>
-    <DeadLineDate>13/03/2024 23:14:37</DeadLineDate>
+    <CreatedAtDate>2024-02-14T12:06:07.4632619+02:00</CreatedAtDate>
+    <Start>15/02/2024 12:06:07</Start>
+    <Forecast>21/02/2024 12:06:07</Forecast>
+    <DeadLineDate>05/03/2024 12:06:07</DeadLineDate>
     <Complete xsi:nil="true" />
     <Deliverables xsi:nil="true" />
     <Remarks xsi:nil="true" />
@@ -49,15 +65,15 @@
     <ComplexityLevel xsi:nil="true" />
   </Task>
   <Task>
-    <Id>31</Id>
+    <Id>54</Id>
     <Description>Optimize the code for performance</Description>
     <Alias>Optimizing</Alias>
     <Milestone>false</Milestone>
     <RequiredEffortTime>1.00:00:00</RequiredEffortTime>
-    <CreatedAtDate>2024-02-13T23:14:37.9713402+02:00</CreatedAtDate>
-    <Start>14/02/2024 23:14:37</Start>
-    <Forecast>19/02/2024 23:14:37</Forecast>
-    <DeadLineDate>29/02/2024 23:14:37</DeadLineDate>
+    <CreatedAtDate>2024-02-14T12:06:07.483845+02:00</CreatedAtDate>
+    <Start>16/02/2024 12:06:07</Start>
+    <Forecast>21/02/2024 12:06:07</Forecast>
+    <DeadLineDate>26/02/2024 12:06:07</DeadLineDate>
     <Complete xsi:nil="true" />
     <Deliverables xsi:nil="true" />
     <Remarks xsi:nil="true" />
@@ -65,15 +81,15 @@
     <ComplexityLevel xsi:nil="true" />
   </Task>
   <Task>
-    <Id>32</Id>
+    <Id>55</Id>
     <Description>Document the project specifications</Description>
     <Alias>Doucument</Alias>
-    <Milestone>false</Milestone>
+    <Milestone>true</Milestone>
     <RequiredEffortTime>1.00:00:00</RequiredEffortTime>
-    <CreatedAtDate>2024-02-13T23:14:37.9937454+02:00</CreatedAtDate>
-    <Start>14/02/2024 23:14:37</Start>
-    <Forecast>21/02/2024 23:14:37</Forecast>
-    <DeadLineDate>20/02/2024 23:14:37</DeadLineDate>
+    <CreatedAtDate>2024-02-14T12:06:07.5093408+02:00</CreatedAtDate>
+    <Start>15/02/2024 12:06:07</Start>
+    <Forecast>23/02/2024 12:06:07</Forecast>
+    <DeadLineDate>05/03/2024 12:06:07</DeadLineDate>
     <Complete xsi:nil="true" />
     <Deliverables xsi:nil="true" />
     <Remarks xsi:nil="true" />
@@ -81,15 +97,15 @@
     <ComplexityLevel xsi:nil="true" />
   </Task>
   <Task>
-    <Id>33</Id>
+    <Id>56</Id>
     <Description>Collaborate with team members</Description>
     <Alias>collaborating</Alias>
     <Milestone>false</Milestone>
     <RequiredEffortTime>1.00:00:00</RequiredEffortTime>
-    <CreatedAtDate>2024-02-13T23:14:38.0188672+02:00</CreatedAtDate>
-    <Start>14/02/2024 23:14:38</Start>
-    <Forecast>22/02/2024 23:14:38</Forecast>
-    <DeadLineDate>24/02/2024 23:14:38</DeadLineDate>
+    <CreatedAtDate>2024-02-14T12:06:07.5348034+02:00</CreatedAtDate>
+    <Start>15/02/2024 12:06:07</Start>
+    <Forecast>21/02/2024 12:06:07</Forecast>
+    <DeadLineDate>26/02/2024 12:06:07</DeadLineDate>
     <Complete xsi:nil="true" />
     <Deliverables xsi:nil="true" />
     <Remarks xsi:nil="true" />
@@ -97,15 +113,15 @@
     <ComplexityLevel xsi:nil="true" />
   </Task>
   <Task>
-    <Id>34</Id>
+    <Id>57</Id>
     <Description>Attend project meetings</Description>
     <Alias>meetings</Alias>
     <Milestone>false</Milestone>
     <RequiredEffortTime>1.00:00:00</RequiredEffortTime>
-    <CreatedAtDate>2024-02-13T23:14:38.0382831+02:00</CreatedAtDate>
-    <Start>15/02/2024 23:14:38</Start>
-    <Forecast>24/02/2024 23:14:38</Forecast>
-    <DeadLineDate>13/03/2024 23:14:38</DeadLineDate>
+    <CreatedAtDate>2024-02-14T12:06:07.5595426+02:00</CreatedAtDate>
+    <Start>16/02/2024 12:06:07</Start>
+    <Forecast>22/02/2024 12:06:07</Forecast>
+    <DeadLineDate>18/03/2024 12:06:07</DeadLineDate>
     <Complete xsi:nil="true" />
     <Deliverables xsi:nil="true" />
     <Remarks xsi:nil="true" />
@@ -113,15 +129,15 @@
     <ComplexityLevel xsi:nil="true" />
   </Task>
   <Task>
-    <Id>35</Id>
+    <Id>58</Id>
     <Description>Review and provide feedback on code</Description>
     <Alias>code review</Alias>
-    <Milestone>false</Milestone>
+    <Milestone>true</Milestone>
     <RequiredEffortTime>1.00:00:00</RequiredEffortTime>
-    <CreatedAtDate>2024-02-13T23:14:38.0598141+02:00</CreatedAtDate>
-    <Start>14/02/2024 23:14:38</Start>
-    <Forecast>20/02/2024 23:14:38</Forecast>
-    <DeadLineDate>10/03/2024 23:14:38</DeadLineDate>
+    <CreatedAtDate>2024-02-14T12:06:07.5868721+02:00</CreatedAtDate>
+    <Start>16/02/2024 12:06:07</Start>
+    <Forecast>22/02/2024 12:06:07</Forecast>
+    <DeadLineDate>11/03/2024 12:06:07</DeadLineDate>
     <Complete xsi:nil="true" />
     <Deliverables xsi:nil="true" />
     <Remarks xsi:nil="true" />
@@ -129,15 +145,15 @@
     <ComplexityLevel xsi:nil="true" />
   </Task>
   <Task>
-    <Id>36</Id>
+    <Id>59</Id>
     <Description>Deploy the project to production</Description>
     <Alias>production</Alias>
     <Milestone>false</Milestone>
     <RequiredEffortTime>1.00:00:00</RequiredEffortTime>
-    <CreatedAtDate>2024-02-13T23:14:38.0835459+02:00</CreatedAtDate>
-    <Start>15/02/2024 23:14:38</Start>
-    <Forecast>20/02/2024 23:14:38</Forecast>
-    <DeadLineDate>03/03/2024 23:14:38</DeadLineDate>
+    <CreatedAtDate>2024-02-14T12:06:07.6081409+02:00</CreatedAtDate>
+    <Start>16/02/2024 12:06:07</Start>
+    <Forecast>23/02/2024 12:06:07</Forecast>
+    <DeadLineDate>08/03/2024 12:06:07</DeadLineDate>
     <Complete xsi:nil="true" />
     <Deliverables xsi:nil="true" />
     <Remarks xsi:nil="true" />
@@ -145,227 +161,19 @@
     <ComplexityLevel xsi:nil="true" />
   </Task>
   <Task>
-    <Id>37</Id>
+    <Id>60</Id>
     <Description>Maintain and support the project</Description>
     <Alias>support</Alias>
-    <Milestone>true</Milestone>
-    <RequiredEffortTime>1.00:00:00</RequiredEffortTime>
-    <CreatedAtDate>2024-02-13T23:14:38.1072531+02:00</CreatedAtDate>
-    <Start>15/02/2024 23:14:38</Start>
-    <Forecast>20/02/2024 23:14:38</Forecast>
-    <DeadLineDate>22/02/2024 23:14:38</DeadLineDate>
-    <Complete xsi:nil="true" />
-    <Deliverables xsi:nil="true" />
-    <Remarks xsi:nil="true" />
-    <EngineerId xsi:nil="true" />
-    <ComplexityLevel xsi:nil="true" />
-  </Task>
-  <Task>
-    <Id>39</Id>
-    <Description>milestone1</Description>
-    <Alias>M2</Alias>
-    <Milestone>true</Milestone>
-    <RequiredEffortTime>00:00:00</RequiredEffortTime>
-    <CreatedAtDate>2024-02-14T01:17:59.6057879+02:00</CreatedAtDate>
-    <Start xsi:nil="true" />
-    <Forecast xsi:nil="true" />
-    <DeadLineDate xsi:nil="true" />
-    <Complete xsi:nil="true" />
-    <Deliverables xsi:nil="true" />
-    <Remarks xsi:nil="true" />
-    <EngineerId xsi:nil="true" />
-    <ComplexityLevel xsi:nil="true" />
-  </Task>
-  <Task>
-    <Id>40</Id>
-    <Description>milestone3</Description>
-    <Alias>M4</Alias>
-    <Milestone>true</Milestone>
-    <RequiredEffortTime>00:00:00</RequiredEffortTime>
-    <CreatedAtDate>2024-02-14T01:17:59.6259777+02:00</CreatedAtDate>
-    <Start xsi:nil="true" />
-    <Forecast xsi:nil="true" />
-    <DeadLineDate xsi:nil="true" />
-    <Complete xsi:nil="true" />
-    <Deliverables xsi:nil="true" />
-    <Remarks xsi:nil="true" />
-    <EngineerId xsi:nil="true" />
-    <ComplexityLevel xsi:nil="true" />
-  </Task>
-  <Task>
-    <Id>41</Id>
-    <Description>milestone5</Description>
-    <Alias>M6</Alias>
-    <Milestone>true</Milestone>
-    <RequiredEffortTime>00:00:00</RequiredEffortTime>
-    <CreatedAtDate>2024-02-14T01:17:59.6528415+02:00</CreatedAtDate>
-    <Start xsi:nil="true" />
-    <Forecast xsi:nil="true" />
-    <DeadLineDate xsi:nil="true" />
-    <Complete xsi:nil="true" />
-    <Deliverables xsi:nil="true" />
-    <Remarks xsi:nil="true" />
-    <EngineerId xsi:nil="true" />
-    <ComplexityLevel xsi:nil="true" />
-  </Task>
-  <Task>
-    <Id>42</Id>
-    <Description>milestone7</Description>
-    <Alias>M8</Alias>
-    <Milestone>true</Milestone>
-    <RequiredEffortTime>00:00:00</RequiredEffortTime>
-    <CreatedAtDate>2024-02-14T01:17:59.6745921+02:00</CreatedAtDate>
-    <Start xsi:nil="true" />
-    <Forecast xsi:nil="true" />
-    <DeadLineDate xsi:nil="true" />
-    <Complete xsi:nil="true" />
-    <Deliverables xsi:nil="true" />
-    <Remarks xsi:nil="true" />
-    <EngineerId xsi:nil="true" />
-    <ComplexityLevel xsi:nil="true" />
-  </Task>
-  <Task>
-    <Id>43</Id>
-    <Description>milestone9</Description>
-    <Alias>M10</Alias>
-    <Milestone>true</Milestone>
-    <RequiredEffortTime>00:00:00</RequiredEffortTime>
-    <CreatedAtDate>2024-02-14T01:17:59.6987181+02:00</CreatedAtDate>
-    <Start xsi:nil="true" />
-    <Forecast xsi:nil="true" />
-    <DeadLineDate xsi:nil="true" />
-    <Complete xsi:nil="true" />
-    <Deliverables xsi:nil="true" />
-    <Remarks xsi:nil="true" />
-    <EngineerId xsi:nil="true" />
-    <ComplexityLevel xsi:nil="true" />
-  </Task>
-  <Task>
-    <Id>44</Id>
-    <Description>milestone11</Description>
-    <Alias>M12</Alias>
-    <Milestone>true</Milestone>
-    <RequiredEffortTime>00:00:00</RequiredEffortTime>
-    <CreatedAtDate>2024-02-14T01:17:59.7226925+02:00</CreatedAtDate>
-    <Start xsi:nil="true" />
-    <Forecast xsi:nil="true" />
-    <DeadLineDate xsi:nil="true" />
-    <Complete xsi:nil="true" />
-    <Deliverables xsi:nil="true" />
-    <Remarks xsi:nil="true" />
-    <EngineerId xsi:nil="true" />
-    <ComplexityLevel xsi:nil="true" />
-  </Task>
-  <Task>
-    <Id>45</Id>
-    <Description>milestone13</Description>
-    <Alias>M14</Alias>
-    <Milestone>true</Milestone>
-    <RequiredEffortTime>00:00:00</RequiredEffortTime>
-    <CreatedAtDate>2024-02-14T01:17:59.7437743+02:00</CreatedAtDate>
-    <Start xsi:nil="true" />
-    <Forecast xsi:nil="true" />
-    <DeadLineDate xsi:nil="true" />
-    <Complete xsi:nil="true" />
-    <Deliverables xsi:nil="true" />
-    <Remarks xsi:nil="true" />
-    <EngineerId xsi:nil="true" />
-    <ComplexityLevel xsi:nil="true" />
-  </Task>
-  <Task>
-    <Id>46</Id>
-    <Description>milestone15</Description>
-    <Alias>M16</Alias>
-    <Milestone>true</Milestone>
-    <RequiredEffortTime>00:00:00</RequiredEffortTime>
-    <CreatedAtDate>2024-02-14T01:17:59.7664596+02:00</CreatedAtDate>
-    <Start xsi:nil="true" />
-    <Forecast xsi:nil="true" />
-    <DeadLineDate xsi:nil="true" />
-    <Complete xsi:nil="true" />
-    <Deliverables xsi:nil="true" />
-    <Remarks xsi:nil="true" />
-    <EngineerId xsi:nil="true" />
-    <ComplexityLevel xsi:nil="true" />
-  </Task>
-  <Task>
-    <Id>47</Id>
-    <Description>milestone17</Description>
-    <Alias>M18</Alias>
-    <Milestone>true</Milestone>
-    <RequiredEffortTime>00:00:00</RequiredEffortTime>
-    <CreatedAtDate>2024-02-14T01:17:59.7878297+02:00</CreatedAtDate>
-    <Start xsi:nil="true" />
-    <Forecast xsi:nil="true" />
-    <DeadLineDate xsi:nil="true" />
-    <Complete xsi:nil="true" />
-    <Deliverables xsi:nil="true" />
-    <Remarks xsi:nil="true" />
-    <EngineerId xsi:nil="true" />
-    <ComplexityLevel xsi:nil="true" />
-  </Task>
-  <Task>
-    <Id>48</Id>
-    <Description>milestone19</Description>
-    <Alias>M20</Alias>
-    <Milestone>true</Milestone>
-    <RequiredEffortTime>00:00:00</RequiredEffortTime>
-    <CreatedAtDate>2024-02-14T01:17:59.8117484+02:00</CreatedAtDate>
-    <Start xsi:nil="true" />
-    <Forecast xsi:nil="true" />
-    <DeadLineDate xsi:nil="true" />
-    <Complete xsi:nil="true" />
-    <Deliverables xsi:nil="true" />
-    <Remarks xsi:nil="true" />
-    <EngineerId xsi:nil="true" />
-    <ComplexityLevel xsi:nil="true" />
-  </Task>
-  <Task>
-    <Id>49</Id>
-    <Description>milestone21</Description>
-    <Alias>End</Alias>
-    <Milestone>true</Milestone>
-    <RequiredEffortTime>PT0S</RequiredEffortTime>
-    <CreatedAtDate>2024-02-14T01:17:59.8399051+02:00</CreatedAtDate>
-    <Start />
-    <Forecast />
-    <DeadLineDate>2024-02-24T00:00:00</DeadLineDate>
-    <Complete />
-    <Deliverables></Deliverables>
-    <Remarks></Remarks>
-    <EngineerId />
-    <ComplexityLevel />
-  </Task>
-  <Task>
-    <Id>28</Id>
-    <Description>Develop the backend logic</Description>
-    <Alias>Develop</Alias>
     <Milestone>false</Milestone>
-    <RequiredEffortTime>P1D</RequiredEffortTime>
-    <CreatedAtDate>2024-02-13T23:14:37.9055916+02:00</CreatedAtDate>
-    <Start>2024-02-15T23:14:37</Start>
-    <Forecast>2024-02-23T23:14:37</Forecast>
-    <DeadLineDate>2024-02-23T00:00:00</DeadLineDate>
-    <Complete />
-    <Deliverables></Deliverables>
-    <Remarks></Remarks>
-    <EngineerId />
-    <ComplexityLevel />
-  </Task>
-  <Task>
-    <Id>38</Id>
-    <Description>milestone0</Description>
-    <Alias>M1</Alias>
-    <Milestone>true</Milestone>
-    <RequiredEffortTime>PT0S</RequiredEffortTime>
-    <CreatedAtDate>2024-02-14T01:17:59.5767711+02:00</CreatedAtDate>
-    <Start />
-    <Forecast />
-    <DeadLineDate>2024-02-23T00:00:00</DeadLineDate>
-    <Complete />
-    <Deliverables></Deliverables>
-    <Remarks></Remarks>
-    <EngineerId />
-    <ComplexityLevel />
+    <RequiredEffortTime>1.00:00:00</RequiredEffortTime>
+    <CreatedAtDate>2024-02-14T12:06:07.6307373+02:00</CreatedAtDate>
+    <Start>15/02/2024 12:06:07</Start>
+    <Forecast>21/02/2024 12:06:07</Forecast>
+    <DeadLineDate>21/02/2024 12:06:07</DeadLineDate>
+    <Complete xsi:nil="true" />
+    <Deliverables xsi:nil="true" />
+    <Remarks xsi:nil="true" />
+    <EngineerId xsi:nil="true" />
+    <ComplexityLevel xsi:nil="true" />
   </Task>
 </ArrayOfTask>
