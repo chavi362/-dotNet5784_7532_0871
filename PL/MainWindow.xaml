@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Icon="C:\\-dotNet5784_7532_0871\\PL\\Icon1.ico">
+        Title="MainWindow" Height="450" Width="800" Icon="Icon1.ico">
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />

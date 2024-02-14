@@ -13,15 +13,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BL\BL.csproj" />
-    <ProjectReference Include="..\DalTest\DalTest.csproj" />
-	  <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <None Remove="icon.ico" />
+    <None Remove="Icon1.ico" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Icon1.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BL\BL.csproj" />
+    <ProjectReference Include="..\DalTest\DalTest.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icon1.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
