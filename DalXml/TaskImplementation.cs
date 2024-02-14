@@ -81,6 +81,7 @@ namespace Dal
 
                 if (taskToRemove != null)
                 {
+ 
                     if (!CheckingDependency(taskToRemove))
                         throw new DO.DalDeletionImpossible($"Another task depends on this task with ID={id}");
 

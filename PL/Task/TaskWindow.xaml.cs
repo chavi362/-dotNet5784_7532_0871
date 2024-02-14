@@ -14,7 +14,7 @@ namespace PL.Task
     public partial class TaskWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-         public BO.EngineerExperience ComplexityLevel { get; set; } = BO.EngineerExperience.None;
+        public BO.EngineerExperience ComplexityLevel { get; set; } = BO.EngineerExperience.None;
 
         public BO.Task? Task
         {
@@ -31,7 +31,7 @@ namespace PL.Task
             {
                 Status status;
                 Enum.TryParse<Status>(0.ToString(), out status);
-                Task = id != 0 ? s_bl.Task.Read(id) : new BO.Task { Id = 0, Description = "", Alias = "", Status = status,CreatedAtDate=DateTime.Now };
+                Task = id != 0 ? s_bl.Task.Read(id) : new BO.Task { Id = 0, Description = "", Alias = "", Status = status, CreatedAtDate = DateTime.Now };
             }
             catch (BO.BlDoesNotExistException ex)
             {
@@ -55,7 +55,7 @@ namespace PL.Task
                     //...
 
                     int? id = s_bl.Task.Create(Task!);
-                    MessageBox.Show($"Task was successfully added!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show($"Task {id} was successfully added!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                     this.Close();
                 }
                 catch (BO.BlAlreadyExistsException ex)
@@ -92,4 +92,3 @@ namespace PL.Task
 
     }
 }
-

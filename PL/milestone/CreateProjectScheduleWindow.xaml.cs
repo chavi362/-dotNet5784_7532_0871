@@ -33,10 +33,20 @@ namespace PL.milestone
 
         private void CreateProjectSchedule_Click(object sender, RoutedEventArgs e)
         {
+            
             s_bl.Milestone.SetStartDate(_startDate);
             s_bl.Milestone.SetEndDate(_endDate);
-            s_bl.Milestone.CreateProjectSchedule();
-            MessageBox.Show($"mproject shedule  was successfully created!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            try
+            {
+                s_bl.Milestone.CreateProjectSchedule();
+
+                MessageBox.Show($"project shedule  was successfully created!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            }
+            catch (Exception ex) {
+                MessageBox.Show($"project shedule  creating failed{ex}", "Failure", MessageBoxButton.OK, MessageBoxImage.Error);
+               }
+          
             this.Close();
         }
 

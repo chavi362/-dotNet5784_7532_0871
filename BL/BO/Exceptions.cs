@@ -33,3 +33,8 @@ public class BlInvalidPropertyException : Exception
 {
     public BlInvalidPropertyException(string? message) : base(message) { }
 }
+[Serializable]
+public class BlFailedCreatingSchedule : Exception
+{
+    public BlFailedCreatingSchedule(string? message, Exception inner) : base(message,inner) { }
+}

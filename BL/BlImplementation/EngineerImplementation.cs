@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿//using AutoMapper;
 using BlApi;
 using BO;
 using System;
@@ -10,12 +10,12 @@ namespace BlImplementation
     internal class EngineerImplementation : IEngineer
     {
         private DalApi.IDal _dal = DalApi.Factory.Get;
-        private readonly IMapper _mapper;
+        //private readonly IMapper _mapper;
 
-        public EngineerImplementation()
-        {
-            _mapper = AutoMapperConfiguration.Configure(_dal);
-        }
+        //public EngineerImplementation()
+        //{
+        //    _mapper = AutoMapperConfiguration.Configure(_dal);
+        //}
 
         /// <summary>
         /// Validates the format of an email address.
@@ -169,7 +169,21 @@ namespace BlImplementation
         public IEnumerable<Engineer> ReadAll(Func<BO.Engineer, bool>? filter = null)
         {
             IEnumerable<Engineer> engineers = _dal.Engineer.ReadAll().Select(doEngineer =>
-                _mapper.Map<Engineer>(doEngineer));
+            {
+                BO.EngineerExperience? level = null; // Moved inside the Select lambda
+                if (doEngineer!.Level != null)
+                    level = (BO.EngineerExperience)doEngineer.Level!;
+
+                return new Engineer
+                {
+                    Id = doEngineer.Id,
+                    Name = doEngineer.Name,
+                    Email = doEngineer.Email,
+                    Level = level,
+                    Cost = (double)doEngineer.Cost!,
+                    CurrentTask = FindCurrentTask(doEngineer.Id)
+                };
+            });
 
             if (filter == null)
                 return engineers;

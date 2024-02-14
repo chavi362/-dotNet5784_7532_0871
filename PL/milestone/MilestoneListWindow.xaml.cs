@@ -34,7 +34,7 @@ namespace PL.Milestone
         }
         private void Window_Activated(object sender, EventArgs e)
         {
-            MilestoneList = s_bl?.Task.ReadAll((task)=>task.Milestone==null).Select(task => s_bl?.Milestone.Read(task.Id))!;
+            MilestoneList = s_bl?.Milestone.ReadAll();
         }
         private void AddMilestoneClick(object sender, RoutedEventArgs e)
         {
